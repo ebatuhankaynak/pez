@@ -1,0 +1,4 @@
+# PyTorch CUDA 12.8 build (big, rarely-changing layer). The +cu128 local version
+# only exists on the PyTorch index, so pip can never grab a CPU build.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.10.0+cu128

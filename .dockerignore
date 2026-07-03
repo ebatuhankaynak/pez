@@ -1,0 +1,11 @@
+# Keep the huge media + generated outputs out of the build context.
+freckled_spike_tiktok/
+*.zip
+split/
+transitions/
+montages/
+**/__pycache__/
+*.pyc
+.git/
+.venv/
+*.md

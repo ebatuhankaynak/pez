@@ -1,0 +1,9 @@
+# Stage-1 (TransNetV2) + video I/O + splitting. torch is in requirements-torch.txt,
+# the face stage is in requirements-face.txt. No OpenCLIP — it's unused.
+# (transnetv2-pytorch pulls its own deps: pandas, etc.)
+numpy==2.4.2
+pillow==12.1.0
+decord==0.6.0
+ffmpeg-python==0.2.0
+transnetv2-pytorch==1.0.5
+tqdm==4.67.3

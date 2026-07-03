@@ -1,0 +1,2241 @@
+[
+  {
+    "clip": "tikcdn_beubagah_com_006f0287_eacc_4741_84e6_8a5c21466d03.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 8.025,
+        "label": "meme",
+        "dur": 4.694
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_028cd22a_74ca_4f9a_b06b_4520783daa95.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.255,
+        "label": "person",
+        "dur": 3.255
+      },
+      {
+        "start": 3.331,
+        "end": 8.177,
+        "label": "meme",
+        "dur": 4.846
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_02a0f678_e7be_46c9_bda3_e8b6789c4ea3.mp4",
+    "n_segments": 3,
+    "pattern": "pers\u2192meme\u2192pers",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.4,
+        "label": "person",
+        "dur": 3.4
+      },
+      {
+        "start": 3.433,
+        "end": 5.633,
+        "label": "meme",
+        "dur": 2.2
+      },
+      {
+        "start": 5.667,
+        "end": 8.133,
+        "label": "person",
+        "dur": 2.466
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_05ad0eea_831e_4cec_ad71_c77ef43525b9.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.8,
+        "label": "person",
+        "dur": 3.8
+      },
+      {
+        "start": 3.833,
+        "end": 8.367,
+        "label": "meme",
+        "dur": 4.534
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_07ffd14b_428f_4eb8_a29f_46f82f8d9ce1.mp4",
+    "n_segments": 1,
+    "pattern": "pers",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 8.033,
+        "label": "person",
+        "dur": 8.033
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_0bb1e132_ebb7_4530_a7b5_9a914a97a236.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.815,
+        "label": "person",
+        "dur": 3.815
+      },
+      {
+        "start": 3.85,
+        "end": 7.214,
+        "label": "meme",
+        "dur": 3.364
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_0ca8110a_98ab_404f_b4d5_0c5f9cf81be0.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.333,
+        "label": "person",
+        "dur": 3.333
+      },
+      {
+        "start": 3.367,
+        "end": 11.767,
+        "label": "meme",
+        "dur": 8.4
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_0e8b69e4_00f9_4d0e_a694_62a28230430b.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 10.667,
+        "label": "meme",
+        "dur": 10.667
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_12533770_b1bd_46eb_9305_191240f82288.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.333,
+        "label": "person",
+        "dur": 3.333
+      },
+      {
+        "start": 3.367,
+        "end": 9.633,
+        "label": "meme",
+        "dur": 6.266
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_12a6f023_308e_45bc_8fc7_aefb4588e5ba.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.069,
+        "label": "person",
+        "dur": 4.069
+      },
+      {
+        "start": 4.122,
+        "end": 8.974,
+        "label": "meme",
+        "dur": 4.852
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_13e95e57_8c30_45e9_8362_152407c208d2.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.922,
+        "label": "person",
+        "dur": 2.922
+      },
+      {
+        "start": 2.974,
+        "end": 12.782,
+        "label": "meme",
+        "dur": 9.808
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_17430417_4150_4cf0_a99e_61d3f09be82f.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 8.033,
+        "label": "meme",
+        "dur": 8.033
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_18268c22_4b80_407c_b56a_85598d9685d3.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 11.659,
+        "label": "meme",
+        "dur": 8.328
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_195da596_d3af_49bf_8fa2_81e3e11792b4.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.375,
+        "label": "person",
+        "dur": 4.375
+      },
+      {
+        "start": 4.417,
+        "end": 7.167,
+        "label": "meme",
+        "dur": 2.75
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_1ac4cd02_265c_43e6_bd69_d9002152f9a4.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.867,
+        "label": "person",
+        "dur": 3.867
+      },
+      {
+        "start": 3.9,
+        "end": 8.133,
+        "label": "meme",
+        "dur": 4.233
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_207e8b96_2684_4188_a928_ff6923a7578e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.333,
+        "label": "person",
+        "dur": 4.333
+      },
+      {
+        "start": 4.367,
+        "end": 8.7,
+        "label": "meme",
+        "dur": 4.333
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_23aa8019_7d03_401d_9508_e1fe1893180c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.667,
+        "label": "person",
+        "dur": 3.667
+      },
+      {
+        "start": 3.7,
+        "end": 10.267,
+        "label": "meme",
+        "dur": 6.567
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_24f93ef0_e813_4df7_b727_822c5b0ce5be.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.353,
+        "label": "person",
+        "dur": 4.353
+      },
+      {
+        "start": 4.391,
+        "end": 8.177,
+        "label": "meme",
+        "dur": 3.786
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2649196c_7bc3_447f_a26f_3f90952618b3.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 6.267,
+        "label": "person",
+        "dur": 6.267
+      },
+      {
+        "start": 6.333,
+        "end": 12.567,
+        "label": "meme",
+        "dur": 6.234
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2dd462fc_a03e_43e3_ab0a_c1ca3faa47a6.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 8.404,
+        "label": "meme",
+        "dur": 5.073
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2ec0e70e_e679_470f_bccd_e6c062af6bcc.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.37,
+        "label": "person",
+        "dur": 4.37
+      },
+      {
+        "start": 4.405,
+        "end": 8.324,
+        "label": "meme",
+        "dur": 3.919
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2fd91785_59ee_44c7_ae21_0fda06d8f518.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.233,
+        "label": "person",
+        "dur": 3.233
+      },
+      {
+        "start": 3.267,
+        "end": 8.1,
+        "label": "meme",
+        "dur": 4.833
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_30f9dd1f_42bb_4c6d_9757_fd92d2791db6.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 7.306,
+        "label": "meme",
+        "dur": 3.975
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_310e88d8_bc59_47fc_aa52_7c76252e008e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.233,
+        "label": "person",
+        "dur": 3.233
+      },
+      {
+        "start": 3.3,
+        "end": 11.433,
+        "label": "meme",
+        "dur": 8.133
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_363fc499_730e_4078_ab08_18097e6f406b.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.088,
+        "label": "person",
+        "dur": 4.088
+      },
+      {
+        "start": 4.164,
+        "end": 8.669,
+        "label": "meme",
+        "dur": 4.505
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_37f0f7c5_944b_477d_a54a_35b141993822.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.18,
+        "label": "person",
+        "dur": 3.18
+      },
+      {
+        "start": 3.218,
+        "end": 8.669,
+        "label": "meme",
+        "dur": 5.451
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_3bdc1c7e_1db0_422f_a714_0b9bf76f76fa.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.667,
+        "label": "person",
+        "dur": 3.667
+      },
+      {
+        "start": 3.7,
+        "end": 8.533,
+        "label": "meme",
+        "dur": 4.833
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_3d9d01bd_0c0e_4f92_bdba_13e1913568fd.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 8.101,
+        "label": "meme",
+        "dur": 4.77
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_40b0955b_2058_4017_8092_0aedf1d87b6c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.933,
+        "label": "person",
+        "dur": 4.933
+      },
+      {
+        "start": 4.967,
+        "end": 12.0,
+        "label": "meme",
+        "dur": 7.033
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_42d9e873_a4c6_4e30_bcab_1b9c05177b41.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 9.199,
+        "label": "meme",
+        "dur": 9.199
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_43da1350_9868_4797_8caa_baa225f7723d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.3,
+        "label": "person",
+        "dur": 3.3
+      },
+      {
+        "start": 3.333,
+        "end": 11.633,
+        "label": "meme",
+        "dur": 8.3
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_443f44f3_beef_46b2_8775_d73d0e65c380.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 10.448,
+        "label": "meme",
+        "dur": 7.117
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_48058a0e_afc3_46a9_9e76_058e0f632f48.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 8.555,
+        "label": "meme",
+        "dur": 5.224
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_49ad99db_1711_40b5_a8f8_bbdfd00cc1b8.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.133,
+        "label": "person",
+        "dur": 4.133
+      },
+      {
+        "start": 4.2,
+        "end": 8.667,
+        "label": "meme",
+        "dur": 4.467
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_4da7682e_2381_44e0_996d_0622c2fd5297.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.088,
+        "label": "person",
+        "dur": 4.088
+      },
+      {
+        "start": 4.164,
+        "end": 8.744,
+        "label": "meme",
+        "dur": 4.58
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_4e529554_5a5b_4db0_982e_5a346d3b1cf2.mp4",
+    "n_segments": 1,
+    "pattern": "pers",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 8.0,
+        "label": "person",
+        "dur": 8.0
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_4e5c3114_0369_448a_bf6e_6c5b8c765227.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.467,
+        "label": "person",
+        "dur": 4.467
+      },
+      {
+        "start": 4.5,
+        "end": 8.167,
+        "label": "meme",
+        "dur": 3.667
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_50261477_4f5a_4183_8247_c931a105879e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.267,
+        "label": "person",
+        "dur": 3.267
+      },
+      {
+        "start": 3.3,
+        "end": 11.867,
+        "label": "meme",
+        "dur": 8.567
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_5288b271_c762_486a_b209_3bc2388c33b1.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.028,
+        "label": "person",
+        "dur": 3.028
+      },
+      {
+        "start": 3.066,
+        "end": 9.123,
+        "label": "meme",
+        "dur": 6.057
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_53e0eefe_e9eb_4262_8dc0_9e2b600ca0a3.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 45.5,
+        "label": "meme",
+        "dur": 45.5
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_567c07b6_0b37_401c_a324_c1bb3153c337.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.25,
+        "label": "person",
+        "dur": 4.25
+      },
+      {
+        "start": 4.292,
+        "end": 8.458,
+        "label": "meme",
+        "dur": 4.166
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_58522d21_0f1f_4e52_9df3_fa68486e668e.mp4",
+    "n_segments": 4,
+    "pattern": "pers\u2192meme\u2192pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.583,
+        "label": "person",
+        "dur": 2.583
+      },
+      {
+        "start": 2.625,
+        "end": 6.583,
+        "label": "meme",
+        "dur": 3.958
+      },
+      {
+        "start": 6.625,
+        "end": 7.958,
+        "label": "person",
+        "dur": 1.333
+      },
+      {
+        "start": 8.0,
+        "end": 10.5,
+        "label": "meme",
+        "dur": 2.5
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_5b3c4cf0_9ff0_4222_b07b_0d9a002f5b79.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 7.733,
+        "label": "meme",
+        "dur": 7.733
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_5bdd08c4_8b8d_42b1_9fa8_a427d6011111.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.983,
+        "label": "person",
+        "dur": 2.983
+      },
+      {
+        "start": 3.017,
+        "end": 8.358,
+        "label": "meme",
+        "dur": 5.341
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_60d1406c_3131_41b1_b1fe_d72ccf9f0bb5.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 5.11,
+        "label": "person",
+        "dur": 5.11
+      },
+      {
+        "start": 5.186,
+        "end": 8.29,
+        "label": "meme",
+        "dur": 3.104
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_63b2184c_4034_4024_96c8_99bacfb04c40.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.439,
+        "label": "person",
+        "dur": 4.439
+      },
+      {
+        "start": 4.509,
+        "end": 7.977,
+        "label": "meme",
+        "dur": 3.468
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_64c020c6_fd3b_4732_9aa1_8ac589fc9b61.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.255,
+        "label": "person",
+        "dur": 3.255
+      },
+      {
+        "start": 3.331,
+        "end": 8.328,
+        "label": "meme",
+        "dur": 4.997
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_65ebb57f_bc59_404e_8d00_582a15921068.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.583,
+        "label": "person",
+        "dur": 3.583
+      },
+      {
+        "start": 3.667,
+        "end": 8.833,
+        "label": "meme",
+        "dur": 5.166
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_67c4d894_6f71_4402_a09a_0dce49924f7d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.18,
+        "label": "person",
+        "dur": 3.18
+      },
+      {
+        "start": 3.218,
+        "end": 8.214,
+        "label": "meme",
+        "dur": 4.996
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_6ae6d0d0_ba30_4a3c_9792_8198b43d5bf5.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.748,
+        "label": "person",
+        "dur": 3.748
+      },
+      {
+        "start": 3.785,
+        "end": 14.082,
+        "label": "meme",
+        "dur": 10.297
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_6c6f4af4_f346_48aa_8519_9e4faf73d316.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.233,
+        "label": "person",
+        "dur": 3.233
+      },
+      {
+        "start": 3.267,
+        "end": 9.633,
+        "label": "meme",
+        "dur": 6.366
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_6f17177e_c7ad_41fc_9e1d_872e50038d9a.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.088,
+        "label": "person",
+        "dur": 4.088
+      },
+      {
+        "start": 4.164,
+        "end": 11.546,
+        "label": "meme",
+        "dur": 7.382
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_702e9fbb_d05f_4bb9_ab07_9a9c5c11adb1.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.197,
+        "label": "person",
+        "dur": 4.197
+      },
+      {
+        "start": 4.231,
+        "end": 8.463,
+        "label": "meme",
+        "dur": 4.232
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_71ed5130_bc49_45c3_8681_46f455a21f30.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 6.965,
+        "label": "meme",
+        "dur": 3.634
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_72469ee4_453c_44a5_a4d4_5de57de9793c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.4,
+        "label": "person",
+        "dur": 3.4
+      },
+      {
+        "start": 3.467,
+        "end": 8.533,
+        "label": "meme",
+        "dur": 5.066
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7584d0d6_c114_483a_a4ec_87a1b81f9769.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.7,
+        "label": "person",
+        "dur": 2.7
+      },
+      {
+        "start": 2.767,
+        "end": 9.5,
+        "label": "meme",
+        "dur": 6.733
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_75b95d9a_1e39_4037_bff9_fd763bd6a01f.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.255,
+        "label": "person",
+        "dur": 3.255
+      },
+      {
+        "start": 3.331,
+        "end": 8.631,
+        "label": "meme",
+        "dur": 5.3
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_76fb9eac_e99c_4004_9cac_ea0081b7e3c8.mp4",
+    "n_segments": 1,
+    "pattern": "pers",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 7.875,
+        "label": "person",
+        "dur": 7.875
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_77122cc1_2f78_4b0f_90cf_74f46092b5dc.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 8.025,
+        "label": "meme",
+        "dur": 8.025
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_77465bcc_cf7a_4279_9a67_2bf6f1dda696.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.567,
+        "label": "person",
+        "dur": 3.567
+      },
+      {
+        "start": 3.6,
+        "end": 8.567,
+        "label": "meme",
+        "dur": 4.967
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_77800745_6404_4d89_8376_e055d262ed2e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.667,
+        "label": "person",
+        "dur": 3.667
+      },
+      {
+        "start": 3.733,
+        "end": 8.167,
+        "label": "meme",
+        "dur": 4.434
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_78c3c96b_bded_4c03_bea4_d0e89d8933c2.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.967,
+        "label": "person",
+        "dur": 2.967
+      },
+      {
+        "start": 3.033,
+        "end": 10.467,
+        "label": "meme",
+        "dur": 7.434
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7a620e15_a1a2_40d9_861c_4d2ef937776b.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.126,
+        "label": "person",
+        "dur": 4.126
+      },
+      {
+        "start": 4.164,
+        "end": 8.631,
+        "label": "meme",
+        "dur": 4.467
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7ee05e69_1908_4471_8eda_04cbcbfbfe01.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.5,
+        "label": "person",
+        "dur": 3.5
+      },
+      {
+        "start": 3.567,
+        "end": 12.367,
+        "label": "meme",
+        "dur": 8.8
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7f96c003_6a92_4dcc_9705_28ebed932956.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.4,
+        "label": "person",
+        "dur": 3.4
+      },
+      {
+        "start": 3.433,
+        "end": 13.133,
+        "label": "meme",
+        "dur": 9.7
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_80df6347_3c77_44ed_be4a_b2e8880ae8b0 (1).mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.983,
+        "label": "person",
+        "dur": 2.983
+      },
+      {
+        "start": 3.017,
+        "end": 8.463,
+        "label": "meme",
+        "dur": 5.446
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_88d3bd30_a7dc_4d44_9bcc_a1b6032071a2.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.7,
+        "label": "person",
+        "dur": 2.7
+      },
+      {
+        "start": 2.767,
+        "end": 10.6,
+        "label": "meme",
+        "dur": 7.833
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_8d128946_4177_46df_a9ea_3abeca2e0204.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.445,
+        "label": "person",
+        "dur": 3.445
+      },
+      {
+        "start": 3.483,
+        "end": 8.404,
+        "label": "meme",
+        "dur": 4.921
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_8d4a09ad_c73f_4e07_8c43_16d55af9c25d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.71,
+        "label": "person",
+        "dur": 3.71
+      },
+      {
+        "start": 3.748,
+        "end": 16.845,
+        "label": "meme",
+        "dur": 13.097
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_8e7b363a_5f39_47bb_9c4e_25f3d4bd75de.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.71,
+        "label": "person",
+        "dur": 3.71
+      },
+      {
+        "start": 3.748,
+        "end": 8.593,
+        "label": "meme",
+        "dur": 4.845
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_900735b1_7b81_4569_964d_98613b63e29c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.3,
+        "label": "person",
+        "dur": 3.3
+      },
+      {
+        "start": 3.333,
+        "end": 8.0,
+        "label": "meme",
+        "dur": 4.667
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_9038b713_7191_4808_8f18_26513464953c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.948,
+        "label": "person",
+        "dur": 2.948
+      },
+      {
+        "start": 3.017,
+        "end": 8.15,
+        "label": "meme",
+        "dur": 5.133
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_90f307cb_ed22_496c_baa2_4d32abcf2b06.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.391,
+        "label": "person",
+        "dur": 4.391
+      },
+      {
+        "start": 4.429,
+        "end": 9.615,
+        "label": "meme",
+        "dur": 5.186
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_915d7797_5c92_4fcb_a723_7e4eedf856c5.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.667,
+        "label": "person",
+        "dur": 3.667
+      },
+      {
+        "start": 3.733,
+        "end": 8.267,
+        "label": "meme",
+        "dur": 4.534
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_95f10e98_9173_43a4_b2d8_84af78a61b17.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 8.29,
+        "label": "meme",
+        "dur": 4.959
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_95fdcee9_ed26_480b_84c6_3d316eaadc7a.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.9,
+        "label": "person",
+        "dur": 3.9
+      },
+      {
+        "start": 3.933,
+        "end": 8.8,
+        "label": "meme",
+        "dur": 4.867
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_9674488c_ba3f_4bcd_ade6_8e30eac56900.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.267,
+        "label": "person",
+        "dur": 3.267
+      },
+      {
+        "start": 3.3,
+        "end": 8.467,
+        "label": "meme",
+        "dur": 5.167
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_995408c9_55e2_4495_985c_e88f36627149.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.3,
+        "label": "person",
+        "dur": 4.3
+      },
+      {
+        "start": 4.333,
+        "end": 8.267,
+        "label": "meme",
+        "dur": 3.934
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a2dca28e_e31e_4de6_b929_43c22239998e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.533,
+        "label": "person",
+        "dur": 3.533
+      },
+      {
+        "start": 3.567,
+        "end": 8.0,
+        "label": "meme",
+        "dur": 4.433
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a4155f90_0e46_4aa9_bf71_9a3f7448903d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.255,
+        "label": "person",
+        "dur": 3.255
+      },
+      {
+        "start": 3.331,
+        "end": 10.486,
+        "label": "meme",
+        "dur": 7.155
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a4ca1596_cc00_4e8e_ad43_0632a416467d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.948,
+        "label": "person",
+        "dur": 2.948
+      },
+      {
+        "start": 3.017,
+        "end": 8.289,
+        "label": "meme",
+        "dur": 5.272
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a4fd6814_f775_4949_88bb_1b23353b369d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.087,
+        "label": "person",
+        "dur": 3.087
+      },
+      {
+        "start": 3.156,
+        "end": 10.023,
+        "label": "meme",
+        "dur": 6.867
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ac83c044_9a91_4407_932c_909baee3b0ac.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.533,
+        "label": "person",
+        "dur": 3.533
+      },
+      {
+        "start": 3.567,
+        "end": 8.2,
+        "label": "meme",
+        "dur": 4.633
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_acbc1b97_0e37_4a98_b32e_677dcd2a702f.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 5.426,
+        "label": "person",
+        "dur": 5.426
+      },
+      {
+        "start": 5.478,
+        "end": 8.191,
+        "label": "meme",
+        "dur": 2.713
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ade58812_f1b5_43d3_ab94_b03da6e7050b.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.367,
+        "label": "person",
+        "dur": 3.367
+      },
+      {
+        "start": 3.4,
+        "end": 6.8,
+        "label": "meme",
+        "dur": 3.4
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ae3aabd1_8646_4adf_958f_74c5c4e9472c.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 6.042,
+        "label": "meme",
+        "dur": 6.042
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_af64c005_5187_4acb_a03b_48f587e6637e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.667,
+        "label": "person",
+        "dur": 3.667
+      },
+      {
+        "start": 3.733,
+        "end": 8.467,
+        "label": "meme",
+        "dur": 4.734
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b0cf9e67_7791_4675_90d2_46e67301f696.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.975,
+        "label": "person",
+        "dur": 3.975
+      },
+      {
+        "start": 4.05,
+        "end": 12.113,
+        "label": "meme",
+        "dur": 8.063
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b16fe14d_a6a4_4fec_8447_74986f83b4fe.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.233,
+        "label": "person",
+        "dur": 3.233
+      },
+      {
+        "start": 3.3,
+        "end": 8.5,
+        "label": "meme",
+        "dur": 5.2
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b2dbc598_ec6b_4a6c_bc9d_f1919f772a8b.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.2,
+        "label": "person",
+        "dur": 3.2
+      },
+      {
+        "start": 3.233,
+        "end": 8.667,
+        "label": "meme",
+        "dur": 5.434
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b45fff16_06ff_477d_9607_3733c97199d4.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.293,
+        "label": "person",
+        "dur": 3.293
+      },
+      {
+        "start": 3.331,
+        "end": 9.615,
+        "label": "meme",
+        "dur": 6.284
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b58c91f0_67d2_4f51_afaf_948701ef3ae3.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.255,
+        "label": "person",
+        "dur": 3.255
+      },
+      {
+        "start": 3.331,
+        "end": 7.987,
+        "label": "meme",
+        "dur": 4.656
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b719b54a_c7fc_41a3_a3e3_04aa504719bf.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.333,
+        "label": "person",
+        "dur": 4.333
+      },
+      {
+        "start": 4.375,
+        "end": 8.167,
+        "label": "meme",
+        "dur": 3.792
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_be56033b_7a42_4cd9_8076_81392d60ebff.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.467,
+        "label": "person",
+        "dur": 3.467
+      },
+      {
+        "start": 3.5,
+        "end": 8.033,
+        "label": "meme",
+        "dur": 4.533
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c0a3b2a9_4444_4e0c_8053_ac241b20ed08.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.767,
+        "label": "person",
+        "dur": 2.767
+      },
+      {
+        "start": 2.833,
+        "end": 11.667,
+        "label": "meme",
+        "dur": 8.834
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c36d7b0e_c189_4bfa_81bf_1a44cd26f853.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.7,
+        "label": "person",
+        "dur": 2.7
+      },
+      {
+        "start": 2.767,
+        "end": 8.067,
+        "label": "meme",
+        "dur": 5.3
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c67e03e1_84ca_4697_a2d2_bb3b6ffa704b.mp4",
+    "n_segments": 1,
+    "pattern": "meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 7.933,
+        "label": "meme",
+        "dur": 7.933
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c7092616_603c_4b78_beed_cdbbccec2cbf.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.7,
+        "label": "person",
+        "dur": 3.7
+      },
+      {
+        "start": 3.733,
+        "end": 8.067,
+        "label": "meme",
+        "dur": 4.334
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c978aae0_cf59_45ad_a5d5_3fd9d8d3402c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.99,
+        "label": "person",
+        "dur": 2.99
+      },
+      {
+        "start": 3.066,
+        "end": 11.583,
+        "label": "meme",
+        "dur": 8.517
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_cbb31741_f113_4af5_89ae_b6d49656e4ad.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 6.347,
+        "label": "person",
+        "dur": 6.347
+      },
+      {
+        "start": 6.382,
+        "end": 10.266,
+        "label": "meme",
+        "dur": 3.884
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_cd042008_e980_4fed_b699_b9e2a21c9cf2.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.164,
+        "label": "person",
+        "dur": 4.164
+      },
+      {
+        "start": 4.24,
+        "end": 8.063,
+        "label": "meme",
+        "dur": 3.823
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ce31422e_1479_4f21_80ee_b2e9c5fa332c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.733,
+        "label": "person",
+        "dur": 2.733
+      },
+      {
+        "start": 2.767,
+        "end": 9.867,
+        "label": "meme",
+        "dur": 7.1
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_cf939912_8167_4abd_859d_4524f14810ff.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.367,
+        "label": "person",
+        "dur": 3.367
+      },
+      {
+        "start": 3.433,
+        "end": 9.933,
+        "label": "meme",
+        "dur": 6.5
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_d93702c4_6e69_44ca_8e0c_95608bbfcd4a.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.267,
+        "label": "person",
+        "dur": 3.267
+      },
+      {
+        "start": 3.3,
+        "end": 8.9,
+        "label": "meme",
+        "dur": 5.6
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_db1405c0_42fe_467b_9a40_40210d6e4663.mp4",
+    "n_segments": 1,
+    "pattern": "pers",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 8.0,
+        "label": "person",
+        "dur": 8.0
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_db78dc46_9f10_4a9a_90f5_d55177ca8da2.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.867,
+        "label": "person",
+        "dur": 3.867
+      },
+      {
+        "start": 3.933,
+        "end": 9.233,
+        "label": "meme",
+        "dur": 5.3
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_dc36d34b_3080_4822_bd93_98e52c3ab2d0.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.4,
+        "label": "person",
+        "dur": 3.4
+      },
+      {
+        "start": 3.433,
+        "end": 10.167,
+        "label": "meme",
+        "dur": 6.734
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e3b6086f_a73a_461b_b795_4e948bf533b1.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.833,
+        "label": "person",
+        "dur": 2.833
+      },
+      {
+        "start": 2.867,
+        "end": 8.067,
+        "label": "meme",
+        "dur": 5.2
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e758eb10_528b_4441_8b1a_32f55161637c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.233,
+        "label": "person",
+        "dur": 3.233
+      },
+      {
+        "start": 3.267,
+        "end": 10.6,
+        "label": "meme",
+        "dur": 7.333
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e7698b9a_d61b_4b22_9376_b6f76bbbf279.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.202,
+        "label": "person",
+        "dur": 4.202
+      },
+      {
+        "start": 4.24,
+        "end": 9.009,
+        "label": "meme",
+        "dur": 4.769
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e8f7d011_2ce7_4472_859a_41c9127bfd2a.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.815,
+        "label": "person",
+        "dur": 3.815
+      },
+      {
+        "start": 3.85,
+        "end": 8.046,
+        "label": "meme",
+        "dur": 4.196
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e9fdfc02_922a_4567_85a4_b55fc8505776.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.967,
+        "label": "person",
+        "dur": 2.967
+      },
+      {
+        "start": 3.0,
+        "end": 8.967,
+        "label": "meme",
+        "dur": 5.967
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ead202b1_13d2_43fa_999f_afbe0b3572a7.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 5.035,
+        "label": "person",
+        "dur": 5.035
+      },
+      {
+        "start": 5.072,
+        "end": 8.214,
+        "label": "meme",
+        "dur": 3.142
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ef5af2b1_3d19_4ad2_8bf4_86c7842440c5.mp4",
+    "n_segments": 1,
+    "pattern": "pers",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 7.248,
+        "label": "person",
+        "dur": 7.248
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_efbe795b_6bc1_4409_a65d_5b3af675162e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 2.953,
+        "label": "person",
+        "dur": 2.953
+      },
+      {
+        "start": 3.028,
+        "end": 9.312,
+        "label": "meme",
+        "dur": 6.284
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_f3783803_fe75_4760_932d_320c61348ef7.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.267,
+        "label": "person",
+        "dur": 3.267
+      },
+      {
+        "start": 3.3,
+        "end": 10.067,
+        "label": "meme",
+        "dur": 6.767
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_f5b1f8c9_59b4_4562_aed1_e7d473f5ab0c.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.067,
+        "label": "person",
+        "dur": 3.067
+      },
+      {
+        "start": 3.133,
+        "end": 8.9,
+        "label": "meme",
+        "dur": 5.767
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_f7ad4e70_5f81_43ca_a8cc_8d05fb66b948.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.833,
+        "label": "person",
+        "dur": 3.833
+      },
+      {
+        "start": 3.867,
+        "end": 7.967,
+        "label": "meme",
+        "dur": 4.1
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_fb0cc763_1767_4575_b2f4_e76c740e701a.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.255,
+        "label": "person",
+        "dur": 3.255
+      },
+      {
+        "start": 3.331,
+        "end": 9.994,
+        "label": "meme",
+        "dur": 6.663
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_fea8c1e4_14c4_4f2f_bbcf_0e5bcf6d408e.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.033,
+        "label": "person",
+        "dur": 4.033
+      },
+      {
+        "start": 4.1,
+        "end": 9.567,
+        "label": "meme",
+        "dur": 5.467
+      }
+    ]
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ff160e7a_5ed9_433b_8249_6b9dbe164b0d.mp4",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 4.0,
+        "label": "person",
+        "dur": 4.0
+      },
+      {
+        "start": 4.042,
+        "end": 8.333,
+        "label": "meme",
+        "dur": 4.291
+      }
+    ]
+  }
+]

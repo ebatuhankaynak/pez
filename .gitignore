@@ -1,0 +1,18 @@
+# --- media / large source data (not for git) ---
+freckled_spike_tiktok/
+*.zip
+split/
+segments/
+
+# --- generated, regenerable outputs ---
+transitions/qa/
+report.html
+verify.html
+
+# --- python ---
+__pycache__/
+*.pyc
+*.pyo
+
+# --- misc ---
+.DS_Store

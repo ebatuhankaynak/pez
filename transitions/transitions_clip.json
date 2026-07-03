@@ -1,0 +1,5901 @@
+[
+  {
+    "clip": "tikcdn_beubagah_com_006f0287_eacc_4741_84e6_8a5c21466d03.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.533,
+        "person_sim": 0.2285,
+        "meme_sim": 0.2272,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 8.025,
+        "start_frame": 88,
+        "end_frame": 212,
+        "p_person": 0.0474,
+        "person_sim": 0.1815,
+        "meme_sim": 0.2115,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "8a5c21466d03_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_028cd22a_74ca_4f9a_b06b_4520783daa95.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.9609,
+        "person_sim": 0.2673,
+        "meme_sim": 0.2353,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.1288,
+        "person_sim": 0.2707,
+        "meme_sim": 0.2898,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 6.625,
+        "start_frame": 110,
+        "end_frame": 175,
+        "p_person": 0.0026,
+        "person_sim": 0.1627,
+        "meme_sim": 0.2223,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.662,
+        "end_sec": 8.177,
+        "start_frame": 176,
+        "end_frame": 216,
+        "p_person": 0.0138,
+        "person_sim": 0.1776,
+        "meme_sim": 0.2203,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "4520783daa95_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_02a0f678_e7be_46c9_bda3_e8b6789c4ea3.mp4",
+    "transition_sec": 3.433,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.4,
+        "start_frame": 0,
+        "end_frame": 102,
+        "p_person": 0.9644,
+        "person_sim": 0.2515,
+        "meme_sim": 0.2185,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.433,
+        "end_sec": 5.633,
+        "start_frame": 103,
+        "end_frame": 169,
+        "p_person": 0.0202,
+        "person_sim": 0.1911,
+        "meme_sim": 0.2299,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.667,
+        "end_sec": 8.133,
+        "start_frame": 170,
+        "end_frame": 244,
+        "p_person": 0.9833,
+        "person_sim": 0.2325,
+        "meme_sim": 0.1917,
+        "label": "person"
+      }
+    ],
+    "qa_image": "e8b6789c4ea3_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_05ad0eea_831e_4cec_ad71_c77ef43525b9.mp4",
+    "transition_sec": 3.833,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.8,
+        "start_frame": 0,
+        "end_frame": 114,
+        "p_person": 0.4539,
+        "person_sim": 0.224,
+        "meme_sim": 0.2259,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.833,
+        "end_sec": 4.367,
+        "start_frame": 115,
+        "end_frame": 131,
+        "p_person": 0.0003,
+        "person_sim": 0.0929,
+        "meme_sim": 0.1736,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.4,
+        "end_sec": 8.367,
+        "start_frame": 132,
+        "end_frame": 251,
+        "p_person": 0.0013,
+        "person_sim": 0.1361,
+        "meme_sim": 0.2023,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "c77ef43525b9_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_07ffd14b_428f_4eb8_a29f_46f82f8d9ce1.mp4",
+    "transition_sec": null,
+    "method": "single_shot_meme",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 8.033,
+        "start_frame": 0,
+        "end_frame": 241,
+        "p_person": 0.0054,
+        "person_sim": 0.1637,
+        "meme_sim": 0.2158,
+        "label": "meme"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_0bb1e132_ebb7_4530_a7b5_9a914a97a236.mp4",
+    "transition_sec": 3.85,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.948,
+        "start_frame": 0,
+        "end_frame": 85,
+        "p_person": 0.9809,
+        "person_sim": 0.2552,
+        "meme_sim": 0.2158,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.983,
+        "end_sec": 3.815,
+        "start_frame": 86,
+        "end_frame": 110,
+        "p_person": 0.789,
+        "person_sim": 0.2437,
+        "meme_sim": 0.2305,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.85,
+        "end_sec": 7.214,
+        "start_frame": 111,
+        "end_frame": 208,
+        "p_person": 0.0577,
+        "person_sim": 0.1804,
+        "meme_sim": 0.2083,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "9a914a97a236_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_0ca8110a_98ab_404f_b4d5_0c5f9cf81be0.mp4",
+    "transition_sec": 3.367,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.333,
+        "start_frame": 0,
+        "end_frame": 100,
+        "p_person": 0.9995,
+        "person_sim": 0.2686,
+        "meme_sim": 0.1933,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.367,
+        "end_sec": 4.1,
+        "start_frame": 101,
+        "end_frame": 123,
+        "p_person": 0.0036,
+        "person_sim": 0.1574,
+        "meme_sim": 0.2136,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.167,
+        "end_sec": 11.767,
+        "start_frame": 125,
+        "end_frame": 353,
+        "p_person": 0.0217,
+        "person_sim": 0.1666,
+        "meme_sim": 0.2047,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0c5f9cf81be0_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_0e8b69e4_00f9_4d0e_a694_62a28230430b.mp4",
+    "transition_sec": 4.083,
+    "method": "person_to_meme",
+    "num_shots": 14,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.042,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.6123,
+        "person_sim": 0.2423,
+        "meme_sim": 0.2377,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.083,
+        "end_sec": 5.75,
+        "start_frame": 98,
+        "end_frame": 138,
+        "p_person": 0.0132,
+        "person_sim": 0.1727,
+        "meme_sim": 0.2158,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.792,
+        "end_sec": 6.042,
+        "start_frame": 139,
+        "end_frame": 145,
+        "p_person": 0.0381,
+        "person_sim": 0.0846,
+        "meme_sim": 0.1169,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.083,
+        "end_sec": 6.333,
+        "start_frame": 146,
+        "end_frame": 152,
+        "p_person": 0.0146,
+        "person_sim": 0.0986,
+        "meme_sim": 0.1406,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.375,
+        "end_sec": 6.875,
+        "start_frame": 153,
+        "end_frame": 165,
+        "p_person": 0.0202,
+        "person_sim": 0.1368,
+        "meme_sim": 0.1756,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.917,
+        "end_sec": 7.333,
+        "start_frame": 166,
+        "end_frame": 176,
+        "p_person": 0.019,
+        "person_sim": 0.0616,
+        "meme_sim": 0.101,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.375,
+        "end_sec": 7.667,
+        "start_frame": 177,
+        "end_frame": 184,
+        "p_person": 0.1354,
+        "person_sim": 0.1253,
+        "meme_sim": 0.1439,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.708,
+        "end_sec": 8.625,
+        "start_frame": 185,
+        "end_frame": 207,
+        "p_person": 0.0094,
+        "person_sim": 0.1208,
+        "meme_sim": 0.1675,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.667,
+        "end_sec": 8.958,
+        "start_frame": 208,
+        "end_frame": 215,
+        "p_person": 0.0144,
+        "person_sim": 0.0932,
+        "meme_sim": 0.1355,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.0,
+        "end_sec": 9.333,
+        "start_frame": 216,
+        "end_frame": 224,
+        "p_person": 0.0046,
+        "person_sim": 0.0675,
+        "meme_sim": 0.1212,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.375,
+        "end_sec": 9.708,
+        "start_frame": 225,
+        "end_frame": 233,
+        "p_person": 0.0432,
+        "person_sim": 0.1221,
+        "meme_sim": 0.1531,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.75,
+        "end_sec": 10.083,
+        "start_frame": 234,
+        "end_frame": 242,
+        "p_person": 0.0046,
+        "person_sim": 0.0874,
+        "meme_sim": 0.1411,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.125,
+        "end_sec": 10.458,
+        "start_frame": 243,
+        "end_frame": 251,
+        "p_person": 0.0152,
+        "person_sim": 0.1072,
+        "meme_sim": 0.1489,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.5,
+        "end_sec": 10.667,
+        "start_frame": 252,
+        "end_frame": 256,
+        "p_person": 0.0099,
+        "person_sim": 0.0885,
+        "meme_sim": 0.1346,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "62a28230430b_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_12533770_b1bd_46eb_9305_191240f82288.mp4",
+    "transition_sec": 3.367,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.333,
+        "start_frame": 0,
+        "end_frame": 100,
+        "p_person": 0.9226,
+        "person_sim": 0.2582,
+        "meme_sim": 0.2334,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.367,
+        "end_sec": 6.067,
+        "start_frame": 101,
+        "end_frame": 182,
+        "p_person": 0.0002,
+        "person_sim": 0.1595,
+        "meme_sim": 0.2435,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.1,
+        "end_sec": 9.1,
+        "start_frame": 183,
+        "end_frame": 273,
+        "p_person": 0.0025,
+        "person_sim": 0.1596,
+        "meme_sim": 0.2195,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.133,
+        "end_sec": 9.633,
+        "start_frame": 274,
+        "end_frame": 289,
+        "p_person": 0.0005,
+        "person_sim": 0.1485,
+        "meme_sim": 0.2247,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "191240f82288_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_12a6f023_308e_45bc_8fc7_aefb4588e5ba.mp4",
+    "transition_sec": 4.122,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.069,
+        "start_frame": 0,
+        "end_frame": 78,
+        "p_person": 0.2083,
+        "person_sim": 0.2428,
+        "meme_sim": 0.2561,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.122,
+        "end_sec": 5.948,
+        "start_frame": 79,
+        "end_frame": 114,
+        "p_person": 0.0131,
+        "person_sim": 0.1671,
+        "meme_sim": 0.2103,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.0,
+        "end_sec": 7.304,
+        "start_frame": 115,
+        "end_frame": 140,
+        "p_person": 0.0007,
+        "person_sim": 0.1595,
+        "meme_sim": 0.2316,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.356,
+        "end_sec": 8.974,
+        "start_frame": 141,
+        "end_frame": 172,
+        "p_person": 0.0009,
+        "person_sim": 0.1657,
+        "meme_sim": 0.2354,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "aefb4588e5ba_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_13e95e57_8c30_45e9_8362_152407c208d2.mp4",
+    "transition_sec": 5.478,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.922,
+        "start_frame": 0,
+        "end_frame": 56,
+        "p_person": 0.6813,
+        "person_sim": 0.2439,
+        "meme_sim": 0.2363,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.974,
+        "end_sec": 5.426,
+        "start_frame": 57,
+        "end_frame": 104,
+        "p_person": 0.8468,
+        "person_sim": 0.2492,
+        "meme_sim": 0.2321,
+        "label": "person"
+      },
+      {
+        "start_sec": 5.478,
+        "end_sec": 12.782,
+        "start_frame": 105,
+        "end_frame": 245,
+        "p_person": 0.1116,
+        "person_sim": 0.1907,
+        "meme_sim": 0.2115,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "152407c208d2_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_17430417_4150_4cf0_a99e_61d3f09be82f.mp4",
+    "transition_sec": null,
+    "method": "single_shot_meme",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 8.033,
+        "start_frame": 0,
+        "end_frame": 241,
+        "p_person": 0.0005,
+        "person_sim": 0.1422,
+        "meme_sim": 0.2176,
+        "label": "meme"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_18268c22_4b80_407c_b56a_85598d9685d3.mp4",
+    "transition_sec": 3.331,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.4836,
+        "person_sim": 0.2177,
+        "meme_sim": 0.2183,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 5.148,
+        "start_frame": 88,
+        "end_frame": 136,
+        "p_person": 0.0385,
+        "person_sim": 0.1947,
+        "meme_sim": 0.2269,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.186,
+        "end_sec": 7.003,
+        "start_frame": 137,
+        "end_frame": 185,
+        "p_person": 0.0867,
+        "person_sim": 0.1874,
+        "meme_sim": 0.2109,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.041,
+        "end_sec": 7.571,
+        "start_frame": 186,
+        "end_frame": 200,
+        "p_person": 0.0046,
+        "person_sim": 0.1335,
+        "meme_sim": 0.1873,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.609,
+        "end_sec": 8.707,
+        "start_frame": 201,
+        "end_frame": 230,
+        "p_person": 0.0046,
+        "person_sim": 0.1554,
+        "meme_sim": 0.2092,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.744,
+        "end_sec": 10.524,
+        "start_frame": 231,
+        "end_frame": 278,
+        "p_person": 0.0067,
+        "person_sim": 0.16,
+        "meme_sim": 0.2101,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.561,
+        "end_sec": 11.659,
+        "start_frame": 279,
+        "end_frame": 308,
+        "p_person": 0.0522,
+        "person_sim": 0.1889,
+        "meme_sim": 0.2179,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "85598d9685d3_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_195da596_d3af_49bf_8fa2_81e3e11792b4.mp4",
+    "transition_sec": 2.583,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.542,
+        "start_frame": 0,
+        "end_frame": 61,
+        "p_person": 0.2189,
+        "person_sim": 0.1899,
+        "meme_sim": 0.2026,
+        "label": "meme"
+      },
+      {
+        "start_sec": 2.583,
+        "end_sec": 3.458,
+        "start_frame": 62,
+        "end_frame": 83,
+        "p_person": 0.038,
+        "person_sim": 0.1717,
+        "meme_sim": 0.204,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.5,
+        "end_sec": 4.375,
+        "start_frame": 84,
+        "end_frame": 105,
+        "p_person": 0.0102,
+        "person_sim": 0.2065,
+        "meme_sim": 0.2522,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.417,
+        "end_sec": 7.167,
+        "start_frame": 106,
+        "end_frame": 172,
+        "p_person": 0.0,
+        "person_sim": 0.0803,
+        "meme_sim": 0.1933,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "81e3e11792b4_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_1ac4cd02_265c_43e6_bd69_d9002152f9a4.mp4",
+    "transition_sec": 3.9,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.867,
+        "start_frame": 0,
+        "end_frame": 116,
+        "p_person": 0.9688,
+        "person_sim": 0.2607,
+        "meme_sim": 0.2263,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.9,
+        "end_sec": 5.4,
+        "start_frame": 117,
+        "end_frame": 162,
+        "p_person": 0.0002,
+        "person_sim": 0.1397,
+        "meme_sim": 0.226,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.433,
+        "end_sec": 6.5,
+        "start_frame": 163,
+        "end_frame": 195,
+        "p_person": 0.0005,
+        "person_sim": 0.1417,
+        "meme_sim": 0.2184,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.533,
+        "end_sec": 7.333,
+        "start_frame": 196,
+        "end_frame": 220,
+        "p_person": 0.0008,
+        "person_sim": 0.146,
+        "meme_sim": 0.2173,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.367,
+        "end_sec": 8.133,
+        "start_frame": 221,
+        "end_frame": 244,
+        "p_person": 0.0011,
+        "person_sim": 0.1474,
+        "meme_sim": 0.2157,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "d9002152f9a4_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_207e8b96_2684_4188_a928_ff6923a7578e.mp4",
+    "transition_sec": 4.367,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.333,
+        "start_frame": 0,
+        "end_frame": 130,
+        "p_person": 0.4779,
+        "person_sim": 0.2334,
+        "meme_sim": 0.2343,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.367,
+        "end_sec": 8.7,
+        "start_frame": 131,
+        "end_frame": 261,
+        "p_person": 0.0019,
+        "person_sim": 0.1919,
+        "meme_sim": 0.2548,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "ff6923a7578e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_23aa8019_7d03_401d_9508_e1fe1893180c.mp4",
+    "transition_sec": 3.7,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.667,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.5408,
+        "person_sim": 0.2168,
+        "meme_sim": 0.2152,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.7,
+        "end_sec": 4.5,
+        "start_frame": 111,
+        "end_frame": 135,
+        "p_person": 0.2036,
+        "person_sim": 0.1968,
+        "meme_sim": 0.2104,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.533,
+        "end_sec": 8.933,
+        "start_frame": 136,
+        "end_frame": 268,
+        "p_person": 0.2007,
+        "person_sim": 0.2124,
+        "meme_sim": 0.2262,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.967,
+        "end_sec": 10.267,
+        "start_frame": 269,
+        "end_frame": 308,
+        "p_person": 0.5064,
+        "person_sim": 0.1991,
+        "meme_sim": 0.1988,
+        "label": "person"
+      }
+    ],
+    "qa_image": "e1fe1893180c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_24f93ef0_e813_4df7_b727_822c5b0ce5be.mp4",
+    "transition_sec": 4.391,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.353,
+        "start_frame": 0,
+        "end_frame": 115,
+        "p_person": 0.9715,
+        "person_sim": 0.2383,
+        "meme_sim": 0.203,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.391,
+        "end_sec": 8.177,
+        "start_frame": 116,
+        "end_frame": 216,
+        "p_person": 0.0005,
+        "person_sim": 0.1346,
+        "meme_sim": 0.2116,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "822c5b0ce5be_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2649196c_7bc3_447f_a26f_3f90952618b3.mp4",
+    "transition_sec": 6.333,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 15,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 6.267,
+        "start_frame": 0,
+        "end_frame": 188,
+        "p_person": 0.0169,
+        "person_sim": 0.2011,
+        "meme_sim": 0.2417,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.333,
+        "end_sec": 7.067,
+        "start_frame": 190,
+        "end_frame": 212,
+        "p_person": 0.0,
+        "person_sim": 0.0757,
+        "meme_sim": 0.1872,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.1,
+        "end_sec": 7.4,
+        "start_frame": 213,
+        "end_frame": 222,
+        "p_person": 0.0062,
+        "person_sim": 0.1424,
+        "meme_sim": 0.1933,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.433,
+        "end_sec": 7.767,
+        "start_frame": 223,
+        "end_frame": 233,
+        "p_person": 0.0002,
+        "person_sim": 0.1178,
+        "meme_sim": 0.204,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.8,
+        "end_sec": 8.167,
+        "start_frame": 234,
+        "end_frame": 245,
+        "p_person": 0.0004,
+        "person_sim": 0.1153,
+        "meme_sim": 0.1929,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.2,
+        "end_sec": 8.533,
+        "start_frame": 246,
+        "end_frame": 256,
+        "p_person": 0.0001,
+        "person_sim": 0.1089,
+        "meme_sim": 0.2042,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.567,
+        "end_sec": 9.333,
+        "start_frame": 257,
+        "end_frame": 280,
+        "p_person": 0.0,
+        "person_sim": 0.1114,
+        "meme_sim": 0.2142,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.367,
+        "end_sec": 9.733,
+        "start_frame": 281,
+        "end_frame": 292,
+        "p_person": 0.0057,
+        "person_sim": 0.1464,
+        "meme_sim": 0.198,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.767,
+        "end_sec": 10.1,
+        "start_frame": 293,
+        "end_frame": 303,
+        "p_person": 0.0028,
+        "person_sim": 0.1385,
+        "meme_sim": 0.1972,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.133,
+        "end_sec": 10.5,
+        "start_frame": 304,
+        "end_frame": 315,
+        "p_person": 0.0001,
+        "person_sim": 0.1015,
+        "meme_sim": 0.1934,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.533,
+        "end_sec": 10.867,
+        "start_frame": 316,
+        "end_frame": 326,
+        "p_person": 0.1896,
+        "person_sim": 0.2132,
+        "meme_sim": 0.2277,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.9,
+        "end_sec": 11.267,
+        "start_frame": 327,
+        "end_frame": 338,
+        "p_person": 0.0003,
+        "person_sim": 0.1067,
+        "meme_sim": 0.1873,
+        "label": "meme"
+      },
+      {
+        "start_sec": 11.3,
+        "end_sec": 11.933,
+        "start_frame": 339,
+        "end_frame": 358,
+        "p_person": 0.0003,
+        "person_sim": 0.1098,
+        "meme_sim": 0.1925,
+        "label": "meme"
+      },
+      {
+        "start_sec": 11.967,
+        "end_sec": 12.267,
+        "start_frame": 359,
+        "end_frame": 368,
+        "p_person": 0.0001,
+        "person_sim": 0.0982,
+        "meme_sim": 0.1888,
+        "label": "meme"
+      },
+      {
+        "start_sec": 12.3,
+        "end_sec": 12.567,
+        "start_frame": 369,
+        "end_frame": 377,
+        "p_person": 0.0001,
+        "person_sim": 0.0982,
+        "meme_sim": 0.1888,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "3f90952618b3_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2dd462fc_a03e_43e3_ab0a_c1ca3faa47a6.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.9943,
+        "person_sim": 0.2652,
+        "meme_sim": 0.2135,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 5.337,
+        "start_frame": 88,
+        "end_frame": 141,
+        "p_person": 0.0082,
+        "person_sim": 0.2047,
+        "meme_sim": 0.2527,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.375,
+        "end_sec": 8.404,
+        "start_frame": 142,
+        "end_frame": 222,
+        "p_person": 0.0297,
+        "person_sim": 0.1819,
+        "meme_sim": 0.2168,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "c1ca3faa47a6_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2ec0e70e_e679_470f_bccd_e6c062af6bcc.mp4",
+    "transition_sec": 4.405,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.37,
+        "start_frame": 0,
+        "end_frame": 126,
+        "p_person": 0.9776,
+        "person_sim": 0.2515,
+        "meme_sim": 0.2137,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.405,
+        "end_sec": 8.324,
+        "start_frame": 127,
+        "end_frame": 240,
+        "p_person": 0.0346,
+        "person_sim": 0.1879,
+        "meme_sim": 0.2212,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "e6c062af6bcc_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_2fd91785_59ee_44c7_ae21_0fda06d8f518.mp4",
+    "transition_sec": 3.267,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.233,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.9292,
+        "person_sim": 0.2384,
+        "meme_sim": 0.2127,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.267,
+        "end_sec": 3.8,
+        "start_frame": 98,
+        "end_frame": 114,
+        "p_person": 0.029,
+        "person_sim": 0.1173,
+        "meme_sim": 0.1524,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.833,
+        "end_sec": 5.3,
+        "start_frame": 115,
+        "end_frame": 159,
+        "p_person": 0.053,
+        "person_sim": 0.1718,
+        "meme_sim": 0.2006,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.333,
+        "end_sec": 5.833,
+        "start_frame": 160,
+        "end_frame": 175,
+        "p_person": 0.5346,
+        "person_sim": 0.1993,
+        "meme_sim": 0.1979,
+        "label": "person"
+      },
+      {
+        "start_sec": 5.867,
+        "end_sec": 8.1,
+        "start_frame": 176,
+        "end_frame": 243,
+        "p_person": 0.5581,
+        "person_sim": 0.1996,
+        "meme_sim": 0.1973,
+        "label": "person"
+      }
+    ],
+    "qa_image": "0fda06d8f518_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_30f9dd1f_42bb_4c6d_9757_fd92d2791db6.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.6547,
+        "person_sim": 0.216,
+        "meme_sim": 0.2096,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0707,
+        "person_sim": 0.2223,
+        "meme_sim": 0.248,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 5.716,
+        "start_frame": 110,
+        "end_frame": 151,
+        "p_person": 0.0008,
+        "person_sim": 0.1564,
+        "meme_sim": 0.2272,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.754,
+        "end_sec": 7.306,
+        "start_frame": 152,
+        "end_frame": 193,
+        "p_person": 0.0006,
+        "person_sim": 0.1379,
+        "meme_sim": 0.2127,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "fd92d2791db6_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_310e88d8_bc59_47fc_aa52_7c76252e008e.mp4",
+    "transition_sec": 3.3,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.233,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.6328,
+        "person_sim": 0.2115,
+        "meme_sim": 0.206,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.3,
+        "end_sec": 4.067,
+        "start_frame": 99,
+        "end_frame": 122,
+        "p_person": 0.0305,
+        "person_sim": 0.2271,
+        "meme_sim": 0.2617,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.1,
+        "end_sec": 11.433,
+        "start_frame": 123,
+        "end_frame": 343,
+        "p_person": 0.0044,
+        "person_sim": 0.1718,
+        "meme_sim": 0.2261,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "7c76252e008e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_363fc499_730e_4078_ab08_18097e6f406b.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.9698,
+        "person_sim": 0.252,
+        "meme_sim": 0.2173,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.088,
+        "start_frame": 88,
+        "end_frame": 108,
+        "p_person": 0.0829,
+        "person_sim": 0.233,
+        "meme_sim": 0.2571,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 8.669,
+        "start_frame": 110,
+        "end_frame": 229,
+        "p_person": 0.0003,
+        "person_sim": 0.1139,
+        "meme_sim": 0.1965,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "18097e6f406b_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_37f0f7c5_944b_477d_a54a_35b141993822.mp4",
+    "transition_sec": 3.218,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.18,
+        "start_frame": 0,
+        "end_frame": 84,
+        "p_person": 0.8415,
+        "person_sim": 0.2383,
+        "meme_sim": 0.2216,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.218,
+        "end_sec": 3.975,
+        "start_frame": 85,
+        "end_frame": 105,
+        "p_person": 0.2249,
+        "person_sim": 0.2486,
+        "meme_sim": 0.2609,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.013,
+        "end_sec": 7.192,
+        "start_frame": 106,
+        "end_frame": 190,
+        "p_person": 0.0094,
+        "person_sim": 0.1254,
+        "meme_sim": 0.172,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.23,
+        "end_sec": 8.29,
+        "start_frame": 191,
+        "end_frame": 219,
+        "p_person": 0.0068,
+        "person_sim": 0.1143,
+        "meme_sim": 0.1642,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.366,
+        "end_sec": 8.669,
+        "start_frame": 221,
+        "end_frame": 229,
+        "p_person": 0.0132,
+        "person_sim": 0.1086,
+        "meme_sim": 0.1518,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "35b141993822_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_3bdc1c7e_1db0_422f_a714_0b9bf76f76fa.mp4",
+    "transition_sec": 3.7,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.667,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.79,
+        "person_sim": 0.25,
+        "meme_sim": 0.2368,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.7,
+        "end_sec": 4.5,
+        "start_frame": 111,
+        "end_frame": 135,
+        "p_person": 0.0035,
+        "person_sim": 0.1709,
+        "meme_sim": 0.2273,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.567,
+        "end_sec": 8.533,
+        "start_frame": 137,
+        "end_frame": 256,
+        "p_person": 0.0053,
+        "person_sim": 0.1684,
+        "meme_sim": 0.2208,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0b9bf76f76fa_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_3d9d01bd_0c0e_4f92_bdba_13e1913568fd.mp4",
+    "transition_sec": 3.331,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.4867,
+        "person_sim": 0.2142,
+        "meme_sim": 0.2148,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0024,
+        "person_sim": 0.1845,
+        "meme_sim": 0.245,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 5.64,
+        "start_frame": 110,
+        "end_frame": 149,
+        "p_person": 0.002,
+        "person_sim": 0.1521,
+        "meme_sim": 0.2141,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.678,
+        "end_sec": 8.101,
+        "start_frame": 150,
+        "end_frame": 214,
+        "p_person": 0.0038,
+        "person_sim": 0.1606,
+        "meme_sim": 0.2164,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "13e1913568fd_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_40b0955b_2058_4017_8092_0aedf1d87b6c.mp4",
+    "transition_sec": 2.4,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.367,
+        "start_frame": 0,
+        "end_frame": 71,
+        "p_person": 0.566,
+        "person_sim": 0.2213,
+        "meme_sim": 0.2187,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.4,
+        "end_sec": 2.767,
+        "start_frame": 72,
+        "end_frame": 83,
+        "p_person": 0.0182,
+        "person_sim": 0.2108,
+        "meme_sim": 0.2507,
+        "label": "meme"
+      },
+      {
+        "start_sec": 2.8,
+        "end_sec": 4.933,
+        "start_frame": 84,
+        "end_frame": 148,
+        "p_person": 0.2525,
+        "person_sim": 0.212,
+        "meme_sim": 0.2229,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.967,
+        "end_sec": 12.0,
+        "start_frame": 149,
+        "end_frame": 360,
+        "p_person": 0.0008,
+        "person_sim": 0.1318,
+        "meme_sim": 0.2026,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0aedf1d87b6c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_42d9e873_a4c6_4e30_bcab_1b9c05177b41.mp4",
+    "transition_sec": null,
+    "method": "single_shot_meme",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 9.199,
+        "start_frame": 0,
+        "end_frame": 243,
+        "p_person": 0.3719,
+        "person_sim": 0.2434,
+        "meme_sim": 0.2486,
+        "label": "meme"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_43da1350_9868_4797_8caa_baa225f7723d.mp4",
+    "transition_sec": 3.333,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 8,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.3,
+        "start_frame": 0,
+        "end_frame": 99,
+        "p_person": 0.453,
+        "person_sim": 0.1776,
+        "meme_sim": 0.1795,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.333,
+        "end_sec": 4.133,
+        "start_frame": 100,
+        "end_frame": 124,
+        "p_person": 0.0022,
+        "person_sim": 0.1473,
+        "meme_sim": 0.2086,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.167,
+        "end_sec": 5.8,
+        "start_frame": 125,
+        "end_frame": 174,
+        "p_person": 0.0013,
+        "person_sim": 0.1462,
+        "meme_sim": 0.2128,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.833,
+        "end_sec": 6.767,
+        "start_frame": 175,
+        "end_frame": 203,
+        "p_person": 0.0032,
+        "person_sim": 0.1529,
+        "meme_sim": 0.2102,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.8,
+        "end_sec": 7.667,
+        "start_frame": 204,
+        "end_frame": 230,
+        "p_person": 0.0021,
+        "person_sim": 0.1487,
+        "meme_sim": 0.2103,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.7,
+        "end_sec": 8.733,
+        "start_frame": 231,
+        "end_frame": 262,
+        "p_person": 0.0046,
+        "person_sim": 0.1635,
+        "meme_sim": 0.2172,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.767,
+        "end_sec": 10.3,
+        "start_frame": 263,
+        "end_frame": 309,
+        "p_person": 0.004,
+        "person_sim": 0.1633,
+        "meme_sim": 0.2186,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.333,
+        "end_sec": 11.633,
+        "start_frame": 310,
+        "end_frame": 349,
+        "p_person": 0.0041,
+        "person_sim": 0.1571,
+        "meme_sim": 0.212,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "baa225f7723d_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_443f44f3_beef_46b2_8775_d73d0e65c380.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.8208,
+        "person_sim": 0.237,
+        "meme_sim": 0.2218,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0234,
+        "person_sim": 0.2159,
+        "meme_sim": 0.2532,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 10.448,
+        "start_frame": 110,
+        "end_frame": 276,
+        "p_person": 0.0085,
+        "person_sim": 0.1507,
+        "meme_sim": 0.1983,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "d73d0e65c380_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_48058a0e_afc3_46a9_9e76_058e0f632f48.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.764,
+        "person_sim": 0.2227,
+        "meme_sim": 0.211,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.164,
+        "start_frame": 88,
+        "end_frame": 110,
+        "p_person": 0.2701,
+        "person_sim": 0.2572,
+        "meme_sim": 0.2671,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.202,
+        "end_sec": 8.555,
+        "start_frame": 111,
+        "end_frame": 226,
+        "p_person": 0.0428,
+        "person_sim": 0.1882,
+        "meme_sim": 0.2193,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "058e0f632f48_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_49ad99db_1711_40b5_a8f8_bbdfd00cc1b8.mp4",
+    "transition_sec": 4.2,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.133,
+        "start_frame": 0,
+        "end_frame": 124,
+        "p_person": 0.387,
+        "person_sim": 0.2187,
+        "meme_sim": 0.2233,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.2,
+        "end_sec": 8.667,
+        "start_frame": 126,
+        "end_frame": 260,
+        "p_person": 0.0255,
+        "person_sim": 0.1766,
+        "meme_sim": 0.213,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "bbdfd00cc1b8_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_4da7682e_2381_44e0_996d_0622c2fd5297.mp4",
+    "transition_sec": 4.164,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.088,
+        "start_frame": 0,
+        "end_frame": 108,
+        "p_person": 0.8517,
+        "person_sim": 0.2555,
+        "meme_sim": 0.238,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 8.744,
+        "start_frame": 110,
+        "end_frame": 231,
+        "p_person": 0.0001,
+        "person_sim": 0.0941,
+        "meme_sim": 0.1923,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0622c2fd5297_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_4e529554_5a5b_4db0_982e_5a346d3b1cf2.mp4",
+    "transition_sec": null,
+    "method": "single_shot_meme",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 8.0,
+        "start_frame": 0,
+        "end_frame": 192,
+        "p_person": 0.0043,
+        "person_sim": 0.1465,
+        "meme_sim": 0.2008,
+        "label": "meme"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_4e5c3114_0369_448a_bf6e_6c5b8c765227.mp4",
+    "transition_sec": 4.5,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.467,
+        "start_frame": 0,
+        "end_frame": 134,
+        "p_person": 0.9728,
+        "person_sim": 0.2762,
+        "meme_sim": 0.2404,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.5,
+        "end_sec": 5.6,
+        "start_frame": 135,
+        "end_frame": 168,
+        "p_person": 0.3038,
+        "person_sim": 0.1842,
+        "meme_sim": 0.1925,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.633,
+        "end_sec": 6.567,
+        "start_frame": 169,
+        "end_frame": 197,
+        "p_person": 0.2391,
+        "person_sim": 0.161,
+        "meme_sim": 0.1726,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.6,
+        "end_sec": 8.167,
+        "start_frame": 198,
+        "end_frame": 245,
+        "p_person": 0.7238,
+        "person_sim": 0.1628,
+        "meme_sim": 0.1531,
+        "label": "person"
+      }
+    ],
+    "qa_image": "6c5b8c765227_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_50261477_4f5a_4183_8247_c931a105879e.mp4",
+    "transition_sec": 3.3,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.267,
+        "start_frame": 0,
+        "end_frame": 98,
+        "p_person": 0.859,
+        "person_sim": 0.2362,
+        "meme_sim": 0.2181,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.3,
+        "end_sec": 4.067,
+        "start_frame": 99,
+        "end_frame": 122,
+        "p_person": 0.0031,
+        "person_sim": 0.1678,
+        "meme_sim": 0.2255,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.1,
+        "end_sec": 7.9,
+        "start_frame": 123,
+        "end_frame": 237,
+        "p_person": 0.0022,
+        "person_sim": 0.1576,
+        "meme_sim": 0.219,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.933,
+        "end_sec": 9.567,
+        "start_frame": 238,
+        "end_frame": 287,
+        "p_person": 0.7707,
+        "person_sim": 0.2466,
+        "meme_sim": 0.2345,
+        "label": "person"
+      },
+      {
+        "start_sec": 9.6,
+        "end_sec": 11.867,
+        "start_frame": 288,
+        "end_frame": 356,
+        "p_person": 0.8597,
+        "person_sim": 0.2474,
+        "meme_sim": 0.2293,
+        "label": "person"
+      }
+    ],
+    "qa_image": "c931a105879e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_5288b271_c762_486a_b209_3bc2388c33b1.mp4",
+    "transition_sec": 3.066,
+    "method": "person_to_meme",
+    "num_shots": 10,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.028,
+        "start_frame": 0,
+        "end_frame": 80,
+        "p_person": 0.6126,
+        "person_sim": 0.2229,
+        "meme_sim": 0.2183,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.066,
+        "end_sec": 3.861,
+        "start_frame": 81,
+        "end_frame": 102,
+        "p_person": 0.1763,
+        "person_sim": 0.2331,
+        "meme_sim": 0.2485,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.937,
+        "end_sec": 5.451,
+        "start_frame": 104,
+        "end_frame": 144,
+        "p_person": 0.0016,
+        "person_sim": 0.1605,
+        "meme_sim": 0.2246,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.489,
+        "end_sec": 6.473,
+        "start_frame": 145,
+        "end_frame": 171,
+        "p_person": 0.0039,
+        "person_sim": 0.1579,
+        "meme_sim": 0.2133,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.511,
+        "end_sec": 7.003,
+        "start_frame": 172,
+        "end_frame": 185,
+        "p_person": 0.0001,
+        "person_sim": 0.1212,
+        "meme_sim": 0.2175,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.041,
+        "end_sec": 7.419,
+        "start_frame": 186,
+        "end_frame": 196,
+        "p_person": 0.0214,
+        "person_sim": 0.1779,
+        "meme_sim": 0.2161,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.457,
+        "end_sec": 7.912,
+        "start_frame": 197,
+        "end_frame": 209,
+        "p_person": 0.1404,
+        "person_sim": 0.1994,
+        "meme_sim": 0.2175,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.949,
+        "end_sec": 8.404,
+        "start_frame": 210,
+        "end_frame": 222,
+        "p_person": 0.1703,
+        "person_sim": 0.203,
+        "meme_sim": 0.2188,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.442,
+        "end_sec": 8.934,
+        "start_frame": 223,
+        "end_frame": 236,
+        "p_person": 0.0013,
+        "person_sim": 0.1499,
+        "meme_sim": 0.2166,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.971,
+        "end_sec": 9.123,
+        "start_frame": 237,
+        "end_frame": 241,
+        "p_person": 0.0008,
+        "person_sim": 0.1343,
+        "meme_sim": 0.2056,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "3bc2388c33b1_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_53e0eefe_e9eb_4262_8dc0_9e2b600ca0a3.mp4",
+    "transition_sec": 4.0,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 12,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.967,
+        "start_frame": 0,
+        "end_frame": 119,
+        "p_person": 0.0114,
+        "person_sim": 0.1316,
+        "meme_sim": 0.1763,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.0,
+        "end_sec": 5.533,
+        "start_frame": 120,
+        "end_frame": 166,
+        "p_person": 0.3183,
+        "person_sim": 0.1668,
+        "meme_sim": 0.1744,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.567,
+        "end_sec": 13.067,
+        "start_frame": 167,
+        "end_frame": 392,
+        "p_person": 0.0,
+        "person_sim": 0.0677,
+        "meme_sim": 0.1852,
+        "label": "meme"
+      },
+      {
+        "start_sec": 13.1,
+        "end_sec": 13.833,
+        "start_frame": 393,
+        "end_frame": 415,
+        "p_person": 0.002,
+        "person_sim": 0.1349,
+        "meme_sim": 0.1969,
+        "label": "meme"
+      },
+      {
+        "start_sec": 13.867,
+        "end_sec": 17.667,
+        "start_frame": 416,
+        "end_frame": 530,
+        "p_person": 0.0002,
+        "person_sim": 0.1113,
+        "meme_sim": 0.1955,
+        "label": "meme"
+      },
+      {
+        "start_sec": 17.7,
+        "end_sec": 19.633,
+        "start_frame": 531,
+        "end_frame": 589,
+        "p_person": 0.0002,
+        "person_sim": 0.0857,
+        "meme_sim": 0.169,
+        "label": "meme"
+      },
+      {
+        "start_sec": 19.667,
+        "end_sec": 22.8,
+        "start_frame": 590,
+        "end_frame": 684,
+        "p_person": 0.0003,
+        "person_sim": 0.0928,
+        "meme_sim": 0.173,
+        "label": "meme"
+      },
+      {
+        "start_sec": 22.833,
+        "end_sec": 29.233,
+        "start_frame": 685,
+        "end_frame": 877,
+        "p_person": 0.0,
+        "person_sim": 0.0831,
+        "meme_sim": 0.1823,
+        "label": "meme"
+      },
+      {
+        "start_sec": 29.267,
+        "end_sec": 32.967,
+        "start_frame": 878,
+        "end_frame": 989,
+        "p_person": 0.1755,
+        "person_sim": 0.1445,
+        "meme_sim": 0.16,
+        "label": "meme"
+      },
+      {
+        "start_sec": 33.0,
+        "end_sec": 38.467,
+        "start_frame": 990,
+        "end_frame": 1154,
+        "p_person": 0.0,
+        "person_sim": 0.0578,
+        "meme_sim": 0.1753,
+        "label": "meme"
+      },
+      {
+        "start_sec": 38.5,
+        "end_sec": 41.4,
+        "start_frame": 1155,
+        "end_frame": 1242,
+        "p_person": 0.003,
+        "person_sim": 0.1183,
+        "meme_sim": 0.1762,
+        "label": "meme"
+      },
+      {
+        "start_sec": 41.433,
+        "end_sec": 45.5,
+        "start_frame": 1243,
+        "end_frame": 1365,
+        "p_person": 0.0014,
+        "person_sim": 0.1201,
+        "meme_sim": 0.1861,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "9e2b600ca0a3_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_567c07b6_0b37_401c_a324_c1bb3153c337.mp4",
+    "transition_sec": 4.292,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.25,
+        "start_frame": 0,
+        "end_frame": 102,
+        "p_person": 0.2209,
+        "person_sim": 0.2161,
+        "meme_sim": 0.2287,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.292,
+        "end_sec": 5.5,
+        "start_frame": 103,
+        "end_frame": 132,
+        "p_person": 0.0004,
+        "person_sim": 0.0869,
+        "meme_sim": 0.1641,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.542,
+        "end_sec": 7.0,
+        "start_frame": 133,
+        "end_frame": 168,
+        "p_person": 0.0009,
+        "person_sim": 0.0776,
+        "meme_sim": 0.1473,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.042,
+        "end_sec": 8.458,
+        "start_frame": 169,
+        "end_frame": 203,
+        "p_person": 0.0038,
+        "person_sim": 0.1029,
+        "meme_sim": 0.1586,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "c1bb3153c337_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_58522d21_0f1f_4e52_9df3_fa68486e668e.mp4",
+    "transition_sec": 3.833,
+    "method": "person_to_meme",
+    "num_shots": 6,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.583,
+        "start_frame": 0,
+        "end_frame": 62,
+        "p_person": 0.9967,
+        "person_sim": 0.2606,
+        "meme_sim": 0.2035,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.625,
+        "end_sec": 3.792,
+        "start_frame": 63,
+        "end_frame": 91,
+        "p_person": 0.895,
+        "person_sim": 0.1738,
+        "meme_sim": 0.1523,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.833,
+        "end_sec": 5.25,
+        "start_frame": 92,
+        "end_frame": 126,
+        "p_person": 0.2189,
+        "person_sim": 0.1401,
+        "meme_sim": 0.1528,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.292,
+        "end_sec": 6.583,
+        "start_frame": 127,
+        "end_frame": 158,
+        "p_person": 0.4466,
+        "person_sim": 0.1412,
+        "meme_sim": 0.1433,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.625,
+        "end_sec": 7.958,
+        "start_frame": 159,
+        "end_frame": 191,
+        "p_person": 0.9761,
+        "person_sim": 0.2567,
+        "meme_sim": 0.2196,
+        "label": "person"
+      },
+      {
+        "start_sec": 8.0,
+        "end_sec": 10.5,
+        "start_frame": 192,
+        "end_frame": 252,
+        "p_person": 0.3256,
+        "person_sim": 0.2244,
+        "meme_sim": 0.2316,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "fa68486e668e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_5b3c4cf0_9ff0_4222_b07b_0d9a002f5b79.mp4",
+    "transition_sec": null,
+    "method": "single_shot_meme",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 7.733,
+        "start_frame": 0,
+        "end_frame": 232,
+        "p_person": 0.2838,
+        "person_sim": 0.2099,
+        "meme_sim": 0.2192,
+        "label": "meme"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_5bdd08c4_8b8d_42b1_9fa8_a427d6011111.mp4",
+    "transition_sec": 3.017,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.983,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.0606,
+        "person_sim": 0.1802,
+        "meme_sim": 0.2076,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.017,
+        "end_sec": 3.746,
+        "start_frame": 87,
+        "end_frame": 108,
+        "p_person": 0.0204,
+        "person_sim": 0.1974,
+        "meme_sim": 0.2361,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.78,
+        "end_sec": 4.509,
+        "start_frame": 109,
+        "end_frame": 130,
+        "p_person": 0.0196,
+        "person_sim": 0.1814,
+        "meme_sim": 0.2206,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.543,
+        "end_sec": 8.358,
+        "start_frame": 131,
+        "end_frame": 241,
+        "p_person": 0.0002,
+        "person_sim": 0.1497,
+        "meme_sim": 0.2365,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "a427d6011111_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_60d1406c_3131_41b1_b1fe_d72ccf9f0bb5.mp4",
+    "transition_sec": 4.24,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.164,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.9759,
+        "person_sim": 0.2488,
+        "meme_sim": 0.2118,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.24,
+        "end_sec": 5.11,
+        "start_frame": 112,
+        "end_frame": 135,
+        "p_person": 0.0184,
+        "person_sim": 0.2085,
+        "meme_sim": 0.2483,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.186,
+        "end_sec": 6.17,
+        "start_frame": 137,
+        "end_frame": 163,
+        "p_person": 0.0,
+        "person_sim": 0.0488,
+        "meme_sim": 0.1812,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.246,
+        "end_sec": 7.268,
+        "start_frame": 165,
+        "end_frame": 192,
+        "p_person": 0.4768,
+        "person_sim": 0.1806,
+        "meme_sim": 0.1815,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.344,
+        "end_sec": 8.29,
+        "start_frame": 194,
+        "end_frame": 219,
+        "p_person": 0.0,
+        "person_sim": 0.0693,
+        "meme_sim": 0.1819,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "d72ccf9f0bb5_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_63b2184c_4034_4024_96c8_99bacfb04c40.mp4",
+    "transition_sec": 4.509,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.439,
+        "start_frame": 0,
+        "end_frame": 128,
+        "p_person": 0.5084,
+        "person_sim": 0.2265,
+        "meme_sim": 0.2262,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.509,
+        "end_sec": 7.977,
+        "start_frame": 130,
+        "end_frame": 230,
+        "p_person": 0.0062,
+        "person_sim": 0.1648,
+        "meme_sim": 0.2156,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "99bacfb04c40_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_64c020c6_fd3b_4732_9aa1_8ac589fc9b61.mp4",
+    "transition_sec": null,
+    "method": "all_person_no_transition",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.9642,
+        "person_sim": 0.2524,
+        "meme_sim": 0.2195,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.088,
+        "start_frame": 88,
+        "end_frame": 108,
+        "p_person": 0.9516,
+        "person_sim": 0.2667,
+        "meme_sim": 0.2369,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 5.3,
+        "start_frame": 110,
+        "end_frame": 140,
+        "p_person": 0.9696,
+        "person_sim": 0.172,
+        "meme_sim": 0.1374,
+        "label": "person"
+      },
+      {
+        "start_sec": 5.337,
+        "end_sec": 6.852,
+        "start_frame": 141,
+        "end_frame": 181,
+        "p_person": 0.9912,
+        "person_sim": 0.1968,
+        "meme_sim": 0.1496,
+        "label": "person"
+      },
+      {
+        "start_sec": 6.89,
+        "end_sec": 8.328,
+        "start_frame": 182,
+        "end_frame": 220,
+        "p_person": 0.7809,
+        "person_sim": 0.1399,
+        "meme_sim": 0.1272,
+        "label": "person"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_65ebb57f_bc59_404e_8d00_582a15921068.mp4",
+    "transition_sec": null,
+    "method": "all_person_no_transition",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.583,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.9885,
+        "person_sim": 0.2707,
+        "meme_sim": 0.2262,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.667,
+        "end_sec": 8.833,
+        "start_frame": 88,
+        "end_frame": 212,
+        "p_person": 0.5733,
+        "person_sim": 0.1525,
+        "meme_sim": 0.1495,
+        "label": "person"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_67c4d894_6f71_4402_a09a_0dce49924f7d.mp4",
+    "transition_sec": 4.088,
+    "method": "person_to_meme",
+    "num_shots": 8,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.18,
+        "start_frame": 0,
+        "end_frame": 84,
+        "p_person": 0.9759,
+        "person_sim": 0.2449,
+        "meme_sim": 0.2079,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.218,
+        "end_sec": 4.013,
+        "start_frame": 85,
+        "end_frame": 106,
+        "p_person": 0.9312,
+        "person_sim": 0.2953,
+        "meme_sim": 0.2692,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.088,
+        "end_sec": 5.072,
+        "start_frame": 108,
+        "end_frame": 134,
+        "p_person": 0.0047,
+        "person_sim": 0.1836,
+        "meme_sim": 0.2372,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.11,
+        "end_sec": 6.132,
+        "start_frame": 135,
+        "end_frame": 162,
+        "p_person": 0.0011,
+        "person_sim": 0.1761,
+        "meme_sim": 0.2439,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.17,
+        "end_sec": 6.435,
+        "start_frame": 163,
+        "end_frame": 170,
+        "p_person": 0.0003,
+        "person_sim": 0.14,
+        "meme_sim": 0.2197,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.473,
+        "end_sec": 7.268,
+        "start_frame": 171,
+        "end_frame": 192,
+        "p_person": 0.0051,
+        "person_sim": 0.183,
+        "meme_sim": 0.2358,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.306,
+        "end_sec": 7.647,
+        "start_frame": 193,
+        "end_frame": 202,
+        "p_person": 0.0003,
+        "person_sim": 0.1386,
+        "meme_sim": 0.2205,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.684,
+        "end_sec": 8.214,
+        "start_frame": 203,
+        "end_frame": 217,
+        "p_person": 0.0063,
+        "person_sim": 0.1848,
+        "meme_sim": 0.2355,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0dce49924f7d_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_6ae6d0d0_ba30_4a3c_9792_8198b43d5bf5.mp4",
+    "transition_sec": 3.785,
+    "method": "person_to_meme",
+    "num_shots": 9,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.748,
+        "start_frame": 0,
+        "end_frame": 99,
+        "p_person": 0.8125,
+        "person_sim": 0.2233,
+        "meme_sim": 0.2086,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.785,
+        "end_sec": 5.413,
+        "start_frame": 100,
+        "end_frame": 143,
+        "p_person": 0.0849,
+        "person_sim": 0.2106,
+        "meme_sim": 0.2344,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.451,
+        "end_sec": 6.625,
+        "start_frame": 144,
+        "end_frame": 175,
+        "p_person": 0.0301,
+        "person_sim": 0.1607,
+        "meme_sim": 0.1955,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.662,
+        "end_sec": 7.912,
+        "start_frame": 176,
+        "end_frame": 209,
+        "p_person": 0.0072,
+        "person_sim": 0.1346,
+        "meme_sim": 0.1839,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.949,
+        "end_sec": 8.404,
+        "start_frame": 210,
+        "end_frame": 222,
+        "p_person": 0.0001,
+        "person_sim": 0.1114,
+        "meme_sim": 0.2071,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.442,
+        "end_sec": 9.956,
+        "start_frame": 223,
+        "end_frame": 263,
+        "p_person": 0.0059,
+        "person_sim": 0.1003,
+        "meme_sim": 0.1516,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.994,
+        "end_sec": 11.962,
+        "start_frame": 264,
+        "end_frame": 316,
+        "p_person": 0.0301,
+        "person_sim": 0.1523,
+        "meme_sim": 0.187,
+        "label": "meme"
+      },
+      {
+        "start_sec": 12.0,
+        "end_sec": 13.135,
+        "start_frame": 317,
+        "end_frame": 347,
+        "p_person": 0.0183,
+        "person_sim": 0.1156,
+        "meme_sim": 0.1554,
+        "label": "meme"
+      },
+      {
+        "start_sec": 13.173,
+        "end_sec": 14.082,
+        "start_frame": 348,
+        "end_frame": 372,
+        "p_person": 0.0076,
+        "person_sim": 0.1086,
+        "meme_sim": 0.1573,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "8198b43d5bf5_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_6c6f4af4_f346_48aa_8519_9e4faf73d316.mp4",
+    "transition_sec": 3.267,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.233,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.9894,
+        "person_sim": 0.2376,
+        "meme_sim": 0.1922,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.267,
+        "end_sec": 4.033,
+        "start_frame": 98,
+        "end_frame": 121,
+        "p_person": 0.0227,
+        "person_sim": 0.1709,
+        "meme_sim": 0.2085,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.1,
+        "end_sec": 5.067,
+        "start_frame": 123,
+        "end_frame": 152,
+        "p_person": 0.0514,
+        "person_sim": 0.1449,
+        "meme_sim": 0.174,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.1,
+        "end_sec": 6.3,
+        "start_frame": 153,
+        "end_frame": 189,
+        "p_person": 0.3838,
+        "person_sim": 0.1824,
+        "meme_sim": 0.1871,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.333,
+        "end_sec": 7.5,
+        "start_frame": 190,
+        "end_frame": 225,
+        "p_person": 0.3892,
+        "person_sim": 0.1907,
+        "meme_sim": 0.1952,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.533,
+        "end_sec": 8.7,
+        "start_frame": 226,
+        "end_frame": 261,
+        "p_person": 0.7069,
+        "person_sim": 0.2102,
+        "meme_sim": 0.2014,
+        "label": "person"
+      },
+      {
+        "start_sec": 8.733,
+        "end_sec": 9.633,
+        "start_frame": 262,
+        "end_frame": 289,
+        "p_person": 0.4489,
+        "person_sim": 0.1796,
+        "meme_sim": 0.1816,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "9e4faf73d316_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_6f17177e_c7ad_41fc_9e1d_872e50038d9a.mp4",
+    "transition_sec": 0.833,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 6,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 0.795,
+        "start_frame": 0,
+        "end_frame": 21,
+        "p_person": 0.0055,
+        "person_sim": 0.1763,
+        "meme_sim": 0.2283,
+        "label": "meme"
+      },
+      {
+        "start_sec": 0.833,
+        "end_sec": 2.12,
+        "start_frame": 22,
+        "end_frame": 56,
+        "p_person": 0.002,
+        "person_sim": 0.1654,
+        "meme_sim": 0.2274,
+        "label": "meme"
+      },
+      {
+        "start_sec": 2.196,
+        "end_sec": 4.088,
+        "start_frame": 58,
+        "end_frame": 108,
+        "p_person": 0.0254,
+        "person_sim": 0.2099,
+        "meme_sim": 0.2464,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 6.36,
+        "start_frame": 110,
+        "end_frame": 168,
+        "p_person": 0.0003,
+        "person_sim": 0.0755,
+        "meme_sim": 0.1566,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.397,
+        "end_sec": 9.199,
+        "start_frame": 169,
+        "end_frame": 243,
+        "p_person": 0.0177,
+        "person_sim": 0.1317,
+        "meme_sim": 0.1719,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.236,
+        "end_sec": 11.546,
+        "start_frame": 244,
+        "end_frame": 305,
+        "p_person": 0.8922,
+        "person_sim": 0.2125,
+        "meme_sim": 0.1914,
+        "label": "person"
+      }
+    ],
+    "qa_image": "872e50038d9a_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_702e9fbb_d05f_4bb9_ab07_9a9c5c11adb1.mp4",
+    "transition_sec": 3.399,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.364,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.9293,
+        "person_sim": 0.2492,
+        "meme_sim": 0.2234,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.399,
+        "end_sec": 4.197,
+        "start_frame": 98,
+        "end_frame": 121,
+        "p_person": 0.454,
+        "person_sim": 0.246,
+        "meme_sim": 0.2478,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.231,
+        "end_sec": 5.723,
+        "start_frame": 122,
+        "end_frame": 165,
+        "p_person": 0.1461,
+        "person_sim": 0.1941,
+        "meme_sim": 0.2118,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.757,
+        "end_sec": 7.873,
+        "start_frame": 166,
+        "end_frame": 227,
+        "p_person": 0.1616,
+        "person_sim": 0.2336,
+        "meme_sim": 0.25,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.908,
+        "end_sec": 8.463,
+        "start_frame": 228,
+        "end_frame": 244,
+        "p_person": 0.244,
+        "person_sim": 0.1976,
+        "meme_sim": 0.2089,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "9a9c5c11adb1_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_71ed5130_bc49_45c3_8681_46f455a21f30.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.8807,
+        "person_sim": 0.2483,
+        "meme_sim": 0.2283,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.2846,
+        "person_sim": 0.224,
+        "meme_sim": 0.2333,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 6.965,
+        "start_frame": 110,
+        "end_frame": 184,
+        "p_person": 0.0204,
+        "person_sim": 0.1924,
+        "meme_sim": 0.2312,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "46f455a21f30_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_72469ee4_453c_44a5_a4d4_5de57de9793c.mp4",
+    "transition_sec": 3.467,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.4,
+        "start_frame": 0,
+        "end_frame": 102,
+        "p_person": 0.1856,
+        "person_sim": 0.2047,
+        "meme_sim": 0.2195,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.467,
+        "end_sec": 4.2,
+        "start_frame": 104,
+        "end_frame": 126,
+        "p_person": 0.0032,
+        "person_sim": 0.1258,
+        "meme_sim": 0.1831,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.267,
+        "end_sec": 8.533,
+        "start_frame": 128,
+        "end_frame": 256,
+        "p_person": 0.0187,
+        "person_sim": 0.1323,
+        "meme_sim": 0.1719,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "5de57de9793c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7584d0d6_c114_483a_a4ec_87a1b81f9769.mp4",
+    "transition_sec": 2.767,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.7,
+        "start_frame": 0,
+        "end_frame": 81,
+        "p_person": 0.5209,
+        "person_sim": 0.2182,
+        "meme_sim": 0.2173,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.767,
+        "end_sec": 3.533,
+        "start_frame": 83,
+        "end_frame": 106,
+        "p_person": 0.1494,
+        "person_sim": 0.2204,
+        "meme_sim": 0.2378,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.6,
+        "end_sec": 5.767,
+        "start_frame": 108,
+        "end_frame": 173,
+        "p_person": 0.0216,
+        "person_sim": 0.1903,
+        "meme_sim": 0.2284,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.8,
+        "end_sec": 9.5,
+        "start_frame": 174,
+        "end_frame": 285,
+        "p_person": 0.0483,
+        "person_sim": 0.2053,
+        "meme_sim": 0.2352,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "87a1b81f9769_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_75b95d9a_1e39_4037_bff9_fd763bd6a01f.mp4",
+    "transition_sec": 4.202,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.988,
+        "person_sim": 0.2603,
+        "meme_sim": 0.2162,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.6319,
+        "person_sim": 0.2803,
+        "meme_sim": 0.2749,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.202,
+        "end_sec": 5.035,
+        "start_frame": 111,
+        "end_frame": 133,
+        "p_person": 0.2518,
+        "person_sim": 0.1914,
+        "meme_sim": 0.2023,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.072,
+        "end_sec": 6.89,
+        "start_frame": 134,
+        "end_frame": 182,
+        "p_person": 0.1041,
+        "person_sim": 0.2026,
+        "meme_sim": 0.2241,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.927,
+        "end_sec": 8.631,
+        "start_frame": 183,
+        "end_frame": 228,
+        "p_person": 0.2209,
+        "person_sim": 0.1872,
+        "meme_sim": 0.1998,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "fd763bd6a01f_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_76fb9eac_e99c_4004_9cac_ea0081b7e3c8.mp4",
+    "transition_sec": null,
+    "method": "single_shot_person",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 7.875,
+        "start_frame": 0,
+        "end_frame": 189,
+        "p_person": 0.852,
+        "person_sim": 0.2635,
+        "meme_sim": 0.246,
+        "label": "person"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_77122cc1_2f78_4b0f_90cf_74f46092b5dc.mp4",
+    "transition_sec": 3.634,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.596,
+        "start_frame": 0,
+        "end_frame": 95,
+        "p_person": 0.0102,
+        "person_sim": 0.1686,
+        "meme_sim": 0.2143,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.634,
+        "end_sec": 4.429,
+        "start_frame": 96,
+        "end_frame": 117,
+        "p_person": 0.0194,
+        "person_sim": 0.1969,
+        "meme_sim": 0.2361,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.467,
+        "end_sec": 8.025,
+        "start_frame": 118,
+        "end_frame": 212,
+        "p_person": 0.0145,
+        "person_sim": 0.183,
+        "meme_sim": 0.2252,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "74f46092b5dc_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_77465bcc_cf7a_4279_9a67_2bf6f1dda696.mp4",
+    "transition_sec": 3.6,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.567,
+        "start_frame": 0,
+        "end_frame": 107,
+        "p_person": 0.7837,
+        "person_sim": 0.2406,
+        "meme_sim": 0.2277,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.6,
+        "end_sec": 8.567,
+        "start_frame": 108,
+        "end_frame": 257,
+        "p_person": 0.0008,
+        "person_sim": 0.1465,
+        "meme_sim": 0.2183,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "2bf6f1dda696_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_77800745_6404_4d89_8376_e055d262ed2e.mp4",
+    "transition_sec": 3.733,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.667,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.9395,
+        "person_sim": 0.2461,
+        "meme_sim": 0.2187,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.733,
+        "end_sec": 4.4,
+        "start_frame": 112,
+        "end_frame": 132,
+        "p_person": 0.0005,
+        "person_sim": 0.1286,
+        "meme_sim": 0.2056,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.433,
+        "end_sec": 8.167,
+        "start_frame": 133,
+        "end_frame": 245,
+        "p_person": 0.0006,
+        "person_sim": 0.1274,
+        "meme_sim": 0.2014,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "e055d262ed2e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_78c3c96b_bded_4c03_bea4_d0e89d8933c2.mp4",
+    "transition_sec": 3.033,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.967,
+        "start_frame": 0,
+        "end_frame": 89,
+        "p_person": 0.9864,
+        "person_sim": 0.2761,
+        "meme_sim": 0.2333,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.033,
+        "end_sec": 9.9,
+        "start_frame": 91,
+        "end_frame": 297,
+        "p_person": 0.0045,
+        "person_sim": 0.1626,
+        "meme_sim": 0.2167,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.933,
+        "end_sec": 10.467,
+        "start_frame": 298,
+        "end_frame": 314,
+        "p_person": 0.0003,
+        "person_sim": 0.1372,
+        "meme_sim": 0.2171,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "d0e89d8933c2_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7a620e15_a1a2_40d9_861c_4d2ef937776b.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.5611,
+        "person_sim": 0.2195,
+        "meme_sim": 0.217,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0047,
+        "person_sim": 0.2131,
+        "meme_sim": 0.2666,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 8.631,
+        "start_frame": 110,
+        "end_frame": 228,
+        "p_person": 0.0,
+        "person_sim": 0.1019,
+        "meme_sim": 0.201,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "4d2ef937776b_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7ee05e69_1908_4471_8eda_04cbcbfbfe01.mp4",
+    "transition_sec": 2.767,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.733,
+        "start_frame": 0,
+        "end_frame": 82,
+        "p_person": 0.7428,
+        "person_sim": 0.2375,
+        "meme_sim": 0.2269,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.767,
+        "end_sec": 3.5,
+        "start_frame": 83,
+        "end_frame": 105,
+        "p_person": 0.0681,
+        "person_sim": 0.2425,
+        "meme_sim": 0.2687,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.567,
+        "end_sec": 9.367,
+        "start_frame": 107,
+        "end_frame": 281,
+        "p_person": 0.1344,
+        "person_sim": 0.2436,
+        "meme_sim": 0.2622,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.4,
+        "end_sec": 9.9,
+        "start_frame": 282,
+        "end_frame": 297,
+        "p_person": 0.5265,
+        "person_sim": 0.2007,
+        "meme_sim": 0.1996,
+        "label": "person"
+      },
+      {
+        "start_sec": 9.933,
+        "end_sec": 10.667,
+        "start_frame": 298,
+        "end_frame": 320,
+        "p_person": 0.453,
+        "person_sim": 0.1915,
+        "meme_sim": 0.1934,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.7,
+        "end_sec": 11.4,
+        "start_frame": 321,
+        "end_frame": 342,
+        "p_person": 0.6156,
+        "person_sim": 0.1878,
+        "meme_sim": 0.1831,
+        "label": "person"
+      },
+      {
+        "start_sec": 11.433,
+        "end_sec": 12.367,
+        "start_frame": 343,
+        "end_frame": 371,
+        "p_person": 0.6306,
+        "person_sim": 0.1894,
+        "meme_sim": 0.1841,
+        "label": "person"
+      }
+    ],
+    "qa_image": "04cbcbfbfe01_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_7f96c003_6a92_4dcc_9705_28ebed932956.mp4",
+    "transition_sec": 4.267,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.4,
+        "start_frame": 0,
+        "end_frame": 102,
+        "p_person": 0.9454,
+        "person_sim": 0.2433,
+        "meme_sim": 0.2147,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.433,
+        "end_sec": 4.233,
+        "start_frame": 103,
+        "end_frame": 127,
+        "p_person": 0.6945,
+        "person_sim": 0.2651,
+        "meme_sim": 0.2569,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.267,
+        "end_sec": 5.967,
+        "start_frame": 128,
+        "end_frame": 179,
+        "p_person": 0.4491,
+        "person_sim": 0.1945,
+        "meme_sim": 0.1966,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.0,
+        "end_sec": 7.867,
+        "start_frame": 180,
+        "end_frame": 236,
+        "p_person": 0.3204,
+        "person_sim": 0.1938,
+        "meme_sim": 0.2013,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.9,
+        "end_sec": 9.733,
+        "start_frame": 237,
+        "end_frame": 292,
+        "p_person": 0.9886,
+        "person_sim": 0.2296,
+        "meme_sim": 0.185,
+        "label": "person"
+      },
+      {
+        "start_sec": 9.767,
+        "end_sec": 11.567,
+        "start_frame": 293,
+        "end_frame": 347,
+        "p_person": 0.1581,
+        "person_sim": 0.1488,
+        "meme_sim": 0.1656,
+        "label": "meme"
+      },
+      {
+        "start_sec": 11.6,
+        "end_sec": 13.133,
+        "start_frame": 348,
+        "end_frame": 394,
+        "p_person": 0.1286,
+        "person_sim": 0.1529,
+        "meme_sim": 0.172,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "28ebed932956_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_80df6347_3c77_44ed_be4a_b2e8880ae8b0 (1).mp4",
+    "transition_sec": 7.318,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.983,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.9792,
+        "person_sim": 0.2542,
+        "meme_sim": 0.2157,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.017,
+        "end_sec": 6.486,
+        "start_frame": 87,
+        "end_frame": 187,
+        "p_person": 0.8313,
+        "person_sim": 0.244,
+        "meme_sim": 0.2281,
+        "label": "person"
+      },
+      {
+        "start_sec": 6.52,
+        "end_sec": 7.283,
+        "start_frame": 188,
+        "end_frame": 210,
+        "p_person": 0.9463,
+        "person_sim": 0.2514,
+        "meme_sim": 0.2227,
+        "label": "person"
+      },
+      {
+        "start_sec": 7.318,
+        "end_sec": 8.463,
+        "start_frame": 211,
+        "end_frame": 244,
+        "p_person": 0.3256,
+        "person_sim": 0.2045,
+        "meme_sim": 0.2118,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "880ae8b0 (1)_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_88d3bd30_a7dc_4d44_9bcc_a1b6032071a2.mp4",
+    "transition_sec": 3.633,
+    "method": "person_to_meme",
+    "num_shots": 9,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.7,
+        "start_frame": 0,
+        "end_frame": 81,
+        "p_person": 0.9943,
+        "person_sim": 0.2408,
+        "meme_sim": 0.1892,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.767,
+        "end_sec": 3.6,
+        "start_frame": 83,
+        "end_frame": 108,
+        "p_person": 0.6752,
+        "person_sim": 0.2722,
+        "meme_sim": 0.2649,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.633,
+        "end_sec": 5.167,
+        "start_frame": 109,
+        "end_frame": 155,
+        "p_person": 0.0012,
+        "person_sim": 0.186,
+        "meme_sim": 0.2529,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.2,
+        "end_sec": 6.5,
+        "start_frame": 156,
+        "end_frame": 195,
+        "p_person": 0.0006,
+        "person_sim": 0.1845,
+        "meme_sim": 0.2587,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.533,
+        "end_sec": 7.1,
+        "start_frame": 196,
+        "end_frame": 213,
+        "p_person": 0.005,
+        "person_sim": 0.1854,
+        "meme_sim": 0.2383,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.133,
+        "end_sec": 7.633,
+        "start_frame": 214,
+        "end_frame": 229,
+        "p_person": 0.0121,
+        "person_sim": 0.1827,
+        "meme_sim": 0.2268,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.667,
+        "end_sec": 8.067,
+        "start_frame": 230,
+        "end_frame": 242,
+        "p_person": 0.0052,
+        "person_sim": 0.1877,
+        "meme_sim": 0.2401,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.1,
+        "end_sec": 10.5,
+        "start_frame": 243,
+        "end_frame": 315,
+        "p_person": 0.0024,
+        "person_sim": 0.1996,
+        "meme_sim": 0.2599,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.533,
+        "end_sec": 10.6,
+        "start_frame": 316,
+        "end_frame": 318,
+        "p_person": 0.0623,
+        "person_sim": 0.2079,
+        "meme_sim": 0.235,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "a1b6032071a2_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_8d128946_4177_46df_a9ea_3abeca2e0204.mp4",
+    "transition_sec": 3.483,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.445,
+        "start_frame": 0,
+        "end_frame": 91,
+        "p_person": 0.4814,
+        "person_sim": 0.2129,
+        "meme_sim": 0.2136,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.483,
+        "end_sec": 8.404,
+        "start_frame": 92,
+        "end_frame": 222,
+        "p_person": 0.0014,
+        "person_sim": 0.156,
+        "meme_sim": 0.2215,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "3abeca2e0204_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_8d4a09ad_c73f_4e07_8c43_16d55af9c25d.mp4",
+    "transition_sec": 3.748,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.369,
+        "start_frame": 0,
+        "end_frame": 89,
+        "p_person": 0.5095,
+        "person_sim": 0.1981,
+        "meme_sim": 0.1977,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.407,
+        "end_sec": 3.71,
+        "start_frame": 90,
+        "end_frame": 98,
+        "p_person": 0.7586,
+        "person_sim": 0.2293,
+        "meme_sim": 0.2179,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.748,
+        "end_sec": 16.845,
+        "start_frame": 99,
+        "end_frame": 445,
+        "p_person": 0.0031,
+        "person_sim": 0.1535,
+        "meme_sim": 0.2113,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "16d55af9c25d_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_8e7b363a_5f39_47bb_9c4e_25f3d4bd75de.mp4",
+    "transition_sec": 3.748,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 9,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.71,
+        "start_frame": 0,
+        "end_frame": 98,
+        "p_person": 0.38,
+        "person_sim": 0.216,
+        "meme_sim": 0.2208,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.748,
+        "end_sec": 4.24,
+        "start_frame": 99,
+        "end_frame": 112,
+        "p_person": 0.0701,
+        "person_sim": 0.1891,
+        "meme_sim": 0.2149,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.278,
+        "end_sec": 4.997,
+        "start_frame": 113,
+        "end_frame": 132,
+        "p_person": 0.1566,
+        "person_sim": 0.2044,
+        "meme_sim": 0.2213,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.035,
+        "end_sec": 5.64,
+        "start_frame": 133,
+        "end_frame": 149,
+        "p_person": 0.2494,
+        "person_sim": 0.2129,
+        "meme_sim": 0.2239,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.678,
+        "end_sec": 6.322,
+        "start_frame": 150,
+        "end_frame": 167,
+        "p_person": 0.1255,
+        "person_sim": 0.1941,
+        "meme_sim": 0.2135,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.36,
+        "end_sec": 6.927,
+        "start_frame": 168,
+        "end_frame": 183,
+        "p_person": 0.1378,
+        "person_sim": 0.2048,
+        "meme_sim": 0.2232,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.965,
+        "end_sec": 7.571,
+        "start_frame": 184,
+        "end_frame": 200,
+        "p_person": 0.0413,
+        "person_sim": 0.1872,
+        "meme_sim": 0.2187,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.609,
+        "end_sec": 8.101,
+        "start_frame": 201,
+        "end_frame": 214,
+        "p_person": 0.0946,
+        "person_sim": 0.183,
+        "meme_sim": 0.2056,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.139,
+        "end_sec": 8.593,
+        "start_frame": 215,
+        "end_frame": 227,
+        "p_person": 0.052,
+        "person_sim": 0.1895,
+        "meme_sim": 0.2186,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "25f3d4bd75de_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_900735b1_7b81_4569_964d_98613b63e29c.mp4",
+    "transition_sec": 3.333,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 6,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.3,
+        "start_frame": 0,
+        "end_frame": 99,
+        "p_person": 0.2991,
+        "person_sim": 0.2073,
+        "meme_sim": 0.2159,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.333,
+        "end_sec": 4.0,
+        "start_frame": 100,
+        "end_frame": 120,
+        "p_person": 0.0642,
+        "person_sim": 0.2009,
+        "meme_sim": 0.2277,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.033,
+        "end_sec": 5.8,
+        "start_frame": 121,
+        "end_frame": 174,
+        "p_person": 0.1099,
+        "person_sim": 0.2134,
+        "meme_sim": 0.2343,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.833,
+        "end_sec": 6.967,
+        "start_frame": 175,
+        "end_frame": 209,
+        "p_person": 0.0055,
+        "person_sim": 0.1835,
+        "meme_sim": 0.2354,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.0,
+        "end_sec": 7.867,
+        "start_frame": 210,
+        "end_frame": 236,
+        "p_person": 0.0369,
+        "person_sim": 0.1873,
+        "meme_sim": 0.22,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.9,
+        "end_sec": 8.0,
+        "start_frame": 237,
+        "end_frame": 240,
+        "p_person": 0.0369,
+        "person_sim": 0.1873,
+        "meme_sim": 0.22,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "98613b63e29c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_9038b713_7191_4808_8f18_26513464953c.mp4",
+    "transition_sec": 3.017,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.948,
+        "start_frame": 0,
+        "end_frame": 85,
+        "p_person": 0.7556,
+        "person_sim": 0.23,
+        "meme_sim": 0.2187,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.017,
+        "end_sec": 8.15,
+        "start_frame": 87,
+        "end_frame": 235,
+        "p_person": 0.0001,
+        "person_sim": 0.1163,
+        "meme_sim": 0.2111,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "26513464953c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_90f307cb_ed22_496c_baa2_4d32abcf2b06.mp4",
+    "transition_sec": 4.429,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.391,
+        "start_frame": 0,
+        "end_frame": 116,
+        "p_person": 0.62,
+        "person_sim": 0.202,
+        "meme_sim": 0.1971,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.429,
+        "end_sec": 9.615,
+        "start_frame": 117,
+        "end_frame": 254,
+        "p_person": 0.138,
+        "person_sim": 0.1779,
+        "meme_sim": 0.1962,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "4d32abcf2b06_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_915d7797_5c92_4fcb_a723_7e4eedf856c5.mp4",
+    "transition_sec": 3.733,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.667,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.9747,
+        "person_sim": 0.2471,
+        "meme_sim": 0.2106,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.733,
+        "end_sec": 8.267,
+        "start_frame": 112,
+        "end_frame": 248,
+        "p_person": 0.008,
+        "person_sim": 0.1326,
+        "meme_sim": 0.1808,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "7e4eedf856c5_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_95f10e98_9173_43a4_b2d8_84af78a61b17.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.8608,
+        "person_sim": 0.2468,
+        "meme_sim": 0.2286,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0814,
+        "person_sim": 0.2522,
+        "meme_sim": 0.2764,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.202,
+        "end_sec": 8.29,
+        "start_frame": 111,
+        "end_frame": 219,
+        "p_person": 0.0013,
+        "person_sim": 0.0861,
+        "meme_sim": 0.1526,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "84af78a61b17_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_95fdcee9_ed26_480b_84c6_3d316eaadc7a.mp4",
+    "transition_sec": 3.933,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.9,
+        "start_frame": 0,
+        "end_frame": 117,
+        "p_person": 0.634,
+        "person_sim": 0.2368,
+        "meme_sim": 0.2313,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.933,
+        "end_sec": 4.633,
+        "start_frame": 118,
+        "end_frame": 139,
+        "p_person": 0.3027,
+        "person_sim": 0.1873,
+        "meme_sim": 0.1957,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.667,
+        "end_sec": 5.667,
+        "start_frame": 140,
+        "end_frame": 170,
+        "p_person": 0.3174,
+        "person_sim": 0.1958,
+        "meme_sim": 0.2035,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.7,
+        "end_sec": 7.133,
+        "start_frame": 171,
+        "end_frame": 214,
+        "p_person": 0.08,
+        "person_sim": 0.1792,
+        "meme_sim": 0.2036,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.167,
+        "end_sec": 8.8,
+        "start_frame": 215,
+        "end_frame": 264,
+        "p_person": 0.006,
+        "person_sim": 0.1424,
+        "meme_sim": 0.1936,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "3d316eaadc7a_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_9674488c_ba3f_4bcd_ade6_8e30eac56900.mp4",
+    "transition_sec": 3.3,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.267,
+        "start_frame": 0,
+        "end_frame": 98,
+        "p_person": 0.8497,
+        "person_sim": 0.2345,
+        "meme_sim": 0.2172,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.3,
+        "end_sec": 4.033,
+        "start_frame": 99,
+        "end_frame": 121,
+        "p_person": 0.0209,
+        "person_sim": 0.1932,
+        "meme_sim": 0.2317,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.133,
+        "end_sec": 8.467,
+        "start_frame": 124,
+        "end_frame": 254,
+        "p_person": 0.0101,
+        "person_sim": 0.1845,
+        "meme_sim": 0.2303,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "8e30eac56900_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_995408c9_55e2_4495_985c_e88f36627149.mp4",
+    "transition_sec": 4.333,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.3,
+        "start_frame": 0,
+        "end_frame": 129,
+        "p_person": 0.5847,
+        "person_sim": 0.2314,
+        "meme_sim": 0.228,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.333,
+        "end_sec": 8.267,
+        "start_frame": 130,
+        "end_frame": 248,
+        "p_person": 0.0019,
+        "person_sim": 0.1391,
+        "meme_sim": 0.2016,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "e88f36627149_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a2dca28e_e31e_4de6_b929_43c22239998e.mp4",
+    "transition_sec": 3.567,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.533,
+        "start_frame": 0,
+        "end_frame": 106,
+        "p_person": 0.8446,
+        "person_sim": 0.2407,
+        "meme_sim": 0.2237,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.567,
+        "end_sec": 5.533,
+        "start_frame": 107,
+        "end_frame": 166,
+        "p_person": 0.0678,
+        "person_sim": 0.1817,
+        "meme_sim": 0.2079,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.567,
+        "end_sec": 8.0,
+        "start_frame": 167,
+        "end_frame": 240,
+        "p_person": 0.0932,
+        "person_sim": 0.1839,
+        "meme_sim": 0.2067,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "43c22239998e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a4155f90_0e46_4aa9_bf71_9a3f7448903d.mp4",
+    "transition_sec": 4.164,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.9367,
+        "person_sim": 0.253,
+        "meme_sim": 0.226,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.6178,
+        "person_sim": 0.285,
+        "meme_sim": 0.2802,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 6.019,
+        "start_frame": 110,
+        "end_frame": 159,
+        "p_person": 0.009,
+        "person_sim": 0.194,
+        "meme_sim": 0.241,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.057,
+        "end_sec": 7.003,
+        "start_frame": 160,
+        "end_frame": 185,
+        "p_person": 0.0039,
+        "person_sim": 0.1678,
+        "meme_sim": 0.2233,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.041,
+        "end_sec": 7.798,
+        "start_frame": 186,
+        "end_frame": 206,
+        "p_person": 0.0004,
+        "person_sim": 0.1499,
+        "meme_sim": 0.2271,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.836,
+        "end_sec": 9.085,
+        "start_frame": 207,
+        "end_frame": 240,
+        "p_person": 0.0048,
+        "person_sim": 0.184,
+        "meme_sim": 0.2374,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.123,
+        "end_sec": 10.486,
+        "start_frame": 241,
+        "end_frame": 277,
+        "p_person": 0.0058,
+        "person_sim": 0.1775,
+        "meme_sim": 0.229,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "9a3f7448903d_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a4ca1596_cc00_4e8e_ad43_0632a416467d.mp4",
+    "transition_sec": 3.017,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.948,
+        "start_frame": 0,
+        "end_frame": 85,
+        "p_person": 0.9943,
+        "person_sim": 0.2606,
+        "meme_sim": 0.2089,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.017,
+        "end_sec": 3.815,
+        "start_frame": 87,
+        "end_frame": 110,
+        "p_person": 0.335,
+        "person_sim": 0.273,
+        "meme_sim": 0.2798,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.85,
+        "end_sec": 5.306,
+        "start_frame": 111,
+        "end_frame": 153,
+        "p_person": 0.0002,
+        "person_sim": 0.1329,
+        "meme_sim": 0.2193,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.341,
+        "end_sec": 6.208,
+        "start_frame": 154,
+        "end_frame": 179,
+        "p_person": 0.0006,
+        "person_sim": 0.125,
+        "meme_sim": 0.2,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.243,
+        "end_sec": 7.11,
+        "start_frame": 180,
+        "end_frame": 205,
+        "p_person": 0.0085,
+        "person_sim": 0.1674,
+        "meme_sim": 0.215,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.145,
+        "end_sec": 8.046,
+        "start_frame": 206,
+        "end_frame": 232,
+        "p_person": 0.0162,
+        "person_sim": 0.1653,
+        "meme_sim": 0.2064,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.081,
+        "end_sec": 8.289,
+        "start_frame": 233,
+        "end_frame": 239,
+        "p_person": 0.1196,
+        "person_sim": 0.1924,
+        "meme_sim": 0.2123,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0632a416467d_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_a4fd6814_f775_4949_88bb_1b23353b369d.mp4",
+    "transition_sec": 3.156,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.087,
+        "start_frame": 0,
+        "end_frame": 89,
+        "p_person": 0.941,
+        "person_sim": 0.229,
+        "meme_sim": 0.2013,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.156,
+        "end_sec": 4.856,
+        "start_frame": 91,
+        "end_frame": 140,
+        "p_person": 0.0014,
+        "person_sim": 0.1375,
+        "meme_sim": 0.2033,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.89,
+        "end_sec": 6.694,
+        "start_frame": 141,
+        "end_frame": 193,
+        "p_person": 0.0032,
+        "person_sim": 0.1449,
+        "meme_sim": 0.2023,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.728,
+        "end_sec": 8.15,
+        "start_frame": 194,
+        "end_frame": 235,
+        "p_person": 0.0053,
+        "person_sim": 0.113,
+        "meme_sim": 0.1654,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.185,
+        "end_sec": 10.023,
+        "start_frame": 236,
+        "end_frame": 289,
+        "p_person": 0.0019,
+        "person_sim": 0.1007,
+        "meme_sim": 0.1636,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "1b23353b369d_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ac83c044_9a91_4407_932c_909baee3b0ac.mp4",
+    "transition_sec": 3.567,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.533,
+        "start_frame": 0,
+        "end_frame": 106,
+        "p_person": 0.0923,
+        "person_sim": 0.2122,
+        "meme_sim": 0.2351,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.567,
+        "end_sec": 4.3,
+        "start_frame": 107,
+        "end_frame": 129,
+        "p_person": 0.0003,
+        "person_sim": 0.1846,
+        "meme_sim": 0.2671,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.367,
+        "end_sec": 8.2,
+        "start_frame": 131,
+        "end_frame": 246,
+        "p_person": 0.0002,
+        "person_sim": 0.125,
+        "meme_sim": 0.2106,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "909baee3b0ac_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_acbc1b97_0e37_4a98_b32e_677dcd2a702f.mp4",
+    "transition_sec": 4.8,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.748,
+        "start_frame": 0,
+        "end_frame": 91,
+        "p_person": 0.569,
+        "person_sim": 0.2346,
+        "meme_sim": 0.2318,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.8,
+        "end_sec": 5.426,
+        "start_frame": 92,
+        "end_frame": 104,
+        "p_person": 0.0085,
+        "person_sim": 0.2031,
+        "meme_sim": 0.2508,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.478,
+        "end_sec": 8.191,
+        "start_frame": 105,
+        "end_frame": 157,
+        "p_person": 0.002,
+        "person_sim": 0.1233,
+        "meme_sim": 0.1853,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "677dcd2a702f_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ade58812_f1b5_43d3_ab94_b03da6e7050b.mp4",
+    "transition_sec": 3.4,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.367,
+        "start_frame": 0,
+        "end_frame": 101,
+        "p_person": 0.9317,
+        "person_sim": 0.2359,
+        "meme_sim": 0.2097,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.4,
+        "end_sec": 6.367,
+        "start_frame": 102,
+        "end_frame": 191,
+        "p_person": 0.0092,
+        "person_sim": 0.1567,
+        "meme_sim": 0.2035,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.4,
+        "end_sec": 6.8,
+        "start_frame": 192,
+        "end_frame": 204,
+        "p_person": 0.0043,
+        "person_sim": 0.1408,
+        "meme_sim": 0.1952,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "b03da6e7050b_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ae3aabd1_8646_4adf_958f_74c5c4e9472c.mp4",
+    "transition_sec": null,
+    "method": "single_shot_person",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 6.042,
+        "start_frame": 0,
+        "end_frame": 145,
+        "p_person": 0.9942,
+        "person_sim": 0.2479,
+        "meme_sim": 0.1964,
+        "label": "person"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_af64c005_5187_4acb_a03b_48f587e6637e.mp4",
+    "transition_sec": 3.733,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.667,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.7149,
+        "person_sim": 0.2243,
+        "meme_sim": 0.2151,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.733,
+        "end_sec": 8.467,
+        "start_frame": 112,
+        "end_frame": 254,
+        "p_person": 0.2265,
+        "person_sim": 0.2146,
+        "meme_sim": 0.2268,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "48f587e6637e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b0cf9e67_7791_4675_90d2_46e67301f696.mp4",
+    "transition_sec": 4.05,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.975,
+        "start_frame": 0,
+        "end_frame": 105,
+        "p_person": 0.9928,
+        "person_sim": 0.2534,
+        "meme_sim": 0.2042,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.05,
+        "end_sec": 6.549,
+        "start_frame": 107,
+        "end_frame": 173,
+        "p_person": 0.0463,
+        "person_sim": 0.1509,
+        "meme_sim": 0.1811,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.587,
+        "end_sec": 8.669,
+        "start_frame": 174,
+        "end_frame": 229,
+        "p_person": 0.1289,
+        "person_sim": 0.1626,
+        "meme_sim": 0.1817,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.707,
+        "end_sec": 10.826,
+        "start_frame": 230,
+        "end_frame": 286,
+        "p_person": 0.0254,
+        "person_sim": 0.1456,
+        "meme_sim": 0.182,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.864,
+        "end_sec": 12.113,
+        "start_frame": 287,
+        "end_frame": 320,
+        "p_person": 0.0232,
+        "person_sim": 0.1365,
+        "meme_sim": 0.1739,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "46e67301f696_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b16fe14d_a6a4_4fec_8447_74986f83b4fe.mp4",
+    "transition_sec": 3.3,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.233,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.9316,
+        "person_sim": 0.2448,
+        "meme_sim": 0.2187,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.3,
+        "end_sec": 4.067,
+        "start_frame": 99,
+        "end_frame": 122,
+        "p_person": 0.0072,
+        "person_sim": 0.1987,
+        "meme_sim": 0.2479,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.1,
+        "end_sec": 8.5,
+        "start_frame": 123,
+        "end_frame": 255,
+        "p_person": 0.0002,
+        "person_sim": 0.1306,
+        "meme_sim": 0.2148,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "74986f83b4fe_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b2dbc598_ec6b_4a6c_bc9d_f1919f772a8b.mp4",
+    "transition_sec": 3.233,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.2,
+        "start_frame": 0,
+        "end_frame": 96,
+        "p_person": 0.9909,
+        "person_sim": 0.2596,
+        "meme_sim": 0.2127,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.233,
+        "end_sec": 5.567,
+        "start_frame": 97,
+        "end_frame": 167,
+        "p_person": 0.1929,
+        "person_sim": 0.2303,
+        "meme_sim": 0.2446,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.6,
+        "end_sec": 8.667,
+        "start_frame": 168,
+        "end_frame": 260,
+        "p_person": 0.2732,
+        "person_sim": 0.1877,
+        "meme_sim": 0.1975,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "f1919f772a8b_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b45fff16_06ff_477d_9607_3733c97199d4.mp4",
+    "transition_sec": 3.331,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.293,
+        "start_frame": 0,
+        "end_frame": 87,
+        "p_person": 0.0415,
+        "person_sim": 0.1819,
+        "meme_sim": 0.2133,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0005,
+        "person_sim": 0.191,
+        "meme_sim": 0.2663,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 7.76,
+        "start_frame": 110,
+        "end_frame": 205,
+        "p_person": 0.0001,
+        "person_sim": 0.1306,
+        "meme_sim": 0.2243,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.798,
+        "end_sec": 9.615,
+        "start_frame": 206,
+        "end_frame": 254,
+        "p_person": 0.0001,
+        "person_sim": 0.1294,
+        "meme_sim": 0.221,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "3733c97199d4_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b58c91f0_67d2_4f51_afaf_948701ef3ae3.mp4",
+    "transition_sec": 3.331,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.2796,
+        "person_sim": 0.1872,
+        "meme_sim": 0.1967,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 7.987,
+        "start_frame": 88,
+        "end_frame": 211,
+        "p_person": 0.0135,
+        "person_sim": 0.1679,
+        "meme_sim": 0.2109,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "948701ef3ae3_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_b719b54a_c7fc_41a3_a3e3_04aa504719bf.mp4",
+    "transition_sec": 4.375,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.333,
+        "start_frame": 0,
+        "end_frame": 104,
+        "p_person": 0.0013,
+        "person_sim": 0.1513,
+        "meme_sim": 0.218,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.375,
+        "end_sec": 8.167,
+        "start_frame": 105,
+        "end_frame": 196,
+        "p_person": 0.0,
+        "person_sim": 0.0651,
+        "meme_sim": 0.2143,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "04aa504719bf_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_be56033b_7a42_4cd9_8076_81392d60ebff.mp4",
+    "transition_sec": 3.5,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.467,
+        "start_frame": 0,
+        "end_frame": 104,
+        "p_person": 0.6576,
+        "person_sim": 0.2142,
+        "meme_sim": 0.2076,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.5,
+        "end_sec": 8.033,
+        "start_frame": 105,
+        "end_frame": 241,
+        "p_person": 0.0673,
+        "person_sim": 0.1689,
+        "meme_sim": 0.1952,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "81392d60ebff_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c0a3b2a9_4444_4e0c_8053_ac241b20ed08.mp4",
+    "transition_sec": 2.833,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.767,
+        "start_frame": 0,
+        "end_frame": 83,
+        "p_person": 0.9432,
+        "person_sim": 0.2166,
+        "meme_sim": 0.1885,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.833,
+        "end_sec": 3.6,
+        "start_frame": 85,
+        "end_frame": 108,
+        "p_person": 0.0192,
+        "person_sim": 0.1896,
+        "meme_sim": 0.229,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.667,
+        "end_sec": 11.667,
+        "start_frame": 110,
+        "end_frame": 350,
+        "p_person": 0.0,
+        "person_sim": 0.0977,
+        "meme_sim": 0.2006,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "ac241b20ed08_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c36d7b0e_c189_4bfa_81bf_1a44cd26f853.mp4",
+    "transition_sec": 2.767,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.7,
+        "start_frame": 0,
+        "end_frame": 81,
+        "p_person": 0.726,
+        "person_sim": 0.2044,
+        "meme_sim": 0.1946,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.767,
+        "end_sec": 3.533,
+        "start_frame": 83,
+        "end_frame": 106,
+        "p_person": 0.187,
+        "person_sim": 0.2322,
+        "meme_sim": 0.2469,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.567,
+        "end_sec": 8.067,
+        "start_frame": 107,
+        "end_frame": 242,
+        "p_person": 0.0748,
+        "person_sim": 0.1862,
+        "meme_sim": 0.2114,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "1a44cd26f853_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c67e03e1_84ca_4697_a2d2_bb3b6ffa704b.mp4",
+    "transition_sec": null,
+    "method": "single_shot_meme",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 7.933,
+        "start_frame": 0,
+        "end_frame": 238,
+        "p_person": 0.1487,
+        "person_sim": 0.1986,
+        "meme_sim": 0.216,
+        "label": "meme"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c7092616_603c_4b78_beed_cdbbccec2cbf.mp4",
+    "transition_sec": 3.733,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.7,
+        "start_frame": 0,
+        "end_frame": 111,
+        "p_person": 0.8417,
+        "person_sim": 0.2383,
+        "meme_sim": 0.2216,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.733,
+        "end_sec": 4.467,
+        "start_frame": 112,
+        "end_frame": 134,
+        "p_person": 0.0023,
+        "person_sim": 0.1485,
+        "meme_sim": 0.2092,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.533,
+        "end_sec": 8.067,
+        "start_frame": 136,
+        "end_frame": 242,
+        "p_person": 0.0023,
+        "person_sim": 0.139,
+        "meme_sim": 0.1996,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "cdbbccec2cbf_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_c978aae0_cf59_45ad_a5d5_3fd9d8d3402c.mp4",
+    "transition_sec": 3.066,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.99,
+        "start_frame": 0,
+        "end_frame": 79,
+        "p_person": 0.9896,
+        "person_sim": 0.268,
+        "meme_sim": 0.2224,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.066,
+        "end_sec": 4.618,
+        "start_frame": 81,
+        "end_frame": 122,
+        "p_person": 0.2562,
+        "person_sim": 0.2376,
+        "meme_sim": 0.2483,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.656,
+        "end_sec": 5.905,
+        "start_frame": 123,
+        "end_frame": 156,
+        "p_person": 0.0385,
+        "person_sim": 0.1606,
+        "meme_sim": 0.1928,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.943,
+        "end_sec": 7.495,
+        "start_frame": 157,
+        "end_frame": 198,
+        "p_person": 0.0004,
+        "person_sim": 0.1154,
+        "meme_sim": 0.1933,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.533,
+        "end_sec": 9.161,
+        "start_frame": 199,
+        "end_frame": 242,
+        "p_person": 0.0011,
+        "person_sim": 0.1249,
+        "meme_sim": 0.1932,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.199,
+        "end_sec": 10.789,
+        "start_frame": 243,
+        "end_frame": 285,
+        "p_person": 0.0011,
+        "person_sim": 0.1384,
+        "meme_sim": 0.2069,
+        "label": "meme"
+      },
+      {
+        "start_sec": 10.826,
+        "end_sec": 11.583,
+        "start_frame": 286,
+        "end_frame": 306,
+        "p_person": 0.0139,
+        "person_sim": 0.1637,
+        "meme_sim": 0.2064,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "3fd9d8d3402c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_cbb31741_f113_4af5_89ae_b6d49656e4ad.mp4",
+    "transition_sec": 6.382,
+    "method": "person_to_meme",
+    "num_shots": 5,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.948,
+        "start_frame": 0,
+        "end_frame": 85,
+        "p_person": 0.9037,
+        "person_sim": 0.2339,
+        "meme_sim": 0.2116,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.983,
+        "end_sec": 3.78,
+        "start_frame": 86,
+        "end_frame": 109,
+        "p_person": 0.8254,
+        "person_sim": 0.2446,
+        "meme_sim": 0.229,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.85,
+        "end_sec": 6.347,
+        "start_frame": 111,
+        "end_frame": 183,
+        "p_person": 0.9525,
+        "person_sim": 0.2357,
+        "meme_sim": 0.2058,
+        "label": "person"
+      },
+      {
+        "start_sec": 6.382,
+        "end_sec": 7.179,
+        "start_frame": 184,
+        "end_frame": 207,
+        "p_person": 0.0102,
+        "person_sim": 0.206,
+        "meme_sim": 0.2518,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.214,
+        "end_sec": 10.266,
+        "start_frame": 208,
+        "end_frame": 296,
+        "p_person": 0.0001,
+        "person_sim": 0.1013,
+        "meme_sim": 0.1898,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "b6d49656e4ad_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_cd042008_e980_4fed_b699_b9e2a21c9cf2.mp4",
+    "transition_sec": 4.24,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.164,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.7519,
+        "person_sim": 0.2369,
+        "meme_sim": 0.2258,
+        "label": "person"
+      },
+      {
+        "start_sec": 4.24,
+        "end_sec": 8.063,
+        "start_frame": 112,
+        "end_frame": 213,
+        "p_person": 0.0091,
+        "person_sim": 0.1215,
+        "meme_sim": 0.1685,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "b9e2a21c9cf2_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ce31422e_1479_4f21_80ee_b2e9c5fa332c.mp4",
+    "transition_sec": 2.767,
+    "method": "person_to_meme",
+    "num_shots": 6,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.733,
+        "start_frame": 0,
+        "end_frame": 82,
+        "p_person": 0.5569,
+        "person_sim": 0.2207,
+        "meme_sim": 0.2184,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.767,
+        "end_sec": 3.9,
+        "start_frame": 83,
+        "end_frame": 117,
+        "p_person": 0.0038,
+        "person_sim": 0.1861,
+        "meme_sim": 0.2418,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.933,
+        "end_sec": 5.733,
+        "start_frame": 118,
+        "end_frame": 172,
+        "p_person": 0.0116,
+        "person_sim": 0.1685,
+        "meme_sim": 0.213,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.767,
+        "end_sec": 7.2,
+        "start_frame": 173,
+        "end_frame": 216,
+        "p_person": 0.0033,
+        "person_sim": 0.1424,
+        "meme_sim": 0.1995,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.233,
+        "end_sec": 8.233,
+        "start_frame": 217,
+        "end_frame": 247,
+        "p_person": 0.004,
+        "person_sim": 0.1586,
+        "meme_sim": 0.2138,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.267,
+        "end_sec": 9.867,
+        "start_frame": 248,
+        "end_frame": 296,
+        "p_person": 0.0041,
+        "person_sim": 0.1394,
+        "meme_sim": 0.1943,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "b2e9c5fa332c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_cf939912_8167_4abd_859d_4524f14810ff.mp4",
+    "transition_sec": 3.433,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.367,
+        "start_frame": 0,
+        "end_frame": 101,
+        "p_person": 0.9823,
+        "person_sim": 0.2604,
+        "meme_sim": 0.2203,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.433,
+        "end_sec": 9.933,
+        "start_frame": 103,
+        "end_frame": 298,
+        "p_person": 0.0126,
+        "person_sim": 0.1576,
+        "meme_sim": 0.2013,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "4524f14810ff_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_d93702c4_6e69_44ca_8e0c_95608bbfcd4a.mp4",
+    "transition_sec": 3.3,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.267,
+        "start_frame": 0,
+        "end_frame": 98,
+        "p_person": 0.0572,
+        "person_sim": 0.207,
+        "meme_sim": 0.235,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.3,
+        "end_sec": 4.1,
+        "start_frame": 99,
+        "end_frame": 123,
+        "p_person": 0.0054,
+        "person_sim": 0.1911,
+        "meme_sim": 0.2431,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.133,
+        "end_sec": 8.9,
+        "start_frame": 124,
+        "end_frame": 267,
+        "p_person": 0.0025,
+        "person_sim": 0.1384,
+        "meme_sim": 0.1984,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "95608bbfcd4a_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_db1405c0_42fe_467b_9a40_40210d6e4663.mp4",
+    "transition_sec": 2.833,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.792,
+        "start_frame": 0,
+        "end_frame": 67,
+        "p_person": 0.217,
+        "person_sim": 0.1972,
+        "meme_sim": 0.21,
+        "label": "meme"
+      },
+      {
+        "start_sec": 2.833,
+        "end_sec": 8.0,
+        "start_frame": 68,
+        "end_frame": 192,
+        "p_person": 0.6218,
+        "person_sim": 0.2174,
+        "meme_sim": 0.2125,
+        "label": "person"
+      }
+    ],
+    "qa_image": "40210d6e4663_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_db78dc46_9f10_4a9a_90f5_d55177ca8da2.mp4",
+    "transition_sec": 3.933,
+    "method": "person_to_meme",
+    "num_shots": 8,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.867,
+        "start_frame": 0,
+        "end_frame": 116,
+        "p_person": 0.5626,
+        "person_sim": 0.2226,
+        "meme_sim": 0.2201,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.933,
+        "end_sec": 4.767,
+        "start_frame": 118,
+        "end_frame": 143,
+        "p_person": 0.3893,
+        "person_sim": 0.2015,
+        "meme_sim": 0.206,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.8,
+        "end_sec": 5.633,
+        "start_frame": 144,
+        "end_frame": 169,
+        "p_person": 0.8254,
+        "person_sim": 0.2056,
+        "meme_sim": 0.1901,
+        "label": "person"
+      },
+      {
+        "start_sec": 5.667,
+        "end_sec": 6.533,
+        "start_frame": 170,
+        "end_frame": 196,
+        "p_person": 0.8827,
+        "person_sim": 0.2172,
+        "meme_sim": 0.1971,
+        "label": "person"
+      },
+      {
+        "start_sec": 6.567,
+        "end_sec": 7.3,
+        "start_frame": 197,
+        "end_frame": 219,
+        "p_person": 0.8997,
+        "person_sim": 0.2324,
+        "meme_sim": 0.2105,
+        "label": "person"
+      },
+      {
+        "start_sec": 7.333,
+        "end_sec": 8.2,
+        "start_frame": 220,
+        "end_frame": 246,
+        "p_person": 0.9054,
+        "person_sim": 0.2373,
+        "meme_sim": 0.2147,
+        "label": "person"
+      },
+      {
+        "start_sec": 8.233,
+        "end_sec": 8.867,
+        "start_frame": 247,
+        "end_frame": 266,
+        "p_person": 0.0131,
+        "person_sim": 0.1594,
+        "meme_sim": 0.2026,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.9,
+        "end_sec": 9.233,
+        "start_frame": 267,
+        "end_frame": 277,
+        "p_person": 0.0131,
+        "person_sim": 0.1594,
+        "meme_sim": 0.2027,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "d55177ca8da2_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_dc36d34b_3080_4822_bd93_98e52c3ab2d0.mp4",
+    "transition_sec": 3.433,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.4,
+        "start_frame": 0,
+        "end_frame": 102,
+        "p_person": 0.0014,
+        "person_sim": 0.127,
+        "meme_sim": 0.1925,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.433,
+        "end_sec": 10.167,
+        "start_frame": 103,
+        "end_frame": 305,
+        "p_person": 0.0064,
+        "person_sim": 0.1678,
+        "meme_sim": 0.2182,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "98e52c3ab2d0_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e3b6086f_a73a_461b_b795_4e948bf533b1.mp4",
+    "transition_sec": 2.867,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.833,
+        "start_frame": 0,
+        "end_frame": 85,
+        "p_person": 0.9327,
+        "person_sim": 0.2503,
+        "meme_sim": 0.2241,
+        "label": "person"
+      },
+      {
+        "start_sec": 2.867,
+        "end_sec": 3.667,
+        "start_frame": 86,
+        "end_frame": 110,
+        "p_person": 0.2391,
+        "person_sim": 0.2364,
+        "meme_sim": 0.248,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.7,
+        "end_sec": 8.067,
+        "start_frame": 111,
+        "end_frame": 242,
+        "p_person": 0.2148,
+        "person_sim": 0.1961,
+        "meme_sim": 0.2091,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "4e948bf533b1_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e758eb10_528b_4441_8b1a_32f55161637c.mp4",
+    "transition_sec": 3.267,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.233,
+        "start_frame": 0,
+        "end_frame": 97,
+        "p_person": 0.4935,
+        "person_sim": 0.2212,
+        "meme_sim": 0.2215,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.267,
+        "end_sec": 4.067,
+        "start_frame": 98,
+        "end_frame": 122,
+        "p_person": 0.0045,
+        "person_sim": 0.1922,
+        "meme_sim": 0.2461,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.133,
+        "end_sec": 10.6,
+        "start_frame": 124,
+        "end_frame": 318,
+        "p_person": 0.0045,
+        "person_sim": 0.1368,
+        "meme_sim": 0.1909,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "32f55161637c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e7698b9a_d61b_4b22_9376_b6f76bbbf279.mp4",
+    "transition_sec": 4.24,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 9,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.202,
+        "start_frame": 0,
+        "end_frame": 111,
+        "p_person": 0.2823,
+        "person_sim": 0.2392,
+        "meme_sim": 0.2485,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.24,
+        "end_sec": 5.148,
+        "start_frame": 112,
+        "end_frame": 136,
+        "p_person": 0.0001,
+        "person_sim": 0.1134,
+        "meme_sim": 0.2057,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.186,
+        "end_sec": 5.716,
+        "start_frame": 137,
+        "end_frame": 151,
+        "p_person": 0.0,
+        "person_sim": 0.1017,
+        "meme_sim": 0.2131,
+        "label": "meme"
+      },
+      {
+        "start_sec": 5.754,
+        "end_sec": 6.208,
+        "start_frame": 152,
+        "end_frame": 164,
+        "p_person": 0.0,
+        "person_sim": 0.1004,
+        "meme_sim": 0.2111,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.246,
+        "end_sec": 6.738,
+        "start_frame": 165,
+        "end_frame": 178,
+        "p_person": 0.0,
+        "person_sim": 0.0947,
+        "meme_sim": 0.2127,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.776,
+        "end_sec": 7.154,
+        "start_frame": 179,
+        "end_frame": 189,
+        "p_person": 0.0,
+        "person_sim": 0.1089,
+        "meme_sim": 0.209,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.192,
+        "end_sec": 7.722,
+        "start_frame": 190,
+        "end_frame": 204,
+        "p_person": 0.0001,
+        "person_sim": 0.1083,
+        "meme_sim": 0.2069,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.76,
+        "end_sec": 8.971,
+        "start_frame": 205,
+        "end_frame": 237,
+        "p_person": 0.0001,
+        "person_sim": 0.1215,
+        "meme_sim": 0.2124,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.009,
+        "end_sec": 9.009,
+        "start_frame": 238,
+        "end_frame": 238,
+        "p_person": 0.0009,
+        "person_sim": 0.129,
+        "meme_sim": 0.1987,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "b6f76bbbf279_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e8f7d011_2ce7_4472_859a_41c9127bfd2a.mp4",
+    "transition_sec": 3.85,
+    "method": "person_to_meme",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.815,
+        "start_frame": 0,
+        "end_frame": 110,
+        "p_person": 0.9979,
+        "person_sim": 0.2838,
+        "meme_sim": 0.2224,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.85,
+        "end_sec": 8.046,
+        "start_frame": 111,
+        "end_frame": 232,
+        "p_person": 0.0003,
+        "person_sim": 0.1312,
+        "meme_sim": 0.2113,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "41c9127bfd2a_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_e9fdfc02_922a_4567_85a4_b55fc8505776.mp4",
+    "transition_sec": 3.0,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.967,
+        "start_frame": 0,
+        "end_frame": 89,
+        "p_person": 0.9633,
+        "person_sim": 0.2515,
+        "meme_sim": 0.2188,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.0,
+        "end_sec": 3.8,
+        "start_frame": 90,
+        "end_frame": 114,
+        "p_person": 0.3461,
+        "person_sim": 0.2347,
+        "meme_sim": 0.2411,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.833,
+        "end_sec": 8.967,
+        "start_frame": 115,
+        "end_frame": 269,
+        "p_person": 0.0144,
+        "person_sim": 0.1483,
+        "meme_sim": 0.1906,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "b55fc8505776_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ead202b1_13d2_43fa_999f_afbe0b3572a7.mp4",
+    "transition_sec": 5.072,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 5.035,
+        "start_frame": 0,
+        "end_frame": 133,
+        "p_person": 0.7802,
+        "person_sim": 0.2509,
+        "meme_sim": 0.2382,
+        "label": "person"
+      },
+      {
+        "start_sec": 5.072,
+        "end_sec": 6.511,
+        "start_frame": 134,
+        "end_frame": 172,
+        "p_person": 0.3391,
+        "person_sim": 0.182,
+        "meme_sim": 0.1887,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.549,
+        "end_sec": 8.214,
+        "start_frame": 173,
+        "end_frame": 217,
+        "p_person": 0.0622,
+        "person_sim": 0.1137,
+        "meme_sim": 0.1408,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "afbe0b3572a7_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ef5af2b1_3d19_4ad2_8bf4_86c7842440c5.mp4",
+    "transition_sec": null,
+    "method": "single_shot_person",
+    "num_shots": 1,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 7.248,
+        "start_frame": 0,
+        "end_frame": 122,
+        "p_person": 0.9676,
+        "person_sim": 0.269,
+        "meme_sim": 0.2351,
+        "label": "person"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_efbe795b_6bc1_4409_a65d_5b3af675162e.mp4",
+    "transition_sec": null,
+    "method": "all_person_no_transition",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 2.953,
+        "start_frame": 0,
+        "end_frame": 78,
+        "p_person": 0.976,
+        "person_sim": 0.2648,
+        "meme_sim": 0.2277,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.028,
+        "end_sec": 9.312,
+        "start_frame": 80,
+        "end_frame": 246,
+        "p_person": 0.6054,
+        "person_sim": 0.1765,
+        "meme_sim": 0.1722,
+        "label": "person"
+      }
+    ],
+    "qa_image": null
+  },
+  {
+    "clip": "tikcdn_beubagah_com_f3783803_fe75_4760_932d_320c61348ef7.mp4",
+    "transition_sec": 3.3,
+    "method": "person_to_meme",
+    "num_shots": 3,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.267,
+        "start_frame": 0,
+        "end_frame": 98,
+        "p_person": 0.6296,
+        "person_sim": 0.216,
+        "meme_sim": 0.2107,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.3,
+        "end_sec": 4.033,
+        "start_frame": 99,
+        "end_frame": 121,
+        "p_person": 0.0026,
+        "person_sim": 0.1639,
+        "meme_sim": 0.2234,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.1,
+        "end_sec": 10.067,
+        "start_frame": 123,
+        "end_frame": 302,
+        "p_person": 0.0053,
+        "person_sim": 0.1466,
+        "meme_sim": 0.199,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "320c61348ef7_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_f5b1f8c9_59b4_4562_aed1_e7d473f5ab0c.mp4",
+    "transition_sec": 3.133,
+    "method": "person_to_meme",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.067,
+        "start_frame": 0,
+        "end_frame": 92,
+        "p_person": 0.897,
+        "person_sim": 0.2346,
+        "meme_sim": 0.213,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.133,
+        "end_sec": 3.867,
+        "start_frame": 94,
+        "end_frame": 116,
+        "p_person": 0.004,
+        "person_sim": 0.2183,
+        "meme_sim": 0.2734,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.9,
+        "end_sec": 7.333,
+        "start_frame": 117,
+        "end_frame": 220,
+        "p_person": 0.0,
+        "person_sim": 0.1169,
+        "meme_sim": 0.2302,
+        "label": "meme"
+      },
+      {
+        "start_sec": 7.367,
+        "end_sec": 8.9,
+        "start_frame": 221,
+        "end_frame": 267,
+        "p_person": 0.0,
+        "person_sim": 0.0758,
+        "meme_sim": 0.1837,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "e7d473f5ab0c_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_f7ad4e70_5f81_43ca_a8cc_8d05fb66b948.mp4",
+    "transition_sec": 3.867,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.833,
+        "start_frame": 0,
+        "end_frame": 115,
+        "p_person": 0.2737,
+        "person_sim": 0.2212,
+        "meme_sim": 0.2309,
+        "label": "meme"
+      },
+      {
+        "start_sec": 3.867,
+        "end_sec": 7.967,
+        "start_frame": 116,
+        "end_frame": 239,
+        "p_person": 0.002,
+        "person_sim": 0.1369,
+        "meme_sim": 0.1992,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "8d05fb66b948_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_fb0cc763_1767_4575_b2f4_e76c740e701a.mp4",
+    "transition_sec": 3.331,
+    "method": "person_to_meme",
+    "num_shots": 7,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 3.255,
+        "start_frame": 0,
+        "end_frame": 86,
+        "p_person": 0.86,
+        "person_sim": 0.208,
+        "meme_sim": 0.1899,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.331,
+        "end_sec": 4.126,
+        "start_frame": 88,
+        "end_frame": 109,
+        "p_person": 0.0805,
+        "person_sim": 0.2165,
+        "meme_sim": 0.2409,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.164,
+        "end_sec": 6.17,
+        "start_frame": 110,
+        "end_frame": 163,
+        "p_person": 0.0103,
+        "person_sim": 0.1689,
+        "meme_sim": 0.2146,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.208,
+        "end_sec": 8.025,
+        "start_frame": 164,
+        "end_frame": 212,
+        "p_person": 0.0009,
+        "person_sim": 0.1503,
+        "meme_sim": 0.2199,
+        "label": "meme"
+      },
+      {
+        "start_sec": 8.063,
+        "end_sec": 8.971,
+        "start_frame": 213,
+        "end_frame": 237,
+        "p_person": 0.0002,
+        "person_sim": 0.1255,
+        "meme_sim": 0.2125,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.009,
+        "end_sec": 9.501,
+        "start_frame": 238,
+        "end_frame": 251,
+        "p_person": 0.0031,
+        "person_sim": 0.1523,
+        "meme_sim": 0.2101,
+        "label": "meme"
+      },
+      {
+        "start_sec": 9.539,
+        "end_sec": 9.994,
+        "start_frame": 252,
+        "end_frame": 264,
+        "p_person": 0.0009,
+        "person_sim": 0.1336,
+        "meme_sim": 0.2039,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "e76c740e701a_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_fea8c1e4_14c4_4f2f_bbcf_0e5bcf6d408e.mp4",
+    "transition_sec": 4.1,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 4,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.033,
+        "start_frame": 0,
+        "end_frame": 121,
+        "p_person": 0.4964,
+        "person_sim": 0.2428,
+        "meme_sim": 0.243,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.1,
+        "end_sec": 6.1,
+        "start_frame": 123,
+        "end_frame": 183,
+        "p_person": 0.0054,
+        "person_sim": 0.1506,
+        "meme_sim": 0.2028,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.133,
+        "end_sec": 6.667,
+        "start_frame": 184,
+        "end_frame": 200,
+        "p_person": 0.001,
+        "person_sim": 0.1441,
+        "meme_sim": 0.213,
+        "label": "meme"
+      },
+      {
+        "start_sec": 6.7,
+        "end_sec": 9.567,
+        "start_frame": 201,
+        "end_frame": 287,
+        "p_person": 0.0079,
+        "person_sim": 0.1552,
+        "meme_sim": 0.2035,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "0e5bcf6d408e_transition.png"
+  },
+  {
+    "clip": "tikcdn_beubagah_com_ff160e7a_5ed9_433b_8249_6b9dbe164b0d.mp4",
+    "transition_sec": 4.042,
+    "method": "no_leading_person_fallback_first_cut",
+    "num_shots": 2,
+    "shots": [
+      {
+        "start_sec": 0.0,
+        "end_sec": 4.0,
+        "start_frame": 0,
+        "end_frame": 96,
+        "p_person": 0.2533,
+        "person_sim": 0.2019,
+        "meme_sim": 0.2127,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.042,
+        "end_sec": 8.333,
+        "start_frame": 97,
+        "end_frame": 200,
+        "p_person": 0.001,
+        "person_sim": 0.1643,
+        "meme_sim": 0.2334,
+        "label": "meme"
+      }
+    ],
+    "qa_image": "6b9dbe164b0d_transition.png"
+  }
+]

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pezevenk — transitions workbench</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0d1117; color:#e6edf3; font:16px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }
+  a { color:#58a6ff; }
+  .bar { position:sticky; top:0; z-index:20; background:#010409ee; backdrop-filter:blur(6px);
+         border-bottom:1px solid #21262d; padding:11px 18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .bar h1 { font-size:20px; margin:0 10px 0 0; font-weight:500; }
+  .bar select, .bar button { background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:16px;
+        padding:6px 14px; cursor:pointer; font-size:15px; }
+  .bar button.on { background:#1f6feb; border-color:#1f6feb; }
+  .bar .sp { flex:1; }
+  .banner { padding:11px 18px; background:#0e2a16; border-bottom:1px solid #1a7f37; color:#adbac7; font-size:15px; }
+  .banner b { color:#3fb950; } .banner .w { color:#e3b341; }
+  .legend { color:#8b949e; font-size:13px; padding:8px 18px; border-bottom:1px solid #21262d; }
+  .legend i { display:inline-block; width:13px; height:13px; border-radius:3px; vertical-align:middle; margin:0 4px 0 14px; }
+  .row { display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; padding:14px 18px; border-bottom:1px solid #21262d; }
+  .row.ok { background:#0e2a1622; } .row.bad { background:#2a0e1233; }
+  .meta { width:340px; flex:0 0 340px; }
+  .idl { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .sid { font-family:ui-monospace,monospace; font-size:15px; color:#8b949e; }
+  .badge { color:#fff; font-size:13px; padding:2px 11px; border-radius:13px; white-space:nowrap; }
+  .tl { position:relative; height:30px; background:#161b22; border-radius:5px; margin:11px 0 4px; overflow:hidden; }
+  .seg { position:absolute; top:0; height:100%; border-right:1px solid #0d1117; }
+  .cut { position:absolute; top:0; width:1px; height:100%; background:#8b949e88; }
+  .mk { position:absolute; top:-3px; width:3px; height:36px; }
+  .mk.det { background:#e3873a; } .mk.tru { background:#f0f6fc; }
+  .tlab { font-size:13px; color:#6e7681; }
+  .times { display:flex; gap:7px; flex-wrap:wrap; margin:8px 0; }
+  .t { font-size:13px; padding:3px 9px; border-radius:6px; background:#21262d; }
+  .t.d { border:1px solid #e3873a88; } .t.g { border:1px solid #f0f6fc55; }
+  .method { font-family:ui-monospace,monospace; font-size:13px; color:#6e7681; }
+  .note { font-size:14.5px; color:#adbac7; margin-top:6px; }
+  .rev button { margin-right:7px; margin-top:6px; border:1px solid #30363d; border-radius:7px; background:#161b22;
+        color:#e6edf3; padding:5px 12px; cursor:pointer; font-size:14px; }
+  .qa { flex:0 0 auto; }
+  .qa img { height:340px; border-radius:6px; display:block; background:#000; cursor:zoom-in; }
+  .qa .cap { font-size:12.5px; color:#8b949e; }
+  .v { flex:0 0 auto; }
+  .v video { height:420px; width:auto; max-width:100%; border-radius:6px; display:block; background:#000; }
+  .vl { font-size:14px; font-weight:600; margin-bottom:4px; }
+  .vl.o { color:#c9d1d9; } .vl.p { color:#3fb950; } .vl.m { color:#6cb6ff; }
+  .shots { font-size:10.5px; color:#8b949e; margin-top:4px; }
+  .shots span { display:inline-block; margin-right:8px; }
+  #lb { position:fixed; inset:0; background:#000e; z-index:100; display:none; align-items:center; justify-content:center; cursor:zoom-out; }
+  #lb.on { display:flex; } #lb img { max-width:96vw; max-height:92vh; }
+  .load { padding:40px; text-align:center; color:#8b949e; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="load" v-if="loading">loading data…</div>
+  <div class="load" v-else-if="error" style="color:#f85149">{{ error }}</div>
+  <template v-else>
+    <div class="bar">
+      <h1>transitions workbench</h1>
+      <label>exact ≤
+        <select v-model.number="tol">
+          <option :value="0.1">0.1s</option><option :value="0.2">0.2s</option>
+          <option :value="0.3">0.3s</option><option :value="0.5">0.5s</option><option :value="0.7">0.7s</option>
+        </select>
+      </label>
+      <button v-for="f in filters" :key="f" :class="{on: filter===f}" @click="filter=f">{{ f }} {{ counts[f] }}</button>
+      <span class="sp"></span>
+      <button @click="load">↻ reload</button>
+      <button @click="exportFlags">export ✗</button>
+    </div>
+    <div class="banner">
+      <b>{{ summary.good }}/{{ rows.length }} exact ({{ pct(summary.good/rows.length) }})</b>
+      · {{ summary.close }} within 1.5s · <span class="w">{{ summary.problems }} to review</span>
+      &nbsp;— threshold {{ tol }}s vs frame-accurate ground truth. reviewed {{ reviewed }}/{{ rows.length }}.
+    </div>
+    <div class="legend">
+      <i style="background:#1a7f37"></i>creator (face)
+      <i style="background:#4184e4"></i>meme
+      <i style="background:#8b949e"></i>detected cut (TransNetV2)
+      <i style="background:#e3873a"></i>picked transition
+      <i style="background:#f0f6fc"></i>ground-truth cut
+    </div>
+
+    <div v-for="r in visible" :key="r.short" class="row" :class="{ok: flags[r.clip]==='ok', bad: flags[r.clip]==='bad'}">
+      <div class="meta">
+        <div class="idl">
+          <span class="sid">{{ r.short }}</span>
+          <span class="badge" :style="{background: vColor(r.verdict)}">{{ r.verdict }}</span>
+        </div>
+        <div class="tl" :title="r.pattern">
+          <div v-for="(s,i) in r.shots" :key="i" class="seg"
+               :style="{left: pct2(s.start_sec,r.dur), width: pct2(s.end_sec-s.start_sec,r.dur), background: s.face>=faceThr ? '#1a7f37' : '#4184e4'}"
+               :title="'shot '+s.start_sec+'-'+s.end_sec+'  face_sim='+s.face"></div>
+          <div v-for="(b,i) in r.cuts" :key="'c'+i" class="cut" :style="{left: pct2(b,r.dur)}"></div>
+          <div v-if="r.det!=null" class="mk det" :style="{left: pct2(r.det,r.dur)}" title="picked transition"></div>
+          <div v-if="r.true!=null" class="mk tru" :style="{left: pct2(r.true,r.dur)}" title="ground-truth cut"></div>
+        </div>
+        <div class="tlab">0s · {{ r.shots.length }} shots · {{ r.dur.toFixed(1) }}s</div>
+        <div class="times">
+          <span class="t d">detected <b>{{ fmt(r.det) }}</b></span>
+          <span class="t g">truth <b>{{ fmt(r.true) }}</b></span>
+          <span class="t" v-if="r.det!=null && r.true!=null">Δ {{ Math.abs(r.det-r.true).toFixed(2) }}s</span>
+        </div>
+        <div class="method">{{ r.method }}</div>
+        <div class="note">{{ r.note }}</div>
+        <div class="rev">
+          <button @click="flag(r,'ok')">✓ ok</button>
+          <button @click="flag(r,'bad')">✗ wrong</button>
+        </div>
+      </div>
+
+      <a class="qa" v-if="r.qa" @click="lbOpen(r.qa)">
+        <img :src="r.qa" loading="lazy"><span class="cap">before | after cut</span>
+      </a>
+      <div class="v"><div class="vl o">ORIGINAL</div><video controls preload="metadata" :src="r.vOrig"></video></div>
+      <div class="v" v-if="r.vPerson"><div class="vl p">PERSON [0–{{ fmt(r.det) }}]</div><video controls preload="metadata" :src="r.vPerson"></video></div>
+      <div class="v" v-if="r.vMeme"><div class="vl m">MEME [{{ fmt(r.det) }}–end]</div><video controls preload="metadata" :src="r.vMeme"></video></div>
+    </div>
+  </template>
+  <div id="lb" :class="{on: lb}" @click="lb=null"><img v-if="lb" :src="lb"></div>
+</div>
+
+<script src="vendor/vue.global.prod.js"></script>
+<script>
+const { createApp } = Vue;
+const FKEY = 'pez_flags_v2';
+const shortOf = n => n.slice(0,-4).slice(-12);
+const enc = p => p.split('/').map(encodeURIComponent).join('/');
+
+createApp({
+  data() {
+    return { loading:true, error:'', trans:[], gt:{}, tol:0.5, faceThr:0.35,
+             filter:'all', flags: JSON.parse(localStorage.getItem(FKEY)||'{}'), lb:null,
+             filters:['all','problem','multicut','clean','none','flagged'] };
+  },
+  async mounted(){ await this.load(); },
+  computed: {
+    rows(){
+      return this.trans.filter(c=>c.shots && !c.error).map(c=>{
+        const short = shortOf(c.clip);
+        const g = this.gt[short] || {};
+        const det = c.transition_sec, tru = g.cut_sec ?? null;
+        const verdict = this.verdict(det, tru, g.has_transition);
+        const shots = c.shots.map(s=>({start_sec:s.start_sec, end_sec:s.end_sec, face: s.face_sim ?? 0}));
+        const dur = Math.max(...shots.map(s=>s.end_sec), 1);
+        const cat = ['wrong_time','missed','false_positive'].includes(verdict) ? 'problem'
+                  : det==null ? 'none' : (c.num_shots>=4 ? 'multicut' : 'clean');
+        return { short, clip:c.clip, det, true:tru, verdict, method:c.method, pattern:g.pattern||'',
+                 note:g.notes||'', shots, dur, cat, cuts: shots.map(s=>s.start_sec).filter(x=>x>0.05),
+                 qa: 'transitions/qa/'+short+'_transition.png',
+                 vOrig: enc('freckled_spike_tiktok/'+c.clip),
+                 vPerson: det!=null? enc('split/person/'+c.clip): null,
+                 vMeme: det!=null? enc('split/meme/'+c.clip): null };
+      }).sort((a,b)=> (this.catOrder(a.cat)-this.catOrder(b.cat)) || ((a.det==null)-(b.det==null)) || ((a.det||0)-(b.det||0)));
+    },
+    counts(){ const c={all:this.rows.length,problem:0,multicut:0,clean:0,none:0,
+        flagged:Object.values(this.flags).filter(v=>v==='bad').length};
+        this.rows.forEach(r=>c[r.cat]++); return c; },
+    visible(){ if(this.filter==='all') return this.rows;
+      if(this.filter==='flagged') return this.rows.filter(r=>this.flags[r.clip]==='bad');
+      return this.rows.filter(r=>r.cat===this.filter); },
+    summary(){ let good=0,close=0,problems=0;
+      this.rows.forEach(r=>{ if(['correct','correct_none'].includes(r.verdict))good++;
+        else if(r.verdict==='close')close++; else problems++; });
+      return {good,close,problems}; },
+    reviewed(){ return Object.keys(this.flags).length; }
+  },
+  methods: {
+    async load(){
+      this.loading=true; this.error='';
+      try {
+        const [t,g] = await Promise.all([
+          fetch('transitions/transitions.json?_='+Date.now()).then(r=>r.json()),
+          fetch('transitions/ground_truth.json?_='+Date.now()).then(r=>r.json())
+        ]);
+        this.trans = t;
+        this.gt = {}; g.clips.forEach(c=> this.gt[c.short]=c);
+      } catch(e){ this.error='Could not load JSON — serve the folder: python3 -m http.server 8000, then open http://localhost:8000/app.html'; }
+      this.loading=false;
+    },
+    verdict(det,tru,hasT){
+      if(det==null && tru==null) return 'correct_none';
+      if(det==null) return 'missed';
+      if(tru==null) return 'false_positive';
+      const e=Math.abs(det-tru); return e<=this.tol ? 'correct' : (e<=1.5 ? 'close' : 'wrong_time');
+    },
+    catOrder(c){ return {problem:0,multicut:1,clean:2,none:3}[c]; },
+    vColor(v){ return {correct:'#1a7f37',correct_none:'#1a7f37',close:'#9a6700',
+      wrong_time:'#cf222e',missed:'#cf222e',false_positive:'#cf222e'}[v]||'#57606a'; },
+    pct(x){ return Math.round(x*1000)/10+'%'; },
+    pct2(x,d){ return (x/d*100)+'%'; },
+    fmt(x){ return x==null?'—':x.toFixed(2)+'s'; },
+    flag(r,s){ if(this.flags[r.clip]===s) delete this.flags[r.clip]; else this.flags[r.clip]=s;
+      localStorage.setItem(FKEY, JSON.stringify(this.flags)); },
+    exportFlags(){ const bad=Object.keys(this.flags).filter(k=>this.flags[k]==='bad');
+      const b=new Blob([JSON.stringify(bad,null,2)],{type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='wrong.json'; a.click(); },
+    lbOpen(src){ this.lb=src; }
+  }
+}).mount('#app');
+</script>
+</body>
+</html>

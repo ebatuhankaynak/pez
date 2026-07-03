@@ -1,0 +1,5 @@
+# Face-based labeling stage (relabel_faces.py). Kept separate from requirements.txt
+# so the big torch/CUDA layer stays cached when these change.
+insightface==1.0.1
+onnxruntime==1.27.0
+onnx==1.22.0

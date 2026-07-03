@@ -1,0 +1,51 @@
+# Pipeline stages. Run them in order:
+#   docker compose run --rm detect     # 1. shot boundaries + first-pass labels -> transitions.json
+#   docker compose run --rm relabel    # 2. re-label by the creator's face (rewrites transitions.json)
+#   docker compose run --rm split      # 3. cut into folders  -> split/person, split/meme
+#   docker compose run --rm report     # 4. build the HTML    -> transitions/report.html
+# or all at once:
+#   docker compose run --rm all
+#
+# GPU is used automatically when available (see the deploy block). On a host with
+# no NVIDIA runtime, delete the `deploy:` block and it will run on CPU.
+
+x-common: &common
+  build: .
+  image: pezevenk-transitions:latest
+  # Write outputs as the host user (avoids root-owned files). Falls back to 1000:1000.
+  # For a different UID:  UID=$(id -u) GID=$(id -g) docker compose run --rm all
+  user: "${UID:-1000}:${GID:-1000}"
+  volumes:
+    - ./freckled_spike_tiktok:/app/freckled_spike_tiktok:ro
+    - ./transitions:/app/transitions
+    - ./split:/app/split
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
+
+services:
+  detect:
+    <<: *common
+    command: ["detect_transitions.py"]
+
+  relabel:
+    <<: *common
+    command: ["relabel_faces.py", "--qa"]
+
+  split:
+    <<: *common
+    command: ["split_clips.py", "--workers", "8"]
+
+  report:
+    <<: *common
+    command: ["build_report.py", "--out", "transitions/report.html"]
+
+  # Run all stages in sequence in one container.
+  all:
+    <<: *common
+    entrypoint: ["bash", "-c"]
+    command: ["python detect_transitions.py && python relabel_faces.py --qa && python split_clips.py --workers 8 && python build_report.py --out transitions/report.html"]
