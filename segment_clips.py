@@ -21,6 +21,7 @@ With --split, also cuts each clip into segments/<clip>/NN_<label>.mp4 in order.
 
 import argparse
 import json
+import shutil
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -95,7 +96,7 @@ def main():
     ap.add_argument("--transitions", default=str(TRANSITIONS))
     ap.add_argument("--out", default=str(SCRIPT_DIR / "transitions" / "segments.json"))
     ap.add_argument("--face-threshold", type=float, default=0.35)
-    ap.add_argument("--min-seg", type=float, default=1.0,
+    ap.add_argument("--min-seg", type=float, default=0.5,
                     help="Absorb segments shorter than this many seconds (noise suppression)")
     ap.add_argument("--split", action="store_true", help="Also cut clips into segments/<clip>/NN_label.mp4")
     ap.add_argument("--seg-dir", default=str(SCRIPT_DIR / "segments"))
@@ -108,11 +109,35 @@ def main():
         shots = c.get("shots", [])
         if not shots:
             continue
-        labels = smooth(shots, label_shots(shots, args.face_threshold), args.min_seg)
-        segs = segments_from(shots, labels)
-        n_person = sum(1 for s in segs if s["label"] == "person")
-        n_meme = sum(1 for s in segs if s["label"] == "meme")
-        rec = {"clip": c["clip"], "n_segments": len(segs),
+        thr, min_seg = args.face_threshold, args.min_seg
+        trans = c.get("transition_sec")
+        method = c.get("method", "")
+        # The shipped binary detector (relabel_faces.pick + soft-cut fallback) already
+        # encodes the domain prior: the creator ALWAYS opens, and `transition_sec` is her
+        # first person->meme cut. Honor it so segments match that result -- otherwise a
+        # dark/occluded intro (face just under threshold) gets mislabeled as opening meme.
+        if trans is not None and method not in ("all_meme_no_creator", "single_shot_meme"):
+            # First segment = creator up to the cut; segment the remainder by face (keeps
+            # later returns to creator). Immediately after the cut is meme by definition.
+            tail = [s for s in shots if s["end_sec"] > trans + 0.05]
+            tsegs = segments_from(tail, smooth(tail, label_shots(tail, thr), min_seg)) if tail else []
+            if tsegs:
+                tsegs[0]["start"] = round(trans, 3)
+                tsegs[0]["label"] = "meme"
+            segs = [{"start": 0.0, "end": round(trans, 3), "label": "person"}] + tsegs
+            merged = []
+            for s in segs:                                   # merge consecutive same-labels
+                if merged and merged[-1]["label"] == s["label"]:
+                    merged[-1]["end"] = s["end"]
+                else:
+                    merged.append({"start": s["start"], "end": s["end"], "label": s["label"]})
+            segs = merged
+            for s in segs:
+                s["dur"] = round(s["end"] - s["start"], 3)
+        else:
+            # No creator->meme cut (all-creator, all-meme, or single shot): label by face.
+            segs = segments_from(shots, smooth(shots, label_shots(shots, thr), min_seg))
+        rec = {"clip": c["clip"], "short": c["clip"][:-4][-12:], "n_segments": len(segs),
                "pattern": "→".join(s["label"][:4] for s in segs), "segments": segs}
         out.append(rec)
         if len(segs) >= 3:
@@ -138,6 +163,11 @@ def main():
     print(f"\nWrote {args.out}")
 
     if args.split and cut_jobs:
+        # Wipe first so a clip whose segmentation changed (different count/labels) can't
+        # leave orphaned *.mp4 from a previous run lingering next to the new pieces.
+        seg_root = Path(args.seg_dir)
+        if seg_root.exists():
+            shutil.rmtree(seg_root)
         print(f"Cutting {len(cut_jobs)} segment files -> {args.seg_dir}/ ...")
         with ThreadPoolExecutor(max_workers=args.workers) as ex:
             list(ex.map(lambda j: cut(*j), cut_jobs))

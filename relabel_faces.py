@@ -65,9 +65,14 @@ def normed(v):
 
 def load_face_app():
     from insightface.app import FaceAnalysis
+    import onnxruntime as ort
     root = os.environ.get("INSIGHTFACE_HOME", os.path.expanduser("~/.insightface"))
-    app = FaceAnalysis(name="buffalo_l", root=root, providers=["CPUExecutionProvider"])
-    app.prepare(ctx_id=-1, det_size=(384, 384))
+    gpu = "CUDAExecutionProvider" in ort.get_available_providers()
+    providers = (["CUDAExecutionProvider", "CPUExecutionProvider"] if gpu
+                 else ["CPUExecutionProvider"])
+    app = FaceAnalysis(name="buffalo_l", root=root, providers=providers)
+    app.prepare(ctx_id=0 if gpu else -1, det_size=(384, 384))
+    print(f"[face] running on {'GPU (CUDA)' if gpu else 'CPU'}", flush=True)
     return app
 
 
@@ -140,27 +145,35 @@ def label_shots(app, src, shots, centroid, thr, frames_per_shot=5):
     return out
 
 
-def pick(labels_creator):
+def pick(labels_creator, sims=None, evidence_floor=0.15):
     """labels_creator: list of bool (is creator). Return (transition_idx, method).
 
-    Max-agreement split: choose the boundary i that best matches the expected
-    'creator prefix, meme suffix' shape, i.e. maximizes
-        (#creator shots in [0,i)) + (#meme shots in [i,n)).
-    This tolerates an isolated face dropout mid-intro (a single shot where her
-    face wasn't detected) instead of cutting there prematurely.
+    DOMAIN RULE: the creator is ALWAYS present and opens every clip; a clip can be
+    creator-only but never meme-only. So the leading shot is always the creator, and
+    the transition is where she first leaves. If she never clearly leaves -> all-creator.
+
+    Max-agreement split (maximizes #creator-before + #meme-after) tolerates an isolated
+    face dropout mid-intro; a result of "no leading creator" usually means her dark/occluded
+    intro fell just under the face threshold, so we treat the first cut as the transition.
+
+    The rule is a strong prior for *resolving ambiguity*, not a hard override: if the whole
+    clip shows essentially NO face of her (max sim < evidence_floor, e.g. pure reposted
+    footage), we respect that and report no creator rather than inventing one.
     """
     n = len(labels_creator)
     if n == 1:
-        return None, ("single_shot_creator" if labels_creator[0] else "single_shot_meme")
+        return None, "single_shot_creator"        # one shot -> she's on screen throughout
     best_i, best = 0, -1
     for i in range(0, n + 1):
         score = sum(labels_creator[:i]) + sum(1 for x in labels_creator[i:] if not x)
         if score > best:
             best, best_i = score, i
-    if best_i == 0:
-        return None, "all_meme_no_creator"      # she never appears -> not a person->meme clip
     if best_i == n:
         return None, "all_creator_no_transition"  # never leaves the creator
+    if best_i == 0:
+        if sims is not None and max(sims) < evidence_floor:
+            return None, "all_meme_no_creator"    # she is genuinely absent (no face anywhere)
+        return 1, "creator_to_meme_prior"         # face missed her intro; she opens -> first cut
     return best_i, "creator_to_meme"
 
 
@@ -202,6 +215,8 @@ def dense_transition(app, src, centroid, thr, sample_fps=4.0):
             best, best_i = score, i
     if best_i == 0 or best_i == m:
         return None
+    if times[-1] - times[best_i] < 1.0:          # meme tail < 1s -> not a real meme; she's on
+        return None                              #   screen the whole clip (all-creator)
     tail = present[best_i:]
     if sum(1 for x in tail if not x) / len(tail) < 0.8:
         return None
@@ -265,7 +280,7 @@ def main():
     qa_dir = Path(args.out).parent / "qa"
 
     records = json.load(open(args.transitions))
-    print("Loading InsightFace (buffalo_l, CPU)...")
+    print("Loading InsightFace (buffalo_l)...")
     app = load_face_app()
 
     print("Enrolling creator face from clip intros...")
@@ -281,7 +296,7 @@ def main():
             continue
         sims = label_shots(app, src, shots, centroid, args.face_threshold, args.frames_per_shot)
         is_creator = [sim >= args.face_threshold for sim in sims]
-        idx, method = pick(is_creator)
+        idx, method = pick(is_creator, sims)
         trans = shots[idx]["start_sec"] if idx is not None else None
         if not args.no_soft_fallback:
             if trans is None:

@@ -19,6 +19,7 @@ x-common: &common
     - ./freckled_spike_tiktok:/app/freckled_spike_tiktok:ro
     - ./transitions:/app/transitions
     - ./split:/app/split
+    - ./segments:/app/segments
   deploy:
     resources:
       reservations:
@@ -40,6 +41,10 @@ services:
     <<: *common
     command: ["split_clips.py", "--workers", "8"]
 
+  segment:
+    <<: *common
+    command: ["segment_clips.py", "--split", "--workers", "8"]
+
   report:
     <<: *common
     command: ["build_report.py", "--out", "transitions/report.html"]
@@ -48,4 +53,4 @@ services:
   all:
     <<: *common
     entrypoint: ["bash", "-c"]
-    command: ["python detect_transitions.py && python relabel_faces.py --qa && python split_clips.py --workers 8 && python build_report.py --out transitions/report.html"]
+    command: ["python detect_transitions.py && python relabel_faces.py --qa && python split_clips.py --workers 8 && python segment_clips.py --split --workers 8 && python build_report.py --out transitions/report.html"]

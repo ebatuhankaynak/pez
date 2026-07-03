@@ -105,6 +105,7 @@
           <span class="t" v-if="r.det!=null && r.true!=null">Δ {{ Math.abs(r.det-r.true).toFixed(2) }}s</span>
         </div>
         <div class="method">{{ r.method }}</div>
+        <div v-if="r.pattern" style="font-size:13px;margin-top:4px"><b>pattern:</b> {{ r.pattern }}</div>
         <div class="note">{{ r.note }}</div>
         <div class="rev">
           <button @click="flag(r,'ok')">✓ ok</button>
@@ -116,8 +117,10 @@
         <img :src="r.qa" loading="lazy"><span class="cap">before | after cut</span>
       </a>
       <div class="v"><div class="vl o">ORIGINAL</div><video controls preload="metadata" :src="r.vOrig"></video></div>
-      <div class="v" v-if="r.vPerson"><div class="vl p">PERSON [0–{{ fmt(r.det) }}]</div><video controls preload="metadata" :src="r.vPerson"></video></div>
-      <div class="v" v-if="r.vMeme"><div class="vl m">MEME [{{ fmt(r.det) }}–end]</div><video controls preload="metadata" :src="r.vMeme"></video></div>
+      <div class="v" v-for="(sv,i) in r.segVids" :key="i">
+        <div class="vl" :class="sv.cls">{{ i+1 }}. {{ sv.label }} <span style="font-weight:400;color:#8b949e">{{ sv.range }}</span></div>
+        <video controls preload="metadata" :src="sv.src"></video>
+      </div>
     </div>
   </template>
   <div id="lb" :class="{on: lb}" @click="lb=null"><img v-if="lb" :src="lb"></div>
@@ -132,7 +135,7 @@ const enc = p => p.split('/').map(encodeURIComponent).join('/');
 
 createApp({
   data() {
-    return { loading:true, error:'', trans:[], gt:{}, tol:0.5, faceThr:0.35,
+    return { loading:true, error:'', trans:[], gt:{}, segs:{}, tol:0.5, faceThr:0.35,
              filter:'all', flags: JSON.parse(localStorage.getItem(FKEY)||'{}'), lb:null,
              filters:['all','problem','multicut','clean','none','flagged'] };
   },
@@ -148,12 +151,19 @@ createApp({
         const dur = Math.max(...shots.map(s=>s.end_sec), 1);
         const cat = ['wrong_time','missed','false_positive'].includes(verdict) ? 'problem'
                   : det==null ? 'none' : (c.num_shots>=4 ? 'multicut' : 'clean');
-        return { short, clip:c.clip, det, true:tru, verdict, method:c.method, pattern:g.pattern||'',
+        const sg = this.segs[short] || {};
+        const stem = c.clip.slice(0,-4);
+        const segVids = (sg.segments||[]).map((s,i)=>({
+          label: s.label==='person'?'creator':'meme',
+          range: s.start.toFixed(1)+'–'+s.end.toFixed(1)+'s',
+          cls: s.label==='person'?'p':'m',
+          src: enc('segments/'+stem+'/'+String(i+1).padStart(2,'0')+'_'+s.label+'.mp4')
+        }));
+        return { short, clip:c.clip, det, true:tru, verdict, method:c.method,
+                 pattern:(sg.pattern||'').replace(/pers/g,'creator').replace(/→/g,' → '),
                  note:g.notes||'', shots, dur, cat, cuts: shots.map(s=>s.start_sec).filter(x=>x>0.05),
                  qa: 'transitions/qa/'+short+'_transition.png',
-                 vOrig: enc('freckled_spike_tiktok/'+c.clip),
-                 vPerson: det!=null? enc('split/person/'+c.clip): null,
-                 vMeme: det!=null? enc('split/meme/'+c.clip): null };
+                 vOrig: enc('freckled_spike_tiktok/'+c.clip), segVids };
       }).sort((a,b)=> (this.catOrder(a.cat)-this.catOrder(b.cat)) || ((a.det==null)-(b.det==null)) || ((a.det||0)-(b.det||0)));
     },
     counts(){ const c={all:this.rows.length,problem:0,multicut:0,clean:0,none:0,
@@ -172,12 +182,14 @@ createApp({
     async load(){
       this.loading=true; this.error='';
       try {
-        const [t,g] = await Promise.all([
+        const [t,g,s] = await Promise.all([
           fetch('transitions/transitions.json?_='+Date.now()).then(r=>r.json()),
-          fetch('transitions/ground_truth.json?_='+Date.now()).then(r=>r.json())
+          fetch('transitions/ground_truth.json?_='+Date.now()).then(r=>r.json()),
+          fetch('transitions/segments.json?_='+Date.now()).then(r=>r.json()).catch(()=>[])
         ]);
         this.trans = t;
         this.gt = {}; g.clips.forEach(c=> this.gt[c.short]=c);
+        this.segs = {}; s.forEach(r=> this.segs[r.short]=r);
       } catch(e){ this.error='Could not load JSON — serve the folder: python3 -m http.server 8000, then open http://localhost:8000/app.html'; }
       this.loading=false;
     },

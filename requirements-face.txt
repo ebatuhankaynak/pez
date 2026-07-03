@@ -1,5 +1,12 @@
 # Face-based labeling stage (relabel_faces.py). Kept separate from requirements.txt
 # so the big torch/CUDA layer stays cached when these change.
+#
+# onnxruntime-gpu (not the CPU build) so InsightFace runs on the GPU inside the
+# container. Pinned to 1.22.0 because that's the last line built against CUDA 12.x
+# / cuDNN 9 — matching this image's base (nvidia/cuda:12.8.1-cudnn). onnxruntime-gpu
+# 1.23+ moved to CUDA 13 and would fail to load libcudart.so here.
+# relabel_faces.load_face_app() auto-detects: CUDA provider present -> GPU, else CPU,
+# so the same image still runs on a CPU-only host.
 insightface==1.0.1
-onnxruntime==1.27.0
+onnxruntime-gpu==1.22.0
 onnx==1.22.0
