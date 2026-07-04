@@ -27,6 +27,7 @@ footage, and is removed).
 | 2. label each shot | **InsightFace (buffalo_l)** | is *the creator's* face in this shot? |
 | 3. pick the cut | max-agreement | best "creator prefix → meme suffix" split, tolerant of a stray face dropout |
 | 3b. soft-cut recovery | dense face scan | TransNetV2 only fires on hard cuts; when it finds *no* cut, scan the whole clip for where she leaves — or when it *merges* creator+meme into one shot, scan that shot (accepted only for a ≤2.5 s move, so a mid-talk self-occlusion can't drag the cut early) |
+| 3c. low-threshold re-detect | TransNetV2 retry | last resort: if a clip is a *single shot* and **neither** boundaries nor the face scan found a cut, re-detect just that clip at a lower TransNetV2 threshold (`--lowthr-redetect`, default 0.4) to recover a fast **match-cut** it merged away, then re-pick. Genuine creator-less clips stay silent (the evidence floor still applies), so it can't invent a cut |
 
 **Domain prior.** The creator is *always* present and opens every clip — a clip can be
 creator-only but never meme-only. So when the face pass finds no leading creator (her
@@ -36,11 +37,11 @@ no face of her (max similarity below a small evidence floor — e.g. reposted st
 footage), that's respected as genuinely creator-less. See `pick()` in `relabel_faces.py`.
 
 **Accuracy** vs the canonical ground truth (`transitions/ground_truth.json`):
-**88.4 % exact (≤0.5 s), 99.2 % within 1.5 s, 0 false positives, 0 wrong-time** (up from
-84 % / 88 % for the old CLIP labeler). The one remaining error is a missed cut where
-TransNetV2 detects no boundary at all (a fast match-cut) *and* her face isn't detected in
-her walking intro — a detector-recall limit, not a labeling error. Score anything with
-`evaluate.py`; compare labelers with `ablation.py`.
+**89.3 % exact (≤0.5 s), 100 % within 1.5 s, 0 false positives, 0 wrong-time, 0 missed**
+(up from 84 % / 88 % for the old CLIP labeler). The last remaining error — a fast
+match-cut TransNetV2 merged into one shot while her walking intro also fell under the
+face threshold — is recovered by the stage-3c low-threshold re-detect. Score anything
+with `evaluate.py`; compare labelers with `ablation.py`.
 
 ## The pipeline
 

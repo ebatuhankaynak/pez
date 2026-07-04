@@ -89,9 +89,9 @@
       },
       {
         "start_sec": 5.667,
-        "end_sec": 8.133,
+        "end_sec": 8.1,
         "start_frame": 170,
-        "end_frame": 244,
+        "end_frame": 243,
         "face_sim": 0.747,
         "label": "person"
       }
@@ -100,30 +100,30 @@
   },
   {
     "clip": "tikcdn_beubagah_com_05ad0eea_831e_4cec_ad71_c77ef43525b9.mp4",
-    "transition_sec": 3.833,
+    "transition_sec": 3.8,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.8,
+        "end_sec": 3.767,
         "start_frame": 0,
-        "end_frame": 114,
+        "end_frame": 113,
         "face_sim": 0.692,
         "label": "person"
       },
       {
-        "start_sec": 3.833,
-        "end_sec": 4.367,
-        "start_frame": 115,
-        "end_frame": 131,
+        "start_sec": 3.8,
+        "end_sec": 4.333,
+        "start_frame": 114,
+        "end_frame": 130,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.4,
+        "start_sec": 4.367,
         "end_sec": 8.367,
-        "start_frame": 132,
+        "start_frame": 131,
         "end_frame": 251,
         "face_sim": 0.0,
         "label": "meme"
@@ -183,31 +183,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_0ca8110a_98ab_404f_b4d5_0c5f9cf81be0.mp4",
-    "transition_sec": 3.367,
+    "transition_sec": 3.333,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.333,
+        "end_sec": 3.3,
         "start_frame": 0,
-        "end_frame": 100,
-        "face_sim": 0.743,
+        "end_frame": 99,
+        "face_sim": 0.754,
         "label": "person"
       },
       {
-        "start_sec": 3.367,
-        "end_sec": 4.1,
-        "start_frame": 101,
-        "end_frame": 123,
+        "start_sec": 3.333,
+        "end_sec": 4.067,
+        "start_frame": 100,
+        "end_frame": 122,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.167,
-        "end_sec": 11.767,
-        "start_frame": 125,
-        "end_frame": 353,
+        "start_sec": 4.133,
+        "end_sec": 11.733,
+        "start_frame": 124,
+        "end_frame": 352,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -226,7 +226,7 @@
         "start_frame": 0,
         "end_frame": 97,
         "face_sim": 0.21,
-        "label": "meme"
+        "label": "person"
       },
       {
         "start_sec": 4.083,
@@ -419,31 +419,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_13e95e57_8c30_45e9_8362_152407c208d2.mp4",
-    "transition_sec": 2.974,
+    "transition_sec": 2.87,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 2.922,
+        "end_sec": 2.817,
         "start_frame": 0,
-        "end_frame": 56,
-        "face_sim": 0.733,
+        "end_frame": 54,
+        "face_sim": 0.734,
         "label": "person"
       },
       {
-        "start_sec": 2.974,
-        "end_sec": 5.426,
-        "start_frame": 57,
-        "end_frame": 104,
+        "start_sec": 2.87,
+        "end_sec": 5.322,
+        "start_frame": 55,
+        "end_frame": 102,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.478,
-        "end_sec": 12.782,
-        "start_frame": 105,
-        "end_frame": 245,
+        "start_sec": 5.374,
+        "end_sec": 12.73,
+        "start_frame": 103,
+        "end_frame": 244,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -462,7 +462,7 @@
         "start_frame": 0,
         "end_frame": 241,
         "face_sim": 0.21,
-        "label": "meme"
+        "label": "person"
       }
     ],
     "qa_image": null
@@ -556,17 +556,17 @@
       },
       {
         "start_sec": 3.5,
-        "end_sec": 4.375,
+        "end_sec": 4.333,
         "start_frame": 84,
-        "end_frame": 105,
-        "face_sim": 0.659,
+        "end_frame": 104,
+        "face_sim": 0.692,
         "label": "person"
       },
       {
-        "start_sec": 4.417,
-        "end_sec": 7.167,
-        "start_frame": 106,
-        "end_frame": 172,
+        "start_sec": 4.375,
+        "end_sec": 7.125,
+        "start_frame": 105,
+        "end_frame": 171,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -575,47 +575,47 @@
   },
   {
     "clip": "tikcdn_beubagah_com_1ac4cd02_265c_43e6_bd69_d9002152f9a4.mp4",
-    "transition_sec": 3.9,
+    "transition_sec": 3.867,
     "method": "creator_to_meme",
     "num_shots": 5,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.867,
+        "end_sec": 3.833,
         "start_frame": 0,
-        "end_frame": 116,
+        "end_frame": 115,
         "face_sim": 0.629,
         "label": "person"
       },
       {
-        "start_sec": 3.9,
-        "end_sec": 5.4,
-        "start_frame": 117,
-        "end_frame": 162,
+        "start_sec": 3.867,
+        "end_sec": 5.367,
+        "start_frame": 116,
+        "end_frame": 161,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.433,
-        "end_sec": 6.5,
-        "start_frame": 163,
-        "end_frame": 195,
+        "start_sec": 5.4,
+        "end_sec": 6.467,
+        "start_frame": 162,
+        "end_frame": 194,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 6.533,
-        "end_sec": 7.333,
-        "start_frame": 196,
-        "end_frame": 220,
+        "start_sec": 6.5,
+        "end_sec": 7.3,
+        "start_frame": 195,
+        "end_frame": 219,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.367,
-        "end_sec": 8.133,
-        "start_frame": 221,
-        "end_frame": 244,
+        "start_sec": 7.333,
+        "end_sec": 8.1,
+        "start_frame": 220,
+        "end_frame": 243,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -649,39 +649,39 @@
   },
   {
     "clip": "tikcdn_beubagah_com_23aa8019_7d03_401d_9508_e1fe1893180c.mp4",
-    "transition_sec": 3.7,
+    "transition_sec": 3.667,
     "method": "creator_to_meme",
     "num_shots": 4,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.667,
+        "end_sec": 3.633,
         "start_frame": 0,
-        "end_frame": 110,
-        "face_sim": 0.657,
+        "end_frame": 109,
+        "face_sim": 0.676,
         "label": "person"
       },
       {
-        "start_sec": 3.7,
-        "end_sec": 4.5,
-        "start_frame": 111,
-        "end_frame": 135,
-        "face_sim": 0.054,
+        "start_sec": 3.667,
+        "end_sec": 4.467,
+        "start_frame": 110,
+        "end_frame": 134,
+        "face_sim": 0.061,
         "label": "meme"
       },
       {
-        "start_sec": 4.533,
-        "end_sec": 8.933,
-        "start_frame": 136,
-        "end_frame": 268,
+        "start_sec": 4.5,
+        "end_sec": 8.9,
+        "start_frame": 135,
+        "end_frame": 267,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.967,
-        "end_sec": 10.267,
-        "start_frame": 269,
-        "end_frame": 308,
+        "start_sec": 8.933,
+        "end_sec": 10.233,
+        "start_frame": 268,
+        "end_frame": 307,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -704,9 +704,9 @@
       },
       {
         "start_sec": 4.391,
-        "end_sec": 8.177,
+        "end_sec": 8.139,
         "start_frame": 116,
-        "end_frame": 216,
+        "end_frame": 215,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -715,127 +715,127 @@
   },
   {
     "clip": "tikcdn_beubagah_com_2649196c_7bc3_447f_a26f_3f90952618b3.mp4",
-    "transition_sec": 6.333,
+    "transition_sec": 6.3,
     "method": "creator_to_meme",
     "num_shots": 15,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 6.267,
+        "end_sec": 6.233,
         "start_frame": 0,
-        "end_frame": 188,
-        "face_sim": 0.449,
+        "end_frame": 187,
+        "face_sim": 0.429,
         "label": "person"
       },
       {
-        "start_sec": 6.333,
-        "end_sec": 7.067,
-        "start_frame": 190,
-        "end_frame": 212,
+        "start_sec": 6.3,
+        "end_sec": 7.033,
+        "start_frame": 189,
+        "end_frame": 211,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.1,
-        "end_sec": 7.4,
-        "start_frame": 213,
-        "end_frame": 222,
+        "start_sec": 7.067,
+        "end_sec": 7.367,
+        "start_frame": 212,
+        "end_frame": 221,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.433,
-        "end_sec": 7.767,
-        "start_frame": 223,
-        "end_frame": 233,
+        "start_sec": 7.4,
+        "end_sec": 7.733,
+        "start_frame": 222,
+        "end_frame": 232,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.8,
-        "end_sec": 8.167,
-        "start_frame": 234,
-        "end_frame": 245,
+        "start_sec": 7.767,
+        "end_sec": 8.133,
+        "start_frame": 233,
+        "end_frame": 244,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.2,
-        "end_sec": 8.533,
-        "start_frame": 246,
-        "end_frame": 256,
+        "start_sec": 8.167,
+        "end_sec": 8.5,
+        "start_frame": 245,
+        "end_frame": 255,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.567,
-        "end_sec": 9.333,
-        "start_frame": 257,
-        "end_frame": 280,
+        "start_sec": 8.533,
+        "end_sec": 9.3,
+        "start_frame": 256,
+        "end_frame": 279,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 9.367,
-        "end_sec": 9.733,
-        "start_frame": 281,
-        "end_frame": 292,
+        "start_sec": 9.333,
+        "end_sec": 9.7,
+        "start_frame": 280,
+        "end_frame": 291,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 9.767,
-        "end_sec": 10.1,
-        "start_frame": 293,
-        "end_frame": 303,
+        "start_sec": 9.733,
+        "end_sec": 10.067,
+        "start_frame": 292,
+        "end_frame": 302,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 10.133,
-        "end_sec": 10.5,
-        "start_frame": 304,
-        "end_frame": 315,
+        "start_sec": 10.1,
+        "end_sec": 10.467,
+        "start_frame": 303,
+        "end_frame": 314,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 10.533,
-        "end_sec": 10.867,
-        "start_frame": 316,
-        "end_frame": 326,
+        "start_sec": 10.5,
+        "end_sec": 10.833,
+        "start_frame": 315,
+        "end_frame": 325,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 10.9,
-        "end_sec": 11.267,
-        "start_frame": 327,
-        "end_frame": 338,
+        "start_sec": 10.867,
+        "end_sec": 11.233,
+        "start_frame": 326,
+        "end_frame": 337,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 11.3,
-        "end_sec": 11.933,
-        "start_frame": 339,
-        "end_frame": 358,
+        "start_sec": 11.267,
+        "end_sec": 11.9,
+        "start_frame": 338,
+        "end_frame": 357,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 11.967,
-        "end_sec": 12.267,
-        "start_frame": 359,
-        "end_frame": 368,
+        "start_sec": 11.933,
+        "end_sec": 12.233,
+        "start_frame": 358,
+        "end_frame": 367,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 12.3,
-        "end_sec": 12.567,
-        "start_frame": 369,
-        "end_frame": 377,
+        "start_sec": 12.267,
+        "end_sec": 12.533,
+        "start_frame": 368,
+        "end_frame": 376,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -877,24 +877,24 @@
   },
   {
     "clip": "tikcdn_beubagah_com_2ec0e70e_e679_470f_bccd_e6c062af6bcc.mp4",
-    "transition_sec": 4.405,
+    "transition_sec": 4.335,
     "method": "creator_to_meme",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 4.37,
+        "end_sec": 4.301,
         "start_frame": 0,
-        "end_frame": 126,
-        "face_sim": 0.744,
+        "end_frame": 124,
+        "face_sim": 0.734,
         "label": "person"
       },
       {
-        "start_sec": 4.405,
-        "end_sec": 8.324,
-        "start_frame": 127,
-        "end_frame": 240,
-        "face_sim": 0.034,
+        "start_sec": 4.335,
+        "end_sec": 8.254,
+        "start_frame": 125,
+        "end_frame": 238,
+        "face_sim": 0.029,
         "label": "meme"
       }
     ],
@@ -916,16 +916,16 @@
       },
       {
         "start_sec": 3.267,
-        "end_sec": 3.8,
+        "end_sec": 3.767,
         "start_frame": 98,
-        "end_frame": 114,
+        "end_frame": 113,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 3.833,
+        "start_sec": 3.8,
         "end_sec": 5.3,
-        "start_frame": 115,
+        "start_frame": 114,
         "end_frame": 159,
         "face_sim": 0.0,
         "label": "meme"
@@ -1107,31 +1107,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_3bdc1c7e_1db0_422f_a714_0b9bf76f76fa.mp4",
-    "transition_sec": 3.25,
+    "transition_sec": 1.99,
     "method": "creator_to_meme_softcut",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.667,
+        "end_sec": 3.633,
         "start_frame": 0,
-        "end_frame": 110,
+        "end_frame": 109,
         "face_sim": 0.508,
         "label": "person"
       },
       {
-        "start_sec": 3.7,
-        "end_sec": 4.5,
-        "start_frame": 111,
-        "end_frame": 135,
+        "start_sec": 3.667,
+        "end_sec": 4.467,
+        "start_frame": 110,
+        "end_frame": 134,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.567,
-        "end_sec": 8.533,
-        "start_frame": 137,
-        "end_frame": 256,
+        "start_sec": 4.533,
+        "end_sec": 8.5,
+        "start_frame": 136,
+        "end_frame": 255,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -1245,64 +1245,64 @@
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.3,
+        "end_sec": 3.267,
         "start_frame": 0,
-        "end_frame": 99,
-        "face_sim": 0.696,
+        "end_frame": 98,
+        "face_sim": 0.697,
         "label": "person"
       },
       {
         "start_sec": 3.333,
-        "end_sec": 4.133,
+        "end_sec": 4.1,
         "start_frame": 100,
-        "end_frame": 124,
+        "end_frame": 123,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.167,
-        "end_sec": 5.8,
-        "start_frame": 125,
-        "end_frame": 174,
+        "start_sec": 4.133,
+        "end_sec": 5.767,
+        "start_frame": 124,
+        "end_frame": 173,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.833,
-        "end_sec": 6.767,
-        "start_frame": 175,
-        "end_frame": 203,
+        "start_sec": 5.8,
+        "end_sec": 6.733,
+        "start_frame": 174,
+        "end_frame": 202,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 6.8,
-        "end_sec": 7.667,
-        "start_frame": 204,
-        "end_frame": 230,
+        "start_sec": 6.767,
+        "end_sec": 7.633,
+        "start_frame": 203,
+        "end_frame": 229,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.7,
-        "end_sec": 8.733,
-        "start_frame": 231,
-        "end_frame": 262,
+        "start_sec": 7.667,
+        "end_sec": 8.7,
+        "start_frame": 230,
+        "end_frame": 261,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.767,
-        "end_sec": 10.3,
-        "start_frame": 263,
-        "end_frame": 309,
+        "start_sec": 8.733,
+        "end_sec": 10.267,
+        "start_frame": 262,
+        "end_frame": 308,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 10.333,
+        "start_sec": 10.3,
         "end_sec": 11.633,
-        "start_frame": 310,
+        "start_frame": 309,
         "end_frame": 349,
         "face_sim": 0.0,
         "label": "meme"
@@ -1384,9 +1384,9 @@
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 4.133,
+        "end_sec": 4.167,
         "start_frame": 0,
-        "end_frame": 124,
+        "end_frame": 125,
         "face_sim": 0.579,
         "label": "person"
       },
@@ -1646,81 +1646,81 @@
       },
       {
         "start_sec": 5.567,
-        "end_sec": 13.067,
+        "end_sec": 13.033,
         "start_frame": 167,
-        "end_frame": 392,
+        "end_frame": 391,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 13.1,
-        "end_sec": 13.833,
-        "start_frame": 393,
-        "end_frame": 415,
+        "start_sec": 13.067,
+        "end_sec": 13.8,
+        "start_frame": 392,
+        "end_frame": 414,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 13.867,
-        "end_sec": 17.667,
-        "start_frame": 416,
-        "end_frame": 530,
+        "start_sec": 13.833,
+        "end_sec": 17.633,
+        "start_frame": 415,
+        "end_frame": 529,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 17.7,
-        "end_sec": 19.633,
-        "start_frame": 531,
-        "end_frame": 589,
+        "start_sec": 17.667,
+        "end_sec": 19.6,
+        "start_frame": 530,
+        "end_frame": 588,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 19.667,
-        "end_sec": 22.8,
-        "start_frame": 590,
-        "end_frame": 684,
+        "start_sec": 19.633,
+        "end_sec": 22.767,
+        "start_frame": 589,
+        "end_frame": 683,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 22.833,
-        "end_sec": 29.233,
-        "start_frame": 685,
-        "end_frame": 877,
+        "start_sec": 22.8,
+        "end_sec": 29.167,
+        "start_frame": 684,
+        "end_frame": 875,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 29.267,
-        "end_sec": 32.967,
-        "start_frame": 878,
-        "end_frame": 989,
+        "start_sec": 29.2,
+        "end_sec": 32.9,
+        "start_frame": 876,
+        "end_frame": 987,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 33.0,
-        "end_sec": 38.467,
-        "start_frame": 990,
-        "end_frame": 1154,
-        "face_sim": 0.018,
-        "label": "meme"
-      },
-      {
-        "start_sec": 38.5,
-        "end_sec": 41.4,
-        "start_frame": 1155,
-        "end_frame": 1242,
+        "start_sec": 32.933,
+        "end_sec": 38.4,
+        "start_frame": 988,
+        "end_frame": 1152,
         "face_sim": 0.064,
         "label": "meme"
       },
       {
-        "start_sec": 41.433,
-        "end_sec": 45.5,
-        "start_frame": 1243,
-        "end_frame": 1365,
+        "start_sec": 38.433,
+        "end_sec": 41.333,
+        "start_frame": 1153,
+        "end_frame": 1240,
+        "face_sim": 0.072,
+        "label": "meme"
+      },
+      {
+        "start_sec": 41.367,
+        "end_sec": 45.433,
+        "start_frame": 1241,
+        "end_frame": 1363,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -1808,17 +1808,17 @@
       },
       {
         "start_sec": 6.625,
-        "end_sec": 7.958,
+        "end_sec": 7.917,
         "start_frame": 159,
-        "end_frame": 191,
+        "end_frame": 190,
         "face_sim": 0.683,
         "label": "person"
       },
       {
-        "start_sec": 8.0,
-        "end_sec": 10.5,
-        "start_frame": 192,
-        "end_frame": 252,
+        "start_sec": 7.958,
+        "end_sec": 10.458,
+        "start_frame": 191,
+        "end_frame": 251,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -1837,7 +1837,7 @@
         "start_frame": 0,
         "end_frame": 232,
         "face_sim": 0.195,
-        "label": "meme"
+        "label": "person"
       }
     ],
     "qa_image": null
@@ -1907,25 +1907,25 @@
       },
       {
         "start_sec": 5.186,
-        "end_sec": 6.17,
+        "end_sec": 6.132,
         "start_frame": 137,
-        "end_frame": 163,
+        "end_frame": 162,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 6.246,
-        "end_sec": 7.268,
-        "start_frame": 165,
-        "end_frame": 192,
+        "start_sec": 6.208,
+        "end_sec": 7.23,
+        "start_frame": 164,
+        "end_frame": 191,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.344,
-        "end_sec": 8.29,
-        "start_frame": 194,
-        "end_frame": 219,
+        "start_sec": 7.306,
+        "end_sec": 8.252,
+        "start_frame": 193,
+        "end_frame": 218,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -1948,9 +1948,9 @@
       },
       {
         "start_sec": 4.509,
-        "end_sec": 7.977,
+        "end_sec": 7.942,
         "start_frame": 130,
-        "end_frame": 230,
+        "end_frame": 229,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -2233,17 +2233,17 @@
       },
       {
         "start_sec": 7.533,
-        "end_sec": 8.7,
+        "end_sec": 8.667,
         "start_frame": 226,
-        "end_frame": 261,
+        "end_frame": 260,
         "face_sim": 0.053,
         "label": "meme"
       },
       {
-        "start_sec": 8.733,
-        "end_sec": 9.633,
-        "start_frame": 262,
-        "end_frame": 289,
+        "start_sec": 8.7,
+        "end_sec": 9.6,
+        "start_frame": 261,
+        "end_frame": 288,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -2298,9 +2298,9 @@
       },
       {
         "start_sec": 9.236,
-        "end_sec": 11.546,
+        "end_sec": 11.508,
         "start_frame": 244,
-        "end_frame": 305,
+        "end_frame": 304,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -2311,7 +2311,7 @@
     "clip": "tikcdn_beubagah_com_702e9fbb_d05f_4bb9_ab07_9a9c5c11adb1.mp4",
     "transition_sec": 4.231,
     "method": "creator_to_meme",
-    "num_shots": 5,
+    "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
@@ -2331,25 +2331,9 @@
       },
       {
         "start_sec": 4.231,
-        "end_sec": 5.723,
+        "end_sec": 8.428,
         "start_frame": 122,
-        "end_frame": 165,
-        "face_sim": 0.0,
-        "label": "meme"
-      },
-      {
-        "start_sec": 5.757,
-        "end_sec": 7.873,
-        "start_frame": 166,
-        "end_frame": 227,
-        "face_sim": 0.0,
-        "label": "meme"
-      },
-      {
-        "start_sec": 7.908,
-        "end_sec": 8.463,
-        "start_frame": 228,
-        "end_frame": 244,
+        "end_frame": 243,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -2391,31 +2375,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_72469ee4_453c_44a5_a4d4_5de57de9793c.mp4",
-    "transition_sec": 3.467,
+    "transition_sec": 3.433,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.4,
+        "end_sec": 3.367,
         "start_frame": 0,
-        "end_frame": 102,
+        "end_frame": 101,
         "face_sim": 0.697,
         "label": "person"
       },
       {
-        "start_sec": 3.467,
-        "end_sec": 4.2,
-        "start_frame": 104,
-        "end_frame": 126,
+        "start_sec": 3.433,
+        "end_sec": 4.167,
+        "start_frame": 103,
+        "end_frame": 125,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.267,
-        "end_sec": 8.533,
-        "start_frame": 128,
-        "end_frame": 256,
+        "start_sec": 4.233,
+        "end_sec": 8.5,
+        "start_frame": 127,
+        "end_frame": 255,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -2541,7 +2525,7 @@
         "start_frame": 0,
         "end_frame": 95,
         "face_sim": 0.0,
-        "label": "meme"
+        "label": "person"
       },
       {
         "start_sec": 3.634,
@@ -2549,13 +2533,13 @@
         "start_frame": 96,
         "end_frame": 117,
         "face_sim": 0.397,
-        "label": "person"
+        "label": "meme"
       },
       {
         "start_sec": 4.467,
-        "end_sec": 8.025,
+        "end_sec": 7.987,
         "start_frame": 118,
-        "end_frame": 212,
+        "end_frame": 211,
         "face_sim": 0.024,
         "label": "meme"
       }
@@ -2564,22 +2548,22 @@
   },
   {
     "clip": "tikcdn_beubagah_com_77465bcc_cf7a_4279_9a67_2bf6f1dda696.mp4",
-    "transition_sec": 3.6,
+    "transition_sec": 3.567,
     "method": "creator_to_meme",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.567,
+        "end_sec": 3.533,
         "start_frame": 0,
-        "end_frame": 107,
+        "end_frame": 106,
         "face_sim": 0.575,
         "label": "person"
       },
       {
-        "start_sec": 3.6,
+        "start_sec": 3.567,
         "end_sec": 8.567,
-        "start_frame": 108,
+        "start_frame": 107,
         "end_frame": 257,
         "face_sim": 0.0,
         "label": "meme"
@@ -2622,32 +2606,32 @@
   },
   {
     "clip": "tikcdn_beubagah_com_78c3c96b_bded_4c03_bea4_d0e89d8933c2.mp4",
-    "transition_sec": 3.033,
+    "transition_sec": 3.0,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 2.967,
+        "end_sec": 2.933,
         "start_frame": 0,
-        "end_frame": 89,
-        "face_sim": 0.625,
+        "end_frame": 88,
+        "face_sim": 0.63,
         "label": "person"
       },
       {
-        "start_sec": 3.033,
-        "end_sec": 9.9,
-        "start_frame": 91,
-        "end_frame": 297,
+        "start_sec": 3.0,
+        "end_sec": 9.867,
+        "start_frame": 90,
+        "end_frame": 296,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 9.933,
-        "end_sec": 10.467,
-        "start_frame": 298,
-        "end_frame": 314,
-        "face_sim": 0.047,
+        "start_sec": 9.9,
+        "end_sec": 10.433,
+        "start_frame": 297,
+        "end_frame": 313,
+        "face_sim": 0.06,
         "label": "meme"
       }
     ],
@@ -2710,41 +2694,41 @@
       },
       {
         "start_sec": 3.567,
-        "end_sec": 9.367,
+        "end_sec": 9.333,
         "start_frame": 107,
-        "end_frame": 281,
+        "end_frame": 280,
         "face_sim": 0.071,
         "label": "meme"
       },
       {
-        "start_sec": 9.4,
-        "end_sec": 9.9,
-        "start_frame": 282,
-        "end_frame": 297,
-        "face_sim": 0.086,
+        "start_sec": 9.367,
+        "end_sec": 9.867,
+        "start_frame": 281,
+        "end_frame": 296,
+        "face_sim": 0.225,
         "label": "meme"
       },
       {
-        "start_sec": 9.933,
-        "end_sec": 10.667,
-        "start_frame": 298,
-        "end_frame": 320,
-        "face_sim": 0.082,
+        "start_sec": 9.9,
+        "end_sec": 10.633,
+        "start_frame": 297,
+        "end_frame": 319,
+        "face_sim": 0.077,
         "label": "meme"
       },
       {
-        "start_sec": 10.7,
-        "end_sec": 11.4,
-        "start_frame": 321,
-        "end_frame": 342,
-        "face_sim": 0.239,
+        "start_sec": 10.667,
+        "end_sec": 11.367,
+        "start_frame": 320,
+        "end_frame": 341,
+        "face_sim": 0.232,
         "label": "meme"
       },
       {
-        "start_sec": 11.433,
-        "end_sec": 12.367,
-        "start_frame": 343,
-        "end_frame": 371,
+        "start_sec": 11.4,
+        "end_sec": 12.333,
+        "start_frame": 342,
+        "end_frame": 370,
         "face_sim": 0.169,
         "label": "meme"
       }
@@ -2753,63 +2737,63 @@
   },
   {
     "clip": "tikcdn_beubagah_com_7f96c003_6a92_4dcc_9705_28ebed932956.mp4",
-    "transition_sec": 3.433,
+    "transition_sec": 3.4,
     "method": "creator_to_meme",
     "num_shots": 7,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.4,
+        "end_sec": 3.333,
         "start_frame": 0,
-        "end_frame": 102,
-        "face_sim": 0.697,
+        "end_frame": 100,
+        "face_sim": 0.699,
         "label": "person"
       },
       {
-        "start_sec": 3.433,
-        "end_sec": 4.233,
-        "start_frame": 103,
-        "end_frame": 127,
-        "face_sim": 0.054,
+        "start_sec": 3.4,
+        "end_sec": 4.2,
+        "start_frame": 102,
+        "end_frame": 126,
+        "face_sim": 0.03,
         "label": "meme"
       },
       {
-        "start_sec": 4.267,
-        "end_sec": 5.967,
-        "start_frame": 128,
-        "end_frame": 179,
-        "face_sim": 0.031,
+        "start_sec": 4.233,
+        "end_sec": 5.933,
+        "start_frame": 127,
+        "end_frame": 178,
+        "face_sim": 0.029,
         "label": "meme"
       },
       {
-        "start_sec": 6.0,
-        "end_sec": 7.867,
-        "start_frame": 180,
-        "end_frame": 236,
+        "start_sec": 5.967,
+        "end_sec": 7.833,
+        "start_frame": 179,
+        "end_frame": 235,
         "face_sim": 0.052,
         "label": "meme"
       },
       {
-        "start_sec": 7.9,
-        "end_sec": 9.733,
-        "start_frame": 237,
-        "end_frame": 292,
+        "start_sec": 7.867,
+        "end_sec": 9.7,
+        "start_frame": 236,
+        "end_frame": 291,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 9.767,
-        "end_sec": 11.567,
-        "start_frame": 293,
-        "end_frame": 347,
-        "face_sim": 0.084,
+        "start_sec": 9.733,
+        "end_sec": 11.533,
+        "start_frame": 292,
+        "end_frame": 346,
+        "face_sim": 0.066,
         "label": "meme"
       },
       {
-        "start_sec": 11.6,
-        "end_sec": 13.133,
-        "start_frame": 348,
-        "end_frame": 394,
+        "start_sec": 11.567,
+        "end_sec": 13.1,
+        "start_frame": 347,
+        "end_frame": 393,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3101,33 +3085,33 @@
       },
       {
         "start_sec": 4.033,
-        "end_sec": 5.8,
+        "end_sec": 5.767,
         "start_frame": 121,
-        "end_frame": 174,
+        "end_frame": 173,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.833,
-        "end_sec": 6.967,
-        "start_frame": 175,
-        "end_frame": 209,
+        "start_sec": 5.8,
+        "end_sec": 6.933,
+        "start_frame": 174,
+        "end_frame": 208,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.0,
+        "start_sec": 6.967,
         "end_sec": 7.867,
-        "start_frame": 210,
+        "start_frame": 209,
         "end_frame": 236,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
         "start_sec": 7.9,
-        "end_sec": 8.0,
+        "end_sec": 7.967,
         "start_frame": 237,
-        "end_frame": 240,
+        "end_frame": 239,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3258,33 +3242,33 @@
       },
       {
         "start_sec": 3.933,
-        "end_sec": 4.633,
+        "end_sec": 4.6,
         "start_frame": 118,
-        "end_frame": 139,
-        "face_sim": 0.007,
+        "end_frame": 138,
+        "face_sim": 0.002,
         "label": "meme"
       },
       {
-        "start_sec": 4.667,
-        "end_sec": 5.667,
-        "start_frame": 140,
-        "end_frame": 170,
+        "start_sec": 4.633,
+        "end_sec": 5.633,
+        "start_frame": 139,
+        "end_frame": 169,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.7,
-        "end_sec": 7.133,
-        "start_frame": 171,
-        "end_frame": 214,
+        "start_sec": 5.667,
+        "end_sec": 7.1,
+        "start_frame": 170,
+        "end_frame": 213,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.167,
-        "end_sec": 8.8,
-        "start_frame": 215,
-        "end_frame": 264,
+        "start_sec": 7.133,
+        "end_sec": 8.767,
+        "start_frame": 214,
+        "end_frame": 263,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3326,23 +3310,23 @@
   },
   {
     "clip": "tikcdn_beubagah_com_995408c9_55e2_4495_985c_e88f36627149.mp4",
-    "transition_sec": 3.698,
+    "transition_sec": 3.67,
     "method": "creator_to_meme_softcut",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 4.3,
+        "end_sec": 4.267,
         "start_frame": 0,
-        "end_frame": 129,
-        "face_sim": 0.69,
+        "end_frame": 128,
+        "face_sim": 0.685,
         "label": "person"
       },
       {
-        "start_sec": 4.333,
-        "end_sec": 8.267,
-        "start_frame": 130,
-        "end_frame": 248,
+        "start_sec": 4.3,
+        "end_sec": 8.233,
+        "start_frame": 129,
+        "end_frame": 247,
         "face_sim": 0.026,
         "label": "meme"
       }
@@ -3351,30 +3335,30 @@
   },
   {
     "clip": "tikcdn_beubagah_com_a2dca28e_e31e_4de6_b929_43c22239998e.mp4",
-    "transition_sec": 3.567,
+    "transition_sec": 3.533,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.533,
+        "end_sec": 3.5,
         "start_frame": 0,
-        "end_frame": 106,
+        "end_frame": 105,
         "face_sim": 0.621,
         "label": "person"
       },
       {
-        "start_sec": 3.567,
-        "end_sec": 5.533,
-        "start_frame": 107,
-        "end_frame": 166,
+        "start_sec": 3.533,
+        "end_sec": 5.5,
+        "start_frame": 106,
+        "end_frame": 165,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.567,
+        "start_sec": 5.533,
         "end_sec": 8.0,
-        "start_frame": 167,
+        "start_frame": 166,
         "end_frame": 240,
         "face_sim": 0.0,
         "label": "meme"
@@ -3527,34 +3511,34 @@
         "label": "person"
       },
       {
-        "start_sec": 3.156,
-        "end_sec": 4.856,
-        "start_frame": 91,
-        "end_frame": 140,
+        "start_sec": 3.121,
+        "end_sec": 4.821,
+        "start_frame": 90,
+        "end_frame": 139,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.89,
-        "end_sec": 6.694,
-        "start_frame": 141,
-        "end_frame": 193,
+        "start_sec": 4.856,
+        "end_sec": 6.659,
+        "start_frame": 140,
+        "end_frame": 192,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 6.728,
-        "end_sec": 8.15,
-        "start_frame": 194,
-        "end_frame": 235,
+        "start_sec": 6.694,
+        "end_sec": 8.116,
+        "start_frame": 193,
+        "end_frame": 234,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.185,
-        "end_sec": 10.023,
-        "start_frame": 236,
-        "end_frame": 289,
+        "start_sec": 8.15,
+        "end_sec": 9.989,
+        "start_frame": 235,
+        "end_frame": 288,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3563,31 +3547,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_ac83c044_9a91_4407_932c_909baee3b0ac.mp4",
-    "transition_sec": 3.567,
+    "transition_sec": 3.533,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.533,
+        "end_sec": 3.5,
         "start_frame": 0,
-        "end_frame": 106,
+        "end_frame": 105,
         "face_sim": 0.679,
         "label": "person"
       },
       {
-        "start_sec": 3.567,
-        "end_sec": 4.3,
-        "start_frame": 107,
-        "end_frame": 129,
+        "start_sec": 3.533,
+        "end_sec": 4.267,
+        "start_frame": 106,
+        "end_frame": 128,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.367,
-        "end_sec": 8.2,
-        "start_frame": 131,
-        "end_frame": 246,
+        "start_sec": 4.333,
+        "end_sec": 8.167,
+        "start_frame": 130,
+        "end_frame": 245,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3596,9 +3580,9 @@
   },
   {
     "clip": "tikcdn_beubagah_com_acbc1b97_0e37_4a98_b32e_677dcd2a702f.mp4",
-    "transition_sec": 5.478,
+    "transition_sec": 4.8,
     "method": "creator_to_meme",
-    "num_shots": 3,
+    "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
@@ -3610,17 +3594,9 @@
       },
       {
         "start_sec": 4.8,
-        "end_sec": 5.426,
+        "end_sec": 8.139,
         "start_frame": 92,
-        "end_frame": 104,
-        "face_sim": 0.554,
-        "label": "person"
-      },
-      {
-        "start_sec": 5.478,
-        "end_sec": 8.191,
-        "start_frame": 105,
-        "end_frame": 157,
+        "end_frame": 156,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3643,17 +3619,17 @@
       },
       {
         "start_sec": 3.4,
-        "end_sec": 6.367,
+        "end_sec": 6.333,
         "start_frame": 102,
-        "end_frame": 191,
+        "end_frame": 190,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 6.4,
-        "end_sec": 6.8,
-        "start_frame": 192,
-        "end_frame": 204,
+        "start_sec": 6.367,
+        "end_sec": 6.767,
+        "start_frame": 191,
+        "end_frame": 203,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -3663,7 +3639,7 @@
   {
     "clip": "tikcdn_beubagah_com_ae3aabd1_8646_4adf_958f_74c5c4e9472c.mp4",
     "transition_sec": null,
-    "method": "single_shot_creator",
+    "method": "all_meme_no_creator",
     "num_shots": 1,
     "shots": [
       {
@@ -3679,23 +3655,23 @@
   },
   {
     "clip": "tikcdn_beubagah_com_af64c005_5187_4acb_a03b_48f587e6637e.mp4",
-    "transition_sec": 3.733,
+    "transition_sec": 3.7,
     "method": "creator_to_meme",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.667,
+        "end_sec": 3.633,
         "start_frame": 0,
-        "end_frame": 110,
+        "end_frame": 109,
         "face_sim": 0.754,
         "label": "person"
       },
       {
-        "start_sec": 3.733,
-        "end_sec": 8.467,
-        "start_frame": 112,
-        "end_frame": 254,
+        "start_sec": 3.7,
+        "end_sec": 8.433,
+        "start_frame": 111,
+        "end_frame": 253,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -4001,48 +3977,64 @@
   },
   {
     "clip": "tikcdn_beubagah_com_c67e03e1_84ca_4697_a2d2_bb3b6ffa704b.mp4",
-    "transition_sec": null,
-    "method": "single_shot_creator",
-    "num_shots": 1,
+    "transition_sec": 3.867,
+    "method": "creator_to_meme_prior",
+    "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 7.933,
+        "end_sec": 3.8,
         "start_frame": 0,
-        "end_frame": 238,
+        "end_frame": 114,
+        "face_sim": 0.21,
+        "label": "person"
+      },
+      {
+        "start_sec": 3.867,
+        "end_sec": 4.3,
+        "start_frame": 116,
+        "end_frame": 129,
         "face_sim": 0.0,
+        "label": "meme"
+      },
+      {
+        "start_sec": 4.333,
+        "end_sec": 7.933,
+        "start_frame": 130,
+        "end_frame": 238,
+        "face_sim": 0.03,
         "label": "meme"
       }
     ],
-    "qa_image": null
+    "qa_image": "bb3b6ffa704b_transition.png"
   },
   {
     "clip": "tikcdn_beubagah_com_c7092616_603c_4b78_beed_cdbbccec2cbf.mp4",
-    "transition_sec": 3.733,
+    "transition_sec": 3.7,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.7,
+        "end_sec": 3.667,
         "start_frame": 0,
-        "end_frame": 111,
+        "end_frame": 110,
         "face_sim": 0.712,
         "label": "person"
       },
       {
-        "start_sec": 3.733,
-        "end_sec": 4.467,
-        "start_frame": 112,
-        "end_frame": 134,
+        "start_sec": 3.7,
+        "end_sec": 4.433,
+        "start_frame": 111,
+        "end_frame": 133,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.533,
-        "end_sec": 8.067,
-        "start_frame": 136,
-        "end_frame": 242,
+        "start_sec": 4.5,
+        "end_sec": 8.033,
+        "start_frame": 135,
+        "end_frame": 241,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -4247,22 +4239,22 @@
   },
   {
     "clip": "tikcdn_beubagah_com_cf939912_8167_4abd_859d_4524f14810ff.mp4",
-    "transition_sec": 3.433,
+    "transition_sec": 3.4,
     "method": "creator_to_meme",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.367,
+        "end_sec": 3.333,
         "start_frame": 0,
-        "end_frame": 101,
-        "face_sim": 0.603,
+        "end_frame": 100,
+        "face_sim": 0.615,
         "label": "person"
       },
       {
-        "start_sec": 3.433,
+        "start_sec": 3.4,
         "end_sec": 9.933,
-        "start_frame": 103,
+        "start_frame": 102,
         "end_frame": 298,
         "face_sim": 0.0,
         "label": "meme"
@@ -4272,32 +4264,32 @@
   },
   {
     "clip": "tikcdn_beubagah_com_d93702c4_6e69_44ca_8e0c_95608bbfcd4a.mp4",
-    "transition_sec": 3.3,
+    "transition_sec": 3.267,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.267,
+        "end_sec": 3.233,
         "start_frame": 0,
-        "end_frame": 98,
-        "face_sim": 0.608,
+        "end_frame": 97,
+        "face_sim": 0.621,
         "label": "person"
       },
       {
-        "start_sec": 3.3,
-        "end_sec": 4.1,
-        "start_frame": 99,
-        "end_frame": 123,
+        "start_sec": 3.267,
+        "end_sec": 4.067,
+        "start_frame": 98,
+        "end_frame": 122,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.133,
-        "end_sec": 8.9,
-        "start_frame": 124,
-        "end_frame": 267,
-        "face_sim": 0.0,
+        "start_sec": 4.1,
+        "end_sec": 8.867,
+        "start_frame": 123,
+        "end_frame": 266,
+        "face_sim": 0.025,
         "label": "meme"
       }
     ],
@@ -4330,72 +4322,72 @@
   },
   {
     "clip": "tikcdn_beubagah_com_db78dc46_9f10_4a9a_90f5_d55177ca8da2.mp4",
-    "transition_sec": 3.933,
+    "transition_sec": 3.9,
     "method": "creator_to_meme",
     "num_shots": 8,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.867,
+        "end_sec": 3.833,
         "start_frame": 0,
-        "end_frame": 116,
+        "end_frame": 115,
         "face_sim": 0.518,
         "label": "person"
       },
       {
-        "start_sec": 3.933,
-        "end_sec": 4.767,
-        "start_frame": 118,
-        "end_frame": 143,
+        "start_sec": 3.9,
+        "end_sec": 4.733,
+        "start_frame": 117,
+        "end_frame": 142,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 4.8,
-        "end_sec": 5.633,
-        "start_frame": 144,
-        "end_frame": 169,
+        "start_sec": 4.767,
+        "end_sec": 5.6,
+        "start_frame": 143,
+        "end_frame": 168,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.667,
-        "end_sec": 6.533,
-        "start_frame": 170,
-        "end_frame": 196,
-        "face_sim": 0.008,
+        "start_sec": 5.633,
+        "end_sec": 6.5,
+        "start_frame": 169,
+        "end_frame": 195,
+        "face_sim": 0.009,
         "label": "meme"
       },
       {
-        "start_sec": 6.567,
-        "end_sec": 7.3,
-        "start_frame": 197,
-        "end_frame": 219,
+        "start_sec": 6.533,
+        "end_sec": 7.267,
+        "start_frame": 196,
+        "end_frame": 218,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.333,
-        "end_sec": 8.2,
-        "start_frame": 220,
-        "end_frame": 246,
+        "start_sec": 7.3,
+        "end_sec": 8.167,
+        "start_frame": 219,
+        "end_frame": 245,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.233,
-        "end_sec": 8.867,
-        "start_frame": 247,
-        "end_frame": 266,
+        "start_sec": 8.2,
+        "end_sec": 8.833,
+        "start_frame": 246,
+        "end_frame": 265,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 8.9,
-        "end_sec": 9.233,
-        "start_frame": 267,
-        "end_frame": 277,
-        "face_sim": 0.015,
+        "start_sec": 8.867,
+        "end_sec": 9.2,
+        "start_frame": 266,
+        "end_frame": 276,
+        "face_sim": 0.018,
         "label": "meme"
       }
     ],
@@ -4403,23 +4395,23 @@
   },
   {
     "clip": "tikcdn_beubagah_com_dc36d34b_3080_4822_bd93_98e52c3ab2d0.mp4",
-    "transition_sec": 3.433,
+    "transition_sec": 3.4,
     "method": "creator_to_meme",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.4,
+        "end_sec": 3.367,
         "start_frame": 0,
-        "end_frame": 102,
+        "end_frame": 101,
         "face_sim": 0.355,
         "label": "person"
       },
       {
-        "start_sec": 3.433,
-        "end_sec": 10.167,
-        "start_frame": 103,
-        "end_frame": 305,
+        "start_sec": 3.4,
+        "end_sec": 10.133,
+        "start_frame": 102,
+        "end_frame": 304,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -4428,31 +4420,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_e3b6086f_a73a_461b_b795_4e948bf533b1.mp4",
-    "transition_sec": 2.867,
+    "transition_sec": 2.833,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 2.833,
+        "end_sec": 2.8,
         "start_frame": 0,
-        "end_frame": 85,
+        "end_frame": 84,
         "face_sim": 0.712,
         "label": "person"
       },
       {
-        "start_sec": 2.867,
-        "end_sec": 3.667,
-        "start_frame": 86,
-        "end_frame": 110,
+        "start_sec": 2.833,
+        "end_sec": 3.633,
+        "start_frame": 85,
+        "end_frame": 109,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 3.7,
-        "end_sec": 8.067,
-        "start_frame": 111,
-        "end_frame": 242,
+        "start_sec": 3.667,
+        "end_sec": 8.033,
+        "start_frame": 110,
+        "end_frame": 241,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -4508,16 +4500,16 @@
       },
       {
         "start_sec": 4.24,
-        "end_sec": 5.148,
+        "end_sec": 5.11,
         "start_frame": 112,
-        "end_frame": 136,
+        "end_frame": 135,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 5.186,
+        "start_sec": 5.148,
         "end_sec": 5.716,
-        "start_frame": 137,
+        "start_frame": 136,
         "end_frame": 151,
         "face_sim": 0.0,
         "label": "meme"
@@ -4532,41 +4524,41 @@
       },
       {
         "start_sec": 6.246,
-        "end_sec": 6.738,
+        "end_sec": 6.7,
         "start_frame": 165,
-        "end_frame": 178,
+        "end_frame": 177,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 6.776,
-        "end_sec": 7.154,
-        "start_frame": 179,
-        "end_frame": 189,
+        "start_sec": 6.738,
+        "end_sec": 7.117,
+        "start_frame": 178,
+        "end_frame": 188,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 7.192,
+        "start_sec": 7.154,
         "end_sec": 7.722,
-        "start_frame": 190,
+        "start_frame": 189,
         "end_frame": 204,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
         "start_sec": 7.76,
-        "end_sec": 8.971,
+        "end_sec": 8.934,
         "start_frame": 205,
-        "end_frame": 237,
+        "end_frame": 236,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 9.009,
-        "end_sec": 9.009,
-        "start_frame": 238,
-        "end_frame": 238,
+        "start_sec": 8.971,
+        "end_sec": 8.971,
+        "start_frame": 237,
+        "end_frame": 237,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -4600,31 +4592,31 @@
   },
   {
     "clip": "tikcdn_beubagah_com_e9fdfc02_922a_4567_85a4_b55fc8505776.mp4",
-    "transition_sec": 3.0,
+    "transition_sec": 2.967,
     "method": "creator_to_meme",
     "num_shots": 3,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 2.967,
+        "end_sec": 2.933,
         "start_frame": 0,
-        "end_frame": 89,
+        "end_frame": 88,
         "face_sim": 0.664,
         "label": "person"
       },
       {
-        "start_sec": 3.0,
-        "end_sec": 3.8,
-        "start_frame": 90,
-        "end_frame": 114,
+        "start_sec": 2.967,
+        "end_sec": 3.767,
+        "start_frame": 89,
+        "end_frame": 113,
         "face_sim": 0.0,
         "label": "meme"
       },
       {
-        "start_sec": 3.833,
-        "end_sec": 8.967,
-        "start_frame": 115,
-        "end_frame": 269,
+        "start_sec": 3.8,
+        "end_sec": 8.933,
+        "start_frame": 114,
+        "end_frame": 268,
         "face_sim": 0.0,
         "label": "meme"
       }
@@ -4782,22 +4774,22 @@
   },
   {
     "clip": "tikcdn_beubagah_com_f7ad4e70_5f81_43ca_a8cc_8d05fb66b948.mp4",
-    "transition_sec": 3.867,
+    "transition_sec": 3.833,
     "method": "creator_to_meme",
     "num_shots": 2,
     "shots": [
       {
         "start_sec": 0.0,
-        "end_sec": 3.833,
+        "end_sec": 3.8,
         "start_frame": 0,
-        "end_frame": 115,
+        "end_frame": 114,
         "face_sim": 0.73,
         "label": "person"
       },
       {
-        "start_sec": 3.867,
+        "start_sec": 3.833,
         "end_sec": 7.967,
-        "start_frame": 116,
+        "start_frame": 115,
         "end_frame": 239,
         "face_sim": 0.0,
         "label": "meme"

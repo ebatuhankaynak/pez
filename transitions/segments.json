@@ -59,9 +59,9 @@
       },
       {
         "start": 5.667,
-        "end": 8.133,
+        "end": 8.1,
         "label": "person",
-        "dur": 2.466
+        "dur": 2.433
       }
     ]
   },
@@ -73,15 +73,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.833,
+        "end": 3.8,
         "label": "person",
-        "dur": 3.833
+        "dur": 3.8
       },
       {
-        "start": 3.833,
+        "start": 3.8,
         "end": 8.367,
         "label": "meme",
-        "dur": 4.534
+        "dur": 4.567
       }
     ]
   },
@@ -127,13 +127,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.367,
+        "end": 3.333,
         "label": "person",
-        "dur": 3.367
+        "dur": 3.333
       },
       {
-        "start": 3.367,
-        "end": 11.767,
+        "start": 3.333,
+        "end": 11.733,
         "label": "meme",
         "dur": 8.4
       }
@@ -207,15 +207,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 2.974,
+        "end": 2.87,
         "label": "person",
-        "dur": 2.974
+        "dur": 2.87
       },
       {
-        "start": 2.974,
-        "end": 12.782,
+        "start": 2.87,
+        "end": 12.73,
         "label": "meme",
-        "dur": 9.808
+        "dur": 9.86
       }
     ]
   },
@@ -273,13 +273,13 @@
       },
       {
         "start": 3.5,
-        "end": 4.375,
+        "end": 4.333,
         "label": "person",
-        "dur": 0.875
+        "dur": 0.833
       },
       {
-        "start": 4.417,
-        "end": 7.167,
+        "start": 4.375,
+        "end": 7.125,
         "label": "meme",
         "dur": 2.75
       }
@@ -293,13 +293,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.9,
+        "end": 3.867,
         "label": "person",
-        "dur": 3.9
+        "dur": 3.867
       },
       {
-        "start": 3.9,
-        "end": 8.133,
+        "start": 3.867,
+        "end": 8.1,
         "label": "meme",
         "dur": 4.233
       }
@@ -333,15 +333,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.7,
+        "end": 3.667,
         "label": "person",
-        "dur": 3.7
+        "dur": 3.667
       },
       {
-        "start": 3.7,
-        "end": 10.267,
+        "start": 3.667,
+        "end": 10.233,
         "label": "meme",
-        "dur": 6.567
+        "dur": 6.566
       }
     ]
   },
@@ -359,9 +359,9 @@
       },
       {
         "start": 4.391,
-        "end": 8.177,
+        "end": 8.139,
         "label": "meme",
-        "dur": 3.786
+        "dur": 3.748
       }
     ]
   },
@@ -373,15 +373,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 6.333,
+        "end": 6.3,
         "label": "person",
-        "dur": 6.333
+        "dur": 6.3
       },
       {
-        "start": 6.333,
-        "end": 12.567,
+        "start": 6.3,
+        "end": 12.533,
         "label": "meme",
-        "dur": 6.234
+        "dur": 6.233
       }
     ]
   },
@@ -413,13 +413,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 4.405,
+        "end": 4.335,
         "label": "person",
-        "dur": 4.405
+        "dur": 4.335
       },
       {
-        "start": 4.405,
-        "end": 8.324,
+        "start": 4.335,
+        "end": 8.254,
         "label": "meme",
         "dur": 3.919
       }
@@ -533,15 +533,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.25,
+        "end": 1.99,
         "label": "person",
-        "dur": 3.25
+        "dur": 1.99
       },
       {
-        "start": 3.25,
-        "end": 8.533,
+        "start": 1.99,
+        "end": 8.5,
         "label": "meme",
-        "dur": 5.283
+        "dur": 6.51
       }
     ]
   },
@@ -787,9 +787,9 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 45.5,
+        "end": 45.433,
         "label": "meme",
-        "dur": 45.5
+        "dur": 45.433
       }
     ]
   },
@@ -833,13 +833,13 @@
       },
       {
         "start": 6.625,
-        "end": 7.958,
+        "end": 7.917,
         "label": "person",
-        "dur": 1.333
+        "dur": 1.292
       },
       {
-        "start": 8.0,
-        "end": 10.5,
+        "start": 7.958,
+        "end": 10.458,
         "label": "meme",
         "dur": 2.5
       }
@@ -893,9 +893,9 @@
       },
       {
         "start": 5.186,
-        "end": 8.29,
+        "end": 8.252,
         "label": "meme",
-        "dur": 3.104
+        "dur": 3.066
       }
     ]
   },
@@ -913,9 +913,9 @@
       },
       {
         "start": 4.012,
-        "end": 7.977,
+        "end": 7.942,
         "label": "meme",
-        "dur": 3.965
+        "dur": 3.93
       }
     ]
   },
@@ -1013,9 +1013,9 @@
       },
       {
         "start": 3.267,
-        "end": 9.633,
+        "end": 9.6,
         "label": "meme",
-        "dur": 6.366
+        "dur": 6.333
       }
     ]
   },
@@ -1033,9 +1033,9 @@
       },
       {
         "start": 4.164,
-        "end": 11.546,
+        "end": 11.508,
         "label": "meme",
-        "dur": 7.382
+        "dur": 7.344
       }
     ]
   },
@@ -1053,9 +1053,9 @@
       },
       {
         "start": 4.231,
-        "end": 8.463,
+        "end": 8.428,
         "label": "meme",
-        "dur": 4.232
+        "dur": 4.197
       }
     ]
   },
@@ -1087,15 +1087,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.467,
+        "end": 3.433,
         "label": "person",
-        "dur": 3.467
+        "dur": 3.433
       },
       {
-        "start": 3.467,
-        "end": 8.533,
+        "start": 3.433,
+        "end": 8.5,
         "label": "meme",
-        "dur": 5.066
+        "dur": 5.067
       }
     ]
   },
@@ -1167,9 +1167,9 @@
       },
       {
         "start": 3.634,
-        "end": 8.025,
+        "end": 7.987,
         "label": "meme",
-        "dur": 4.391
+        "dur": 4.353
       }
     ]
   },
@@ -1181,15 +1181,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.6,
+        "end": 3.567,
         "label": "person",
-        "dur": 3.6
+        "dur": 3.567
       },
       {
-        "start": 3.6,
+        "start": 3.567,
         "end": 8.567,
         "label": "meme",
-        "dur": 4.967
+        "dur": 5.0
       }
     ]
   },
@@ -1221,15 +1221,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.033,
+        "end": 3.0,
         "label": "person",
-        "dur": 3.033
+        "dur": 3.0
       },
       {
-        "start": 3.033,
-        "end": 10.467,
+        "start": 3.0,
+        "end": 10.433,
         "label": "meme",
-        "dur": 7.434
+        "dur": 7.433
       }
     ]
   },
@@ -1267,9 +1267,9 @@
       },
       {
         "start": 3.567,
-        "end": 12.367,
+        "end": 12.333,
         "label": "meme",
-        "dur": 8.8
+        "dur": 8.766
       }
     ]
   },
@@ -1281,13 +1281,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.433,
+        "end": 3.4,
         "label": "person",
-        "dur": 3.433
+        "dur": 3.4
       },
       {
-        "start": 3.433,
-        "end": 13.133,
+        "start": 3.4,
+        "end": 13.1,
         "label": "meme",
         "dur": 9.7
       }
@@ -1407,9 +1407,9 @@
       },
       {
         "start": 3.333,
-        "end": 8.0,
+        "end": 7.967,
         "label": "meme",
-        "dur": 4.667
+        "dur": 4.634
       }
     ]
   },
@@ -1507,9 +1507,9 @@
       },
       {
         "start": 3.933,
-        "end": 8.8,
+        "end": 8.767,
         "label": "meme",
-        "dur": 4.867
+        "dur": 4.834
       }
     ]
   },
@@ -1541,15 +1541,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.698,
+        "end": 3.67,
         "label": "person",
-        "dur": 3.698
+        "dur": 3.67
       },
       {
-        "start": 3.698,
-        "end": 8.267,
+        "start": 3.67,
+        "end": 8.233,
         "label": "meme",
-        "dur": 4.569
+        "dur": 4.563
       }
     ]
   },
@@ -1561,15 +1561,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.567,
+        "end": 3.533,
         "label": "person",
-        "dur": 3.567
+        "dur": 3.533
       },
       {
-        "start": 3.567,
+        "start": 3.533,
         "end": 8.0,
         "label": "meme",
-        "dur": 4.433
+        "dur": 4.467
       }
     ]
   },
@@ -1627,9 +1627,9 @@
       },
       {
         "start": 2.658,
-        "end": 10.023,
+        "end": 9.989,
         "label": "meme",
-        "dur": 7.365
+        "dur": 7.331
       }
     ]
   },
@@ -1641,15 +1641,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.567,
+        "end": 3.533,
         "label": "person",
-        "dur": 3.567
+        "dur": 3.533
       },
       {
-        "start": 3.567,
-        "end": 8.2,
+        "start": 3.533,
+        "end": 8.167,
         "label": "meme",
-        "dur": 4.633
+        "dur": 4.634
       }
     ]
   },
@@ -1661,15 +1661,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 5.478,
+        "end": 4.8,
         "label": "person",
-        "dur": 5.478
+        "dur": 4.8
       },
       {
-        "start": 5.478,
-        "end": 8.191,
+        "start": 4.8,
+        "end": 8.139,
         "label": "meme",
-        "dur": 2.713
+        "dur": 3.339
       }
     ]
   },
@@ -1687,9 +1687,9 @@
       },
       {
         "start": 3.4,
-        "end": 6.8,
+        "end": 6.767,
         "label": "meme",
-        "dur": 3.4
+        "dur": 3.367
       }
     ]
   },
@@ -1715,15 +1715,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.733,
+        "end": 3.7,
         "label": "person",
-        "dur": 3.733
+        "dur": 3.7
       },
       {
-        "start": 3.733,
-        "end": 8.467,
+        "start": 3.7,
+        "end": 8.433,
         "label": "meme",
-        "dur": 4.734
+        "dur": 4.733
       }
     ]
   },
@@ -1910,14 +1910,20 @@
   {
     "clip": "tikcdn_beubagah_com_c67e03e1_84ca_4697_a2d2_bb3b6ffa704b.mp4",
     "short": "bb3b6ffa704b",
-    "n_segments": 1,
-    "pattern": "meme",
+    "n_segments": 2,
+    "pattern": "pers\u2192meme",
     "segments": [
       {
         "start": 0.0,
+        "end": 3.867,
+        "label": "person",
+        "dur": 3.867
+      },
+      {
+        "start": 3.867,
         "end": 7.933,
         "label": "meme",
-        "dur": 7.933
+        "dur": 4.066
       }
     ]
   },
@@ -1929,15 +1935,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.733,
+        "end": 3.7,
         "label": "person",
-        "dur": 3.733
+        "dur": 3.7
       },
       {
-        "start": 3.733,
-        "end": 8.067,
+        "start": 3.7,
+        "end": 8.033,
         "label": "meme",
-        "dur": 4.334
+        "dur": 4.333
       }
     ]
   },
@@ -2029,15 +2035,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.433,
+        "end": 3.4,
         "label": "person",
-        "dur": 3.433
+        "dur": 3.4
       },
       {
-        "start": 3.433,
+        "start": 3.4,
         "end": 9.933,
         "label": "meme",
-        "dur": 6.5
+        "dur": 6.533
       }
     ]
   },
@@ -2049,13 +2055,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.3,
+        "end": 3.267,
         "label": "person",
-        "dur": 3.3
+        "dur": 3.267
       },
       {
-        "start": 3.3,
-        "end": 8.9,
+        "start": 3.267,
+        "end": 8.867,
         "label": "meme",
         "dur": 5.6
       }
@@ -2083,13 +2089,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.933,
+        "end": 3.9,
         "label": "person",
-        "dur": 3.933
+        "dur": 3.9
       },
       {
-        "start": 3.933,
-        "end": 9.233,
+        "start": 3.9,
+        "end": 9.2,
         "label": "meme",
         "dur": 5.3
       }
@@ -2103,15 +2109,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.433,
+        "end": 3.4,
         "label": "person",
-        "dur": 3.433
+        "dur": 3.4
       },
       {
-        "start": 3.433,
-        "end": 10.167,
+        "start": 3.4,
+        "end": 10.133,
         "label": "meme",
-        "dur": 6.734
+        "dur": 6.733
       }
     ]
   },
@@ -2123,13 +2129,13 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 2.867,
+        "end": 2.833,
         "label": "person",
-        "dur": 2.867
+        "dur": 2.833
       },
       {
-        "start": 2.867,
-        "end": 8.067,
+        "start": 2.833,
+        "end": 8.033,
         "label": "meme",
         "dur": 5.2
       }
@@ -2169,9 +2175,9 @@
       },
       {
         "start": 3.614,
-        "end": 9.009,
+        "end": 8.971,
         "label": "meme",
-        "dur": 5.395
+        "dur": 5.357
       }
     ]
   },
@@ -2203,15 +2209,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.0,
+        "end": 2.967,
         "label": "person",
-        "dur": 3.0
+        "dur": 2.967
       },
       {
-        "start": 3.0,
-        "end": 8.967,
+        "start": 2.967,
+        "end": 8.933,
         "label": "meme",
-        "dur": 5.967
+        "dur": 5.966
       }
     ]
   },
@@ -2323,15 +2329,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.867,
+        "end": 3.833,
         "label": "person",
-        "dur": 3.867
+        "dur": 3.833
       },
       {
-        "start": 3.867,
+        "start": 3.833,
         "end": 7.967,
         "label": "meme",
-        "dur": 4.1
+        "dur": 4.134
       }
     ]
   },
