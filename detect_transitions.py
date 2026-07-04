@@ -8,8 +8,8 @@ decided in stage 2 by relabel_faces.py, using the creator's face.
 
 This stage runs ONLY TransNetV2 - no OpenCLIP / no CLIP.
 
-    conda run -n wedia_telif python detect_transitions.py            # all clips
-    conda run -n wedia_telif python detect_transitions.py --limit 5
+    python detect_transitions.py            # all clips
+    python detect_transitions.py --limit 5
 """
 
 import argparse

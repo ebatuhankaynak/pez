@@ -17,7 +17,7 @@ Pipeline (reuses the cached shots in transitions.json — no TransNetV2 re-run):
 
 Writes transitions_face.json and prints accuracy vs transitions/verification.json.
 
-    conda run -n wedia_telif python relabel_faces.py
+    python relabel_faces.py
 """
 
 import argparse

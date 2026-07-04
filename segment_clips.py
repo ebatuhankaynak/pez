@@ -15,8 +15,8 @@ Knobs to play with:
 Outputs transitions/segments.json:  [{clip, segments:[{start,end,dur,label}], ...}]
 With --split, also cuts each clip into segments/<clip>/NN_<label>.mp4 in order.
 
-    conda run -n wedia_telif python segment_clips.py --min-seg 1.0
-    conda run -n wedia_telif python segment_clips.py --min-seg 0.5 --split
+    python segment_clips.py --min-seg 1.0
+    python segment_clips.py --min-seg 0.5 --split
 """
 
 import argparse

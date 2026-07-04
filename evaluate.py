@@ -2,8 +2,8 @@
 """
 Score a transitions.json against the canonical ground truth (transitions/ground_truth.json).
 
-    conda run -n wedia_telif python evaluate.py transitions/transitions.json
-    conda run -n wedia_telif python evaluate.py transitions/transitions_clip.json
+    python evaluate.py transitions/transitions.json
+    python evaluate.py transitions/transitions_clip.json
 
 Verdicts per clip (tol = 0.7s exact, 1.5s close):
   correct        detected within tol of the true cut
