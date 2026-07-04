@@ -1,32 +1,34 @@
-# Pipeline stages. Run them in order:
-#   docker compose run --rm detect     # 1. shot boundaries + first-pass labels -> transitions.json
-#   docker compose run --rm relabel    # 2. re-label by the creator's face (rewrites transitions.json)
-#   docker compose run --rm split      # 3. cut into folders  -> split/person, split/meme
-#   docker compose run --rm report     # 4. build the HTML    -> transitions/report.html
-# or all at once:
-#   docker compose run --rm all
+# Everything runs in Docker — no local Python needed. GPU is used automatically when
+# the host has the NVIDIA runtime; both stages fall back to CPU otherwise.
 #
-# GPU is used automatically when available (see the deploy block). On a host with
-# no NVIDIA runtime, delete the `deploy:` block and it will run on CPU.
+# Pipeline stages (run in order, or use `all`):
+#   docker compose run --rm detect     # 1. TransNetV2 shot boundaries      -> transitions.json
+#   docker compose run --rm relabel    # 2. face-label + pick the cut         (rewrites transitions.json)
+#   docker compose run --rm segment    # 3. creator/meme segments + cut videos
+#   docker compose run --rm split      # 3b. binary split -> split/person, split/meme
+#   docker compose run --rm report     # 4. build report.html
+#   docker compose run --rm all        # all of the above, in sequence
+#
+# View the UI (also dockerized):
+#   docker compose up serve            # -> http://localhost:8000/  (app, editor, report, verify)
+#
+# Force CPU even on a GPU host:  add `--gpus 0` is n/a for compose; instead set
+#   DEVICE=cpu (detect honors --device) or remove the `gpus:` line below.
 
 x-common: &common
   build: .
   image: pezevenk-transitions:latest
-  # Write outputs as the host user (avoids root-owned files). Falls back to 1000:1000.
-  # For a different UID:  UID=$(id -u) GID=$(id -g) docker compose run --rm all
-  user: "${UID:-1000}:${GID:-1000}"
+  # Write outputs as the host user (avoids root-owned files). HOST_UID/HOST_GID come
+  # from the .env file (auto-generated to your id -u/-g); falls back to 1000:1000.
+  user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+  # Mount the whole repo so containers run the live code + read/write data + serve the
+  # HTML, all without a rebuild. The source videos are re-mounted read-only on top.
   volumes:
+    - .:/app
     - ./freckled_spike_tiktok:/app/freckled_spike_tiktok:ro
-    - ./transitions:/app/transitions
-    - ./split:/app/split
-    - ./segments:/app/segments
-  deploy:
-    resources:
-      reservations:
-        devices:
-          - driver: nvidia
-            count: all
-            capabilities: [gpu]
+  # Request the GPU (compose v2 honors this for `run`/`up`). Harmless on a CPU-only
+  # host — the code detects an actual device and falls back to CPU.
+  gpus: all
 
 services:
   detect:
@@ -53,4 +55,12 @@ services:
   all:
     <<: *common
     entrypoint: ["bash", "-c"]
-    command: ["python detect_transitions.py && python relabel_faces.py --qa && python split_clips.py --workers 8 && python segment_clips.py --split --workers 8 && python build_report.py --out transitions/report.html"]
+    command: ["python detect_transitions.py && python relabel_faces.py --qa && python segment_clips.py --split --workers 8 && python split_clips.py --workers 8 && python build_report.py --out transitions/report.html"]
+
+  # Static UI + batu-GT save endpoint (serve.py). `up serve` keeps it running.
+  serve:
+    <<: *common
+    entrypoint: ["python"]
+    command: ["serve.py", "8000"]
+    ports:
+      - "8000:8000"

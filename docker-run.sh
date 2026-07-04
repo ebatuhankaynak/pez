@@ -15,9 +15,9 @@ GPU="${GPU:-1}"
 GPU_FLAG=()
 if [[ "$GPU" == "1" ]]; then GPU_FLAG=(--gpus all); fi
 
-# Run as the host user so outputs aren't root-owned.
+# Run as the host user so outputs aren't root-owned; mount the whole repo (live code +
+# data), with the source videos re-mounted read-only on top.
 exec docker run --rm "${GPU_FLAG[@]}" --user "$(id -u):$(id -g)" \
+  -v "$HERE:/app" \
   -v "$HERE/freckled_spike_tiktok:/app/freckled_spike_tiktok:ro" \
-  -v "$HERE/transitions:/app/transitions" \
-  -v "$HERE/split:/app/split" \
   "$IMAGE" "$@"

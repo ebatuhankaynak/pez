@@ -80,24 +80,24 @@ onnxruntime-gpu — `relabel_faces.py` auto-detects CUDA, else CPU). `onnxruntim
 pinned to the CUDA-12 line (1.22.x) to match the `nvidia/cuda:12.8-cudnn` base; 1.23+
 moved to CUDA 13 and won't load here.
 
+Everything runs in the container — **no local Python.** The whole repo is bind-mounted,
+so runs use the live code and write outputs back to the host as your user (`.env` carries
+`HOST_UID/HOST_GID`).
+
 ```bash
-docker compose build                      # one-time
-docker compose run --rm all               # detect → relabel → split → segment → report
-# or a single stage: docker compose run --rm {detect|relabel|split|segment|report}
+docker compose build                      # one-time (cached after that)
+docker compose run --rm all               # detect → relabel → segment → split → report
+# or a single stage: docker compose run --rm {detect|relabel|segment|split|report}
+docker compose up serve                   # UI + editor at http://localhost:8000/  (or ./serve.sh)
 ```
 
 No compose? `./docker-run.sh detect_transitions.py` (set `GPU=0` to force CPU).
 
-## Run it — local (conda)
-
-```bash
-conda run -n wedia_telif python detect_transitions.py     # stage 1: shots (~40 s, GPU)
-conda run -n wedia_telif python relabel_faces.py --qa     # stage 2: face + cut (~2-3 min, CPU here*)
-conda run -n wedia_telif python segment_clips.py --split  # stage 3: segments
-```
-
-\* the `wedia_telif` env's onnxruntime has no CUDA provider, so the face stage runs on CPU
-there — use Docker for a GPU face stage.
+**GPU / CPU.** Both stages use the GPU when the container is started with the NVIDIA
+runtime (compose does this via `gpus: all`); on a CPU-only host they fall back
+automatically. The fallback keys on an *actual* visible device (`torch.cuda.is_available()`) —
+not onnxruntime's compiled-in provider list, which always advertises CUDA and would
+otherwise segfault a CPU-only run.
 
 **Key flags:** `detect_transitions.py --threshold` (0.5, cut sensitivity) `--limit N`
 (smoke test); `relabel_faces.py --face-threshold` (0.35, cosine cutoff) `--frames-per-shot`

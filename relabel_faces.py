@@ -67,7 +67,16 @@ def load_face_app():
     from insightface.app import FaceAnalysis
     import onnxruntime as ort
     root = os.environ.get("INSIGHTFACE_HOME", os.path.expanduser("~/.insightface"))
-    gpu = "CUDAExecutionProvider" in ort.get_available_providers()
+    # onnxruntime-gpu ALWAYS lists CUDAExecutionProvider (it's compiled in), even on a
+    # host with no visible GPU — trusting that list and forcing ctx_id=0 SEGFAULTS on a
+    # CPU-only run. Gate on ACTUAL device access instead: torch.cuda.is_available()
+    # checks the driver + a visible device, so it's False unless started with --gpus.
+    try:
+        import torch
+        cuda_ok = torch.cuda.is_available()
+    except Exception:
+        cuda_ok = False
+    gpu = cuda_ok and "CUDAExecutionProvider" in ort.get_available_providers()
     providers = (["CUDAExecutionProvider", "CPUExecutionProvider"] if gpu
                  else ["CPUExecutionProvider"])
     app = FaceAnalysis(name="buffalo_l", root=root, providers=providers)
