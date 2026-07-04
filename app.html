@@ -15,6 +15,8 @@
   .bar select, .bar button { background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:16px;
         padding:6px 14px; cursor:pointer; font-size:15px; }
   .bar button.on { background:#1f6feb; border-color:#1f6feb; }
+  .bar a.nav { background:#21262d; border:1px solid #30363d; border-radius:16px; padding:6px 14px; color:#adbac7; font-size:15px; }
+  .bar a.nav:hover { background:#30363d; }
   .bar .sp { flex:1; }
   .banner { padding:11px 18px; background:#0e2a16; border-bottom:1px solid #1a7f37; color:#adbac7; font-size:15px; }
   .banner b { color:#3fb950; } .banner .w { color:#e3b341; }
@@ -60,6 +62,15 @@
   <template v-else>
     <div class="bar">
       <h1>transitions workbench</h1>
+      <a class="nav" href="editor.html">✎ cut editor</a>
+      <a class="nav" href="report.html">report</a>
+      <a class="nav" href="verify.html">verify</a>
+      <label>truth
+        <select v-model="gtSource" @change="onGt">
+          <option value="claude">claude</option>
+          <option value="batu">batu</option>
+        </select>
+      </label>
       <label>exact ≤
         <select v-model.number="tol">
           <option :value="0.1">0.1s</option><option :value="0.2">0.2s</option>
@@ -74,7 +85,7 @@
     <div class="banner">
       <b>{{ summary.good }}/{{ rows.length }} exact ({{ pct(summary.good/rows.length) }})</b>
       · {{ summary.close }} within 1.5s · <span class="w">{{ summary.problems }} to review</span>
-      &nbsp;— threshold {{ tol }}s vs frame-accurate ground truth. reviewed {{ reviewed }}/{{ rows.length }}.
+      &nbsp;— threshold {{ tol }}s vs <b>{{ gtSource }}</b> ground truth. reviewed {{ reviewed }}/{{ rows.length }}.
     </div>
     <div class="legend">
       <i style="background:#1a7f37"></i>creator (face)
@@ -136,6 +147,7 @@ const enc = p => p.split('/').map(encodeURIComponent).join('/');
 createApp({
   data() {
     return { loading:true, error:'', trans:[], gt:{}, segs:{}, tol:0.5, faceThr:0.35,
+             gtSource: localStorage.getItem('pez_gt_src')||'claude',
              filter:'all', flags: JSON.parse(localStorage.getItem(FKEY)||'{}'), lb:null,
              filters:['all','problem','multicut','clean','none','flagged'] };
   },
@@ -182,15 +194,16 @@ createApp({
     async load(){
       this.loading=true; this.error='';
       try {
+        const gtFile = this.gtSource==='batu' ? 'ground_truth_batu.json' : 'ground_truth.json';
         const [t,g,s] = await Promise.all([
           fetch('transitions/transitions.json?_='+Date.now()).then(r=>r.json()),
-          fetch('transitions/ground_truth.json?_='+Date.now()).then(r=>r.json()),
+          fetch('transitions/'+gtFile+'?_='+Date.now()).then(r=>r.json()),
           fetch('transitions/segments.json?_='+Date.now()).then(r=>r.json()).catch(()=>[])
         ]);
         this.trans = t;
-        this.gt = {}; g.clips.forEach(c=> this.gt[c.short]=c);
+        this.gt = {}; (g.clips||[]).forEach(c=> this.gt[c.short]=c);
         this.segs = {}; s.forEach(r=> this.segs[r.short]=r);
-      } catch(e){ this.error='Could not load JSON — serve the folder: python3 -m http.server 8000, then open http://localhost:8000/app.html'; }
+      } catch(e){ this.error='Could not load JSON — serve the folder: python serve.py, then open http://localhost:8000/app.html'; }
       this.loading=false;
     },
     verdict(det,tru,hasT){
@@ -210,7 +223,8 @@ createApp({
     exportFlags(){ const bad=Object.keys(this.flags).filter(k=>this.flags[k]==='bad');
       const b=new Blob([JSON.stringify(bad,null,2)],{type:'application/json'});
       const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='wrong.json'; a.click(); },
-    lbOpen(src){ this.lb=src; }
+    lbOpen(src){ this.lb=src; },
+    onGt(){ localStorage.setItem('pez_gt_src', this.gtSource); this.load(); }
   }
 }).mount('#app');
 </script>

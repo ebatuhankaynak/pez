@@ -218,6 +218,7 @@ def main():
   .vlabel .sub {{ color:#8b949e; font-weight:400; }}
   .hidden {{ display:none; }}
 </style></head><body>
+<nav id="peznav" style="position:sticky;top:0;z-index:50;display:flex;gap:4px;align-items:center;background:#010409ee;backdrop-filter:blur(6px);border-bottom:1px solid #21262d;padding:8px 16px;font:14px/1.4 -apple-system,Segoe UI,Roboto,sans-serif"><span style="font-weight:600;margin-right:10px;color:#e6edf3">pezevenk</span><a href="app.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">workbench</a><a href="editor.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">cut editor</a><a href="report.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">report</a><a href="verify.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;background:#1f6feb;color:#fff">verify</a></nav>
 <div class="bar">
   <h1>verify splits</h1>
   <button data-f="all" class="active" onclick="filt(this,'all')">all {len(records)}</button>

@@ -275,6 +275,7 @@ def main():
   .note {{ font-size:12px; color:#adbac7; margin-top:5px; }}
   footer {{ padding:18px 28px; color:#6e7681; font-size:12px; }}
 </style></head><body>
+<nav id="peznav" style="position:sticky;top:0;z-index:50;display:flex;gap:4px;align-items:center;background:#010409ee;backdrop-filter:blur(6px);border-bottom:1px solid #21262d;padding:8px 16px;font:14px/1.4 -apple-system,Segoe UI,Roboto,sans-serif"><span style="font-weight:600;margin-right:10px;color:#e6edf3">pezevenk</span><a href="app.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">workbench</a><a href="editor.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">cut editor</a><a href="report.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;background:#1f6feb;color:#fff">report</a><a href="verify.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">verify</a></nav>
 <header>
   <h1>pezevenk — person → meme transition detection</h1>
   <p class="lede">Each TikTok clip cuts from the creator talking to camera over to a meme. Detector = TransNetV2 (shot boundaries) + InsightFace (is this shot <em>the creator's</em> face?). Accuracy below is from an independent verification pass (6 ground-truth entries corrected after visual re-check).</p>
