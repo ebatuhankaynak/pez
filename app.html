@@ -4,19 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pezevenk — transitions workbench</title>
+<link rel="stylesheet" href="peznav.css">
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
   body { margin:0; background:#0d1117; color:#e6edf3; font:16px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }
   a { color:#58a6ff; }
-  .bar { position:sticky; top:0; z-index:20; background:#010409ee; backdrop-filter:blur(6px);
+  .bar { background:#010409ee; backdrop-filter:blur(6px);
          border-bottom:1px solid #21262d; padding:11px 18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
   .bar h1 { font-size:20px; margin:0 10px 0 0; font-weight:500; }
   .bar select, .bar button { background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:16px;
         padding:6px 14px; cursor:pointer; font-size:15px; }
   .bar button.on { background:#1f6feb; border-color:#1f6feb; }
-  .bar a.nav { background:#21262d; border:1px solid #30363d; border-radius:16px; padding:6px 14px; color:#adbac7; font-size:15px; }
-  .bar a.nav:hover { background:#30363d; }
   .bar .sp { flex:1; }
   .banner { padding:11px 18px; background:#0e2a16; border-bottom:1px solid #1a7f37; color:#adbac7; font-size:15px; }
   .banner b { color:#3fb950; } .banner .w { color:#e3b341; }
@@ -60,11 +59,16 @@
   <div class="load" v-if="loading">loading data…</div>
   <div class="load" v-else-if="error" style="color:#f85149">{{ error }}</div>
   <template v-else>
+    <div class="pezhdr">
+    <nav class="peznav">
+      <span class="brand">pezevenk</span>
+      <a href="app.html" class="on">workbench</a>
+      <a href="editor.html">cut editor</a>
+      <a href="report.html">report</a>
+      <a href="verify.html">verify</a>
+    </nav>
     <div class="bar">
       <h1>transitions workbench</h1>
-      <a class="nav" href="editor.html">✎ cut editor</a>
-      <a class="nav" href="report.html">report</a>
-      <a class="nav" href="verify.html">verify</a>
       <label>truth
         <select v-model="gtSource" @change="onGt">
           <option value="claude">claude</option>
@@ -82,16 +86,18 @@
       <button @click="load">↻ reload</button>
       <button @click="exportFlags">export ✗</button>
     </div>
+    </div>
     <div class="banner">
-      <b>{{ summary.good }}/{{ rows.length }} exact ({{ pct(summary.good/rows.length) }})</b>
-      · {{ summary.close }} within 1.5s · <span class="w">{{ summary.problems }} to review</span>
+      <b>{{ summary.good }}/{{ labeledCount }} full-sequence ({{ pct(summary.good/(labeledCount||1)) }})</b>
+      · {{ summary.partial }} partial · <span class="w">{{ summary.problems }} to review</span>
+      <span v-if="counts.unlabeled"> · {{ counts.unlabeled }} not yet labeled</span>
       &nbsp;— threshold {{ tol }}s vs <b>{{ gtSource }}</b> ground truth. reviewed {{ reviewed }}/{{ rows.length }}.
     </div>
     <div class="legend">
       <i style="background:#1a7f37"></i>creator (face)
       <i style="background:#4184e4"></i>meme
       <i style="background:#8b949e"></i>detected cut (TransNetV2)
-      <i style="background:#e3873a"></i>picked transition
+      <i style="background:#e3873a"></i>detected cut(s)
       <i style="background:#f0f6fc"></i>ground-truth cut
     </div>
 
@@ -106,14 +112,15 @@
                :style="{left: pct2(s.start_sec,r.dur), width: pct2(s.end_sec-s.start_sec,r.dur), background: s.face>=faceThr ? '#1a7f37' : '#4184e4'}"
                :title="'shot '+s.start_sec+'-'+s.end_sec+'  face_sim='+s.face"></div>
           <div v-for="(b,i) in r.cuts" :key="'c'+i" class="cut" :style="{left: pct2(b,r.dur)}"></div>
-          <div v-if="r.det!=null" class="mk det" :style="{left: pct2(r.det,r.dur)}" title="picked transition"></div>
-          <div v-if="r.true!=null" class="mk tru" :style="{left: pct2(r.true,r.dur)}" title="ground-truth cut"></div>
+          <div v-for="(b,i) in r.detCuts" :key="'d'+i" class="mk det" :style="{left: pct2(b,r.dur)}" :title="'detected cut #'+(i+1)"></div>
+          <div v-for="(b,i) in r.trueCuts" :key="'tc'+i" class="mk tru" :style="{left: pct2(b.sec,r.dur)}"
+               :title="'ground-truth cut #'+(i+1)+' → '+(b.to||'')"></div>
         </div>
         <div class="tlab">0s · {{ r.shots.length }} shots · {{ r.dur.toFixed(1) }}s</div>
         <div class="times">
-          <span class="t d">detected <b>{{ fmt(r.det) }}</b></span>
-          <span class="t g">truth <b>{{ fmt(r.true) }}</b></span>
-          <span class="t" v-if="r.det!=null && r.true!=null">Δ {{ Math.abs(r.det-r.true).toFixed(2) }}s</span>
+          <span class="t d">detected <b>{{ fmtList(r.detCuts) }}</b></span>
+          <span class="t g">truth <b>{{ fmtList(r.trueSecs) }}</b></span>
+          <span class="t" v-if="r.detCuts.length || r.trueSecs.length">{{ r.m.tp }}/{{ r.trueSecs.length }} matched<span v-if="r.m.extra" style="color:#e3b341">, +{{ r.m.extra }} extra</span><span v-if="r.m.missed" style="color:#f85149">, {{ r.m.missed }} missed</span></span>
         </div>
         <div class="method">{{ r.method }}</div>
         <div v-if="r.pattern" style="font-size:13px;margin-top:4px"><b>pattern:</b> {{ r.pattern }}</div>
@@ -128,6 +135,7 @@
         <img :src="r.qa" loading="lazy"><span class="cap">before | after cut</span>
       </a>
       <div class="v"><div class="vl o">ORIGINAL</div><video controls preload="metadata" :src="r.vOrig"></video></div>
+      <div class="v"><div class="vl o">FACE DEBUG <span style="font-weight:400;color:#8b949e">bbox · sim vs 0.35</span></div><video controls preload="metadata" :src="r.vDebug"></video></div>
       <div class="v" v-for="(sv,i) in r.segVids" :key="i">
         <div class="vl" :class="sv.cls">{{ i+1 }}. {{ sv.label }} <span style="font-weight:400;color:#8b949e">{{ sv.range }}</span></div>
         <video controls preload="metadata" :src="sv.src"></video>
@@ -149,7 +157,7 @@ createApp({
     return { loading:true, error:'', trans:[], gt:{}, segs:{}, tol:0.5, faceThr:0.35,
              gtSource: localStorage.getItem('pez_gt_src')||'claude',
              filter:'all', flags: JSON.parse(localStorage.getItem(FKEY)||'{}'), lb:null,
-             filters:['all','problem','multicut','clean','none','flagged'] };
+             filters:['all','problem','multicut','clean','none','unlabeled','flagged'] };
   },
   async mounted(){ await this.load(); },
   computed: {
@@ -158,36 +166,52 @@ createApp({
         const short = shortOf(c.clip);
         const g = this.gt[short] || {};
         const det = c.transition_sec, tru = g.cut_sec ?? null;
-        const verdict = this.verdict(det, tru, g.has_transition);
-        const shots = c.shots.map(s=>({start_sec:s.start_sec, end_sec:s.end_sec, face: s.face_sim ?? 0}));
-        const dur = Math.max(...shots.map(s=>s.end_sec), 1);
-        const cat = ['wrong_time','missed','false_positive'].includes(verdict) ? 'problem'
-                  : det==null ? 'none' : (c.num_shots>=4 ? 'multicut' : 'clean');
         const sg = this.segs[short] || {};
         const stem = c.clip.slice(0,-4);
+        const shots = c.shots.map(s=>({start_sec:s.start_sec, end_sec:s.end_sec, face: s.face_sim ?? 0}));
+        const dur = Math.max(...shots.map(s=>s.end_sec), 1);
+        // MODEL's full cut sequence = segment boundaries (each segment after the first
+        // starts at a cut), matching evaluate.py. Fall back to the single picked cut.
+        const detCuts = (sg.segments && sg.segments.length>1)
+                      ? sg.segments.slice(1).map(s=>s.start)
+                      : (det!=null ? [det] : []);
+        const trueCuts = Array.isArray(g.cuts) && g.cuts.length ? g.cuts
+                       : (tru!=null ? [{sec:tru, to:'meme'}] : []);
+        const trueSecs = trueCuts.map(x=>x.sec);
+        // batu is a work-in-progress GT: clips you haven't addressed yet have no
+        // truth cut, so don't score them as false positives — bucket as 'unlabeled'.
+        const unlabeled = this.gtSource==='batu' && g.edited===false;
+        const m = this.matchCuts(detCuts, trueSecs, this.tol);
+        const verdict = unlabeled ? 'unlabeled' : this.mcVerdict(detCuts, trueSecs, m);
+        const cat = unlabeled ? 'unlabeled'
+                  : ['partial','missed','false_positive'].includes(verdict) ? 'problem'
+                  : detCuts.length===0 ? 'none'
+                  : (trueCuts.length>1 || detCuts.length>1 ? 'multicut' : 'clean');
         const segVids = (sg.segments||[]).map((s,i)=>({
           label: s.label==='person'?'creator':'meme',
           range: s.start.toFixed(1)+'–'+s.end.toFixed(1)+'s',
           cls: s.label==='person'?'p':'m',
           src: enc('segments/'+stem+'/'+String(i+1).padStart(2,'0')+'_'+s.label+'.mp4')
         }));
-        return { short, clip:c.clip, det, true:tru, verdict, method:c.method,
+        return { short, clip:c.clip, det, detCuts, true:tru, trueCuts, trueSecs, verdict, m, method:c.method,
                  pattern:(sg.pattern||'').replace(/pers/g,'creator').replace(/→/g,' → '),
                  note:g.notes||'', shots, dur, cat, cuts: shots.map(s=>s.start_sec).filter(x=>x>0.05),
                  qa: 'transitions/qa/'+short+'_transition.png',
-                 vOrig: enc('freckled_spike_tiktok/'+c.clip), segVids };
+                 vOrig: enc('freckled_spike_tiktok/'+c.clip), vDebug: enc('debug/'+stem+'.mp4'), segVids };
       }).sort((a,b)=> (this.catOrder(a.cat)-this.catOrder(b.cat)) || ((a.det==null)-(b.det==null)) || ((a.det||0)-(b.det||0)));
     },
-    counts(){ const c={all:this.rows.length,problem:0,multicut:0,clean:0,none:0,
+    counts(){ const c={all:this.rows.length,problem:0,multicut:0,clean:0,none:0,unlabeled:0,
         flagged:Object.values(this.flags).filter(v=>v==='bad').length};
         this.rows.forEach(r=>c[r.cat]++); return c; },
+    labeledCount(){ return this.rows.filter(r=>r.verdict!=='unlabeled').length; },
     visible(){ if(this.filter==='all') return this.rows;
       if(this.filter==='flagged') return this.rows.filter(r=>this.flags[r.clip]==='bad');
       return this.rows.filter(r=>r.cat===this.filter); },
-    summary(){ let good=0,close=0,problems=0;
-      this.rows.forEach(r=>{ if(['correct','correct_none'].includes(r.verdict))good++;
-        else if(r.verdict==='close')close++; else problems++; });
-      return {good,close,problems}; },
+    summary(){ let good=0,partial=0,problems=0;
+      this.rows.forEach(r=>{ if(r.verdict==='unlabeled') return;
+        if(['correct','correct_none'].includes(r.verdict))good++;
+        else if(r.verdict==='partial')partial++; else problems++; });
+      return {good,partial,problems}; },
     reviewed(){ return Object.keys(this.flags).length; }
   },
   methods: {
@@ -206,18 +230,28 @@ createApp({
       } catch(e){ this.error='Could not load JSON — serve the folder: python serve.py, then open http://localhost:8000/app.html'; }
       this.loading=false;
     },
-    verdict(det,tru,hasT){
-      if(det==null && tru==null) return 'correct_none';
-      if(det==null) return 'missed';
-      if(tru==null) return 'false_positive';
-      const e=Math.abs(det-tru); return e<=this.tol ? 'correct' : (e<=1.5 ? 'close' : 'wrong_time');
+    // multi-cut scoring — mirrors evaluate.py: greedy one-to-one nearest match within tol.
+    matchCuts(dets, trues, tol){
+      const pool = dets.slice(); let tp=0; const errs=[];
+      for(const g of trues){
+        let bi=-1, bd=Infinity;
+        pool.forEach((p,i)=>{ const d=Math.abs(p-g); if(d<=tol && d<bd){ bd=d; bi=i; } });
+        if(bi>=0){ tp++; errs.push(bd); pool.splice(bi,1); }
+      }
+      return { tp, missed: trues.length-tp, extra: pool.length, errs };
     },
-    catOrder(c){ return {problem:0,multicut:1,clean:2,none:3}[c]; },
-    vColor(v){ return {correct:'#1a7f37',correct_none:'#1a7f37',close:'#9a6700',
-      wrong_time:'#cf222e',missed:'#cf222e',false_positive:'#cf222e'}[v]||'#57606a'; },
+    mcVerdict(dets, trues, m){
+      if(!trues.length) return dets.length ? 'false_positive' : 'correct_none';
+      if(m.tp===0) return 'missed';
+      return (m.missed===0 && m.extra===0) ? 'correct' : 'partial';
+    },
+    catOrder(c){ return {problem:0,multicut:1,clean:2,none:3,unlabeled:4}[c]; },
+    vColor(v){ return {correct:'#1a7f37',correct_none:'#1a7f37',partial:'#9a6700',
+      missed:'#cf222e',false_positive:'#cf222e'}[v]||'#57606a'; },
     pct(x){ return Math.round(x*1000)/10+'%'; },
     pct2(x,d){ return (x/d*100)+'%'; },
     fmt(x){ return x==null?'—':x.toFixed(2)+'s'; },
+    fmtList(a){ return a && a.length ? a.map(x=>x.toFixed(2)).join(', ')+'s' : '—'; },
     flag(r,s){ if(this.flags[r.clip]===s) delete this.flags[r.clip]; else this.flags[r.clip]=s;
       localStorage.setItem(FKEY, JSON.stringify(this.flags)); },
     exportFlags(){ const bad=Object.keys(this.flags).filter(k=>this.flags[k]==='bad');
