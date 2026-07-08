@@ -7,7 +7,6 @@ segments/
 # --- generated, regenerable outputs ---
 transitions/qa/
 report.html
-verify.html
 
 # --- python ---
 __pycache__/

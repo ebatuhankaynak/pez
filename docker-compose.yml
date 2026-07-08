@@ -10,7 +10,7 @@
 #   docker compose run --rm all        # all of the above, in sequence
 #
 # View the UI (also dockerized):
-#   docker compose up serve            # -> http://localhost:8000/  (app, editor, report, verify)
+#   docker compose up serve            # -> http://localhost:8000/  (app, editor, report)
 #
 # Force CPU even on a GPU host:  add `--gpus 0` is n/a for compose; instead set
 #   DEVICE=cpu (detect honors --device) or remove the `gpus:` line below.

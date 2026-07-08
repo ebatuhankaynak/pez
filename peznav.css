@@ -1,6 +1,6 @@
 /* pezevenk — shared top navigation. Single source of truth for every page.
    Linked by editor.html + app.html; inlined verbatim into the generated
-   report.html / verify.html (so those stay self-contained). Keep it here only. */
+   report.html (so it stays self-contained). Keep it here only. */
 
 .peznav {
   display: flex; gap: 4px; align-items: center; flex-wrap: wrap;
@@ -11,7 +11,7 @@
 /* peznav is the sticky header on its own (editor, report) */
 .peznav.sticky { position: sticky; top: 0; z-index: 50; }
 /* when a page has a second toolbar row, wrap nav + bar in .pezhdr so they
-   stick together (workbench, verify) */
+   stick together (workbench) */
 .pezhdr { position: sticky; top: 0; z-index: 50; }
 
 .peznav .brand { font-weight: 600; margin-right: 12px; color: #e6edf3; }

@@ -68,7 +68,7 @@ over-segmentations. Compare labelers with `ablation.py`.
 | [`segment_clips.py`](segment_clips.py) | **stage 3 (default)** — full creator/meme segment sequence per clip | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
 | [`split_clips.py`](split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
 | [`evaluate.py`](evaluate.py) / [`ablation.py`](ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
-| [`build_report.py`](build_report.py) / [`build_verify_ui.py`](build_verify_ui.py) | static `report.html` / `verify.html` | HTML |
+| [`build_report.py`](build_report.py) | static `report.html` | HTML |
 
 **Segments are the general representation:** merge consecutive same-label shots →
 `creator→meme` (2 segments), `creator→meme→creator…` (returns), or "no transition"
@@ -82,8 +82,7 @@ hit ↻ reload. Per clip: the timeline (every TransNetV2 cut as grey ticks,
 green=creator/blue=meme, orange=picked, white=ground-truth), the before|after cut frame
 (click to enlarge), the segment pattern with each piece playable next to the original, a
 live tolerance slider (client-side verdicts), filters, and ✗-flagging with export. Vue is
-vendored in `vendor/` so it runs offline. `report.html` / `verify.html` are static
-fallbacks.
+vendored in `vendor/` so it runs offline. `report.html` is a static fallback.
 
 ## Run it — Docker (recommended, reproducible)
 

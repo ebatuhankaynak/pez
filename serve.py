@@ -3,7 +3,7 @@
 Static file server for the pezevenk workbench + a tiny save endpoint so the cut
 editor (editor.html) can write batu's ground truth straight to disk.
 
-    python serve.py            # http://localhost:8000/   (app, editor, report, verify)
+    python serve.py            # http://localhost:8000/   (app, editor, report)
     python serve.py 8080       # custom port
 
 Everything under this folder is served like `python3 -m http.server`. The ONE
@@ -150,7 +150,6 @@ def main():
     print(f"app     ->  http://localhost:{port}/            (workbench; pick claude/batu truth)")
     print(f"editor  ->  http://localhost:{port}/editor.html  (input cuts, autosaves to batu GT)")
     print(f"report  ->  http://localhost:{port}/report.html")
-    print(f"verify  ->  http://localhost:{port}/verify.html")
     print(f"save endpoint: POST /api/save/ground_truth_batu.json")
     try:
         srv.serve_forever()

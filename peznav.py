@@ -1,4 +1,4 @@
-"""Shared top-nav for the generated report.html / verify.html.
+"""Shared top-nav for the generated report.html.
 
 The canonical styles live in peznav.css (also linked by editor.html + app.html).
 The generators inline css() + nav() so the produced HTML stays self-contained
@@ -14,7 +14,6 @@ LINKS = [
     ("app.html", "workbench"),
     ("editor.html", "cut editor"),
     ("report.html", "report"),
-    ("verify.html", "verify"),
 ]
 
 
@@ -27,7 +26,7 @@ def nav(active, sticky=True):
     """<nav> markup with `active` (e.g. 'report.html') highlighted.
 
     sticky=True makes the nav its own sticky header (report). Pass sticky=False
-    when the nav is wrapped in a .pezhdr alongside a toolbar (verify)."""
+    when the nav is wrapped in a .pezhdr alongside a toolbar."""
     parts = []
     for href, label in LINKS:
         cls = ' class="on"' if href == active else ""

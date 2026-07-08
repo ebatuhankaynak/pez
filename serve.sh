@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Serve the UI through Docker (app / cut editor / report / verify + the batu-GT save
+# Serve the UI through Docker (app / cut editor / report + the batu-GT save
 # endpoint). Everything runs in the container — nothing local. Ctrl-C to stop.
 #
 #   ./serve.sh            # -> http://localhost:8000/
@@ -10,5 +10,4 @@ cd "$(dirname "$0")"
 echo "app      ->  http://localhost:8000/            (workbench; pick claude/batu truth)"
 echo "editor   ->  http://localhost:8000/editor.html  (input cuts to ms precision; autosaves batu GT)"
 echo "report   ->  http://localhost:8000/report.html"
-echo "verify   ->  http://localhost:8000/verify.html"
 exec docker compose up serve
