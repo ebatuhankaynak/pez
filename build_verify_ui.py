@@ -23,6 +23,8 @@ from html import escape
 from pathlib import Path
 from urllib.parse import quote
 
+import peznav
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 VERIFICATION = SCRIPT_DIR / "transitions" / "verification.json"
@@ -169,13 +171,16 @@ def main():
         'only the <span class="warn">problems</span> filter needs attention.'
     )
 
+    peznav_css = peznav.css()
+    peznav_nav = peznav.nav("verify.html", sticky=False)
+
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>verify — person/meme splits</title>
 <style>
   :root {{ color-scheme: dark; }}
   body {{ margin:0; background:#0d1117; color:#e6edf3; font:13px/1.45 -apple-system,Segoe UI,Roboto,sans-serif; }}
-  .bar {{ position:sticky; top:0; z-index:10; background:#010409ee; backdrop-filter:blur(6px);
+  .bar {{ background:#010409ee; backdrop-filter:blur(6px);
          border-bottom:1px solid #21262d; padding:10px 16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }}
   .bar h1 {{ font-size:15px; margin:0 10px 0 0; }}
   .bar button {{ background:#21262d; color:#e6edf3; border:1px solid #30363d; border-radius:16px;
@@ -217,8 +222,9 @@ def main():
   .banner b {{ color:#3fb950; }} .banner .warn {{ color:#e3b341; }}
   .vlabel .sub {{ color:#8b949e; font-weight:400; }}
   .hidden {{ display:none; }}
-</style></head><body>
-<nav id="peznav" style="position:sticky;top:0;z-index:50;display:flex;gap:4px;align-items:center;background:#010409ee;backdrop-filter:blur(6px);border-bottom:1px solid #21262d;padding:8px 16px;font:14px/1.4 -apple-system,Segoe UI,Roboto,sans-serif"><span style="font-weight:600;margin-right:10px;color:#e6edf3">pezevenk</span><a href="app.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">workbench</a><a href="editor.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">cut editor</a><a href="report.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">report</a><a href="verify.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;background:#1f6feb;color:#fff">verify</a></nav>
+</style><style>{peznav_css}</style></head><body>
+<div class="pezhdr">
+{peznav_nav}
 <div class="bar">
   <h1>verify splits</h1>
   <button data-f="all" class="active" onclick="filt(this,'all')">all {len(records)}</button>
@@ -229,6 +235,7 @@ def main():
   <button data-f="wrong" onclick="filt(this,'wrong')">flagged ✗</button>
   <span class="prog" id="prog"></span>
   <button class="exp" onclick="exportWrong()">Export wrong</button>
+</div>
 </div>
 <div class="banner">{banner_html}</div>
 <div id="rows">{rows_html}</div>

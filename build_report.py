@@ -25,6 +25,8 @@ import tempfile
 from html import escape
 from pathlib import Path
 
+import peznav
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 SPLIT_DIR = SCRIPT_DIR / "split"
@@ -228,6 +230,9 @@ def main():
         <div class="stat warn"><b>{bv.get('wrong_time',0)+bv.get('missed',0)+bv.get('false_positive',0)}</b><span>problems</span></div>
       </div>"""
 
+    peznav_css = peznav.css()
+    peznav_nav = peznav.nav("report.html")
+
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pezevenk — person→meme transitions</title>
@@ -274,8 +279,8 @@ def main():
   .method {{ font-family:ui-monospace,monospace; font-size:10.5px; color:#6e7681; }}
   .note {{ font-size:12px; color:#adbac7; margin-top:5px; }}
   footer {{ padding:18px 28px; color:#6e7681; font-size:12px; }}
-</style></head><body>
-<nav id="peznav" style="position:sticky;top:0;z-index:50;display:flex;gap:4px;align-items:center;background:#010409ee;backdrop-filter:blur(6px);border-bottom:1px solid #21262d;padding:8px 16px;font:14px/1.4 -apple-system,Segoe UI,Roboto,sans-serif"><span style="font-weight:600;margin-right:10px;color:#e6edf3">pezevenk</span><a href="app.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">workbench</a><a href="editor.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">cut editor</a><a href="report.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;background:#1f6feb;color:#fff">report</a><a href="verify.html" style="padding:4px 12px;border-radius:13px;text-decoration:none;color:#adbac7">verify</a></nav>
+</style><style>{peznav_css}</style></head><body>
+{peznav_nav}
 <header>
   <h1>pezevenk — person → meme transition detection</h1>
   <p class="lede">Each TikTok clip cuts from the creator talking to camera over to a meme. Detector = TransNetV2 (shot boundaries) + InsightFace (is this shot <em>the creator's</em> face?). Accuracy below is from an independent verification pass (6 ground-truth entries corrected after visual re-check).</p>
