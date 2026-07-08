@@ -34,6 +34,76 @@ CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 VERIFICATION = SCRIPT_DIR / "transitions" / "verification.json"
 
+# --- benchmark/tuning config (all default to the shipped behavior) -----------
+# Populated from CLI in main(); read by faces_at()/face_ok() so the P0/P1/P2
+# levers can be A/B'd without threading params through every function.
+RUNCFG = {
+    "low_light": False,      # P0b: CLAHE-retry detection on zero-face frames
+    "min_det_score": 0.0,    # P1: drop matched faces below this SCRFD score
+    "min_face_frac": 0.0,    # P1: drop matched faces shorter than this frac of frame height
+    "recognizer": "arcface", # P2: "arcface" (native) or "adaface" (re-embed via AdaFace ONNX)
+    "adaface_model": "",     # path to adaface .onnx when recognizer == "adaface"
+    "stats": None,           # dict accumulator for detection-level stats, or None
+}
+_ADAFACE = None              # lazy AdaFace onnxruntime session
+
+
+def _stat(key, n=1):
+    s = RUNCFG.get("stats")
+    if s is not None:
+        s[key] = s.get(key, 0) + n
+
+
+def _enhance(bgr):
+    """Content-safe low-light normalization: CLAHE on L + mild gamma. Adds no
+    hallucinated content, so it can't invent a face -> 0-FP-safe for the matcher."""
+    import cv2
+    lab = cv2.cvtColor(bgr, cv2.COLOR_BGR2LAB)
+    l, a, b = cv2.split(lab)
+    l = cv2.createCLAHE(clipLimit=2.5, tileGridSize=(8, 8)).apply(l)
+    out = cv2.cvtColor(cv2.merge((l, a, b)), cv2.COLOR_LAB2BGR)
+    # mild gamma<1 brighten for very dark frames
+    lut = np.array([((i / 255.0) ** 0.75) * 255 for i in range(256)], dtype=np.uint8)
+    return cv2.LUT(out, lut)
+
+
+def face_ok(f, frame_h):
+    """P1 gate: reject weak/tiny matched faces so meme/crowd faces can't clear the
+    cosine threshold and hold a creator run open one shot too long. No-op at defaults."""
+    if RUNCFG["min_det_score"] > 0 and float(getattr(f, "det_score", 1.0)) < RUNCFG["min_det_score"]:
+        return False
+    if RUNCFG["min_face_frac"] > 0:
+        fh = (f.bbox[3] - f.bbox[1]) / max(frame_h, 1)
+        if fh < RUNCFG["min_face_frac"]:
+            return False
+    return True
+
+
+def _load_adaface():
+    global _ADAFACE
+    if _ADAFACE is None:
+        import onnxruntime as ort
+        _ADAFACE = ort.InferenceSession(RUNCFG["adaface_model"],
+                                        providers=["CPUExecutionProvider"])
+    return _ADAFACE
+
+
+def _embed_adaface(img_bgr, faces):
+    """P2: overwrite each face's normed_embedding with an AdaFace embedding computed
+    from the same 5-point aligned 112x112 crop insightface uses, so all downstream
+    cosine/centroid code is unchanged. AdaFace expects BGR, (x/255-0.5)/0.5, NCHW."""
+    from insightface.utils import face_align
+    sess = _load_adaface()
+    iname = sess.get_inputs()[0].name
+    for f in faces:
+        crop = face_align.norm_crop(img_bgr, f.kps, image_size=112)  # BGR 112x112
+        blob = ((crop.astype(np.float32) / 255.0) - 0.5) / 0.5
+        blob = np.transpose(blob, (2, 0, 1))[None]                    # 1x3x112x112
+        emb = sess.run(None, {iname: blob})[0][0]
+        # normed_embedding is a read-only @property computed from .embedding, so we
+        # overwrite the raw embedding; downstream cosine code reads normed_embedding.
+        f.embedding = emb.astype(np.float32)
+
 
 def short(name):
     return name[:-4][-12:]
@@ -63,7 +133,7 @@ def normed(v):
     return v / n if n > 0 else v
 
 
-def load_face_app():
+def load_face_app(det_size=640):
     from insightface.app import FaceAnalysis
     import onnxruntime as ort
     root = os.environ.get("INSIGHTFACE_HOME", os.path.expanduser("~/.insightface"))
@@ -80,8 +150,8 @@ def load_face_app():
     providers = (["CUDAExecutionProvider", "CPUExecutionProvider"] if gpu
                  else ["CPUExecutionProvider"])
     app = FaceAnalysis(name="buffalo_l", root=root, providers=providers)
-    app.prepare(ctx_id=0 if gpu else -1, det_size=(384, 384))
-    print(f"[face] running on {'GPU (CUDA)' if gpu else 'CPU'}", flush=True)
+    app.prepare(ctx_id=0 if gpu else -1, det_size=(det_size, det_size))
+    print(f"[face] running on {'GPU (CUDA)' if gpu else 'CPU'} | det_size={det_size}", flush=True)
     return app
 
 
@@ -90,8 +160,30 @@ def faces_at(app, vr, fps, t, total):
     if idx < 0:
         return []
     rgb = vr[idx].asnumpy()
-    bgr = rgb[:, :, ::-1]
-    return app.get(bgr)
+    bgr = np.ascontiguousarray(rgb[:, :, ::-1])
+    _stat("frames")
+    faces = app.get(bgr)
+    img_used = bgr
+    if RUNCFG["low_light"] and not faces:                 # P0b: retry dark frames
+        _stat("lowlight_tried")
+        enh = _enhance(bgr)
+        faces = app.get(enh)
+        if faces:
+            _stat("lowlight_rescued")
+            img_used = enh
+    # detection recall (after low-light retry, BEFORE gating) == the P0a/P0b signal
+    _stat("det_faces", len(faces))
+    if faces:
+        _stat("det_frames_with_face")
+    if RUNCFG["recognizer"] == "adaface" and faces:       # P2: re-embed with AdaFace
+        _embed_adaface(img_used, faces)
+    if RUNCFG["min_det_score"] > 0 or RUNCFG["min_face_frac"] > 0:   # P1: gate weak/tiny faces
+        frame_h = rgb.shape[0]
+        faces = [f for f in faces if face_ok(f, frame_h)]
+    _stat("faces", len(faces))       # matched-eligible faces AFTER gating == the P1 signal
+    if faces:
+        _stat("frames_with_face")
+    return faces
 
 
 def largest_face_emb(faces):
@@ -274,6 +366,11 @@ def refine_within_shot(app, src, a, b, centroid, thr, sample_fps=6.0, hi=0.45):
     tail = present[best_i:]
     if sum(1 for x in tail if not x) / len(tail) < 0.6:
         return None
+    # The tail must actually look like the MEME, not just "below confident (hi)". If her
+    # face still matches there (median sim >= the match threshold), she's merely dipping
+    # (soft occlusion / coffee cup / turning), not gone — cutting here fires too early.
+    if float(np.median(sims[best_i:])) >= thr:
+        return None
     return round(times[best_i], 3)
 
 
@@ -347,13 +444,39 @@ def main():
                     help="Disable the single-shot low-threshold re-detect fallback")
     ap.add_argument("--device", default="auto",
                     help="Device for the low-threshold re-detect (auto/cuda/cpu)")
+    # --- benchmark/tuning levers (P0/P1/P2); all default to shipped behavior ---
+    ap.add_argument("--det-size", type=int, default=640,
+                    help="SCRFD detection input size. 640 = the detector's rated scale and the "
+                         "default (benchmarked +0.8% exact vs the old 384, 0 regressions, 0 FP).")
+    ap.add_argument("--low-light", action="store_true",
+                    help="P0b: CLAHE+gamma retry on frames where SCRFD finds no face")
+    ap.add_argument("--min-det-score", type=float, default=0.0,
+                    help="P1: drop matched faces with SCRFD score below this")
+    ap.add_argument("--min-face-frac", type=float, default=0.0,
+                    help="P1: drop matched faces shorter than this fraction of frame height")
+    ap.add_argument("--recognizer", choices=["arcface", "adaface"], default="arcface",
+                    help="P2: face embedder (arcface=native w600k_r50; adaface=ONNX re-embed)")
+    ap.add_argument("--adaface-model", default="",
+                    help="Path to AdaFace .onnx (required for --recognizer adaface)")
+    ap.add_argument("--stats-out", default="",
+                    help="Write detection-level stats + method distribution here")
+    ap.add_argument("--limit", type=int, default=0, help="Only process first N clips (smoke test)")
     args = ap.parse_args()
+
+    RUNCFG.update(low_light=args.low_light, min_det_score=args.min_det_score,
+                  min_face_frac=args.min_face_frac, recognizer=args.recognizer,
+                  adaface_model=args.adaface_model,
+                  stats={k: 0 for k in ("frames", "det_faces", "det_frames_with_face",
+                                        "faces", "frames_with_face", "lowlight_tried",
+                                        "lowlight_rescued")})
 
     qa_dir = Path(args.out).parent / "qa"
 
     records = json.load(open(args.transitions))
+    if args.limit:
+        records = records[:args.limit]
     print("Loading InsightFace (buffalo_l)...")
-    app = load_face_app()
+    app = load_face_app(det_size=args.det_size)
 
     print("Enrolling creator face from clip intros...")
     centroid = enroll_creator(app, records)
@@ -413,6 +536,21 @@ def main():
 
     Path(args.out).write_text(json.dumps(out_records, indent=2))
     print(f"Wrote {args.out}")
+
+    if args.stats_out:
+        from collections import Counter
+        st = dict(RUNCFG["stats"])
+        methods = Counter(r.get("method") for r in out_records)
+        fr = st.get("frames", 0)
+        st["method_dist"] = dict(methods)
+        st["det_recall_pct"] = round(100 * st.get("det_frames_with_face", 0) / fr, 2) if fr else 0.0
+        st["matched_after_gate_pct"] = round(100 * st.get("frames_with_face", 0) / fr, 2) if fr else 0.0
+        st["config"] = {"det_size": args.det_size, "low_light": args.low_light,
+                        "min_det_score": args.min_det_score, "min_face_frac": args.min_face_frac,
+                        "recognizer": args.recognizer}
+        Path(args.stats_out).write_text(json.dumps(st, indent=2))
+        print(f"Wrote {args.stats_out}: frames={fr} det_recall={st['det_recall_pct']}% "
+              f"after_gate={st['matched_after_gate_pct']}% lowlight_rescued={st.get('lowlight_rescued',0)}")
 
     # Evaluate vs verified truth
     try:

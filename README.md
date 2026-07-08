@@ -36,12 +36,28 @@ This resolves *ambiguity*, it's not a hard override: if the whole clip shows ess
 no face of her (max similarity below a small evidence floor — e.g. reposted stadium
 footage), that's respected as genuinely creator-less. See `pick()` in `relabel_faces.py`.
 
-**Accuracy** vs the canonical ground truth (`transitions/ground_truth.json`):
-**89.3 % exact (≤0.5 s), 100 % within 1.5 s, 0 false positives, 0 wrong-time, 0 missed**
-(up from 84 % / 88 % for the old CLIP labeler). The last remaining error — a fast
-match-cut TransNetV2 merged into one shot while her walking intro also fell under the
-face threshold — is recovered by the stage-3c low-threshold re-detect. Score anything
-with `evaluate.py`; compare labelers with `ablation.py`.
+**Accuracy.** The face stage runs SCRFD at `--det-size 640` (the detector's rated scale —
+benchmarked **+0.8 pts** over the old 384, with **0 regressions and 0 new false positives**; a
+fuller ablation of low-light preprocessing, face gating, and an AdaFace recognizer swap all did
+worse, so det-size is the only lever that helped).
+
+`evaluate.py` is **multi-cut aware**: a clip that returns to the creator has more than one cut,
+so it scores the *whole* cut sequence (the GT `cuts` array) against the model's segment
+boundaries, matching each cut one-to-one within `--tol` (0.5 s) — not just the first cut. Its
+**default GT is the manual cut-editor set** (`ground_truth_batu.json`), the only label set with
+multi-cut arrays:
+
+- vs the **manual** GT (default): **95.9 % of clips fully correct** (whole sequence, 116/121),
+  cut-level **precision 95.8 % / recall 96.6 %**; **98.3 %** first-cut-only, **0 false positives**.
+- vs the **Claude/agent** GT (`--gt transitions/ground_truth.json`): 87.6 % full-sequence /
+  90.1 % first-cut — lower *only* because that set carries no multi-cut labels, so every real
+  creator-return the model emits is counted as an "extra." The model's cuts land within **0.04 s**
+  of the Claude marks (essentially on them); the manual labels sit ~0.35 s later by convention, so
+  scores below ~0.35 s tolerance measure annotation convention, not correctness.
+
+Remaining errors: a soft dissolve merged into one shot (`0b9bf76f76fa`), one clip whose two
+creator-returns the model collapses to a single cut (`152407c208d2`), and a couple of
+over-segmentations. Compare labelers with `ablation.py`.
 
 ## The pipeline
 
@@ -51,7 +67,7 @@ with `evaluate.py`; compare labelers with `ablation.py`.
 | [`relabel_faces.py`](relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
 | [`segment_clips.py`](segment_clips.py) | **stage 3 (default)** — full creator/meme segment sequence per clip | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
 | [`split_clips.py`](split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
-| [`evaluate.py`](evaluate.py) / [`ablation.py`](ablation.py) | score / compare approaches | prints tables |
+| [`evaluate.py`](evaluate.py) / [`ablation.py`](ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
 | [`build_report.py`](build_report.py) / [`build_verify_ui.py`](build_verify_ui.py) | static `report.html` / `verify.html` | HTML |
 
 **Segments are the general representation:** merge consecutive same-label shots →
@@ -100,8 +116,8 @@ not onnxruntime's compiled-in provider list, which always advertises CUDA and wo
 otherwise segfault a CPU-only run.
 
 **Key flags:** `detect_transitions.py --threshold` (0.5, cut sensitivity) `--limit N`
-(smoke test); `relabel_faces.py --face-threshold` (0.35, cosine cutoff) `--frames-per-shot`
-(3) `--qa` (dump before|after cut frames) `--no-soft-fallback`.
+(smoke test); `relabel_faces.py --det-size` (640, SCRFD input scale) `--face-threshold` (0.35,
+cosine cutoff) `--frames-per-shot` (3) `--qa` (dump before|after cut frames) `--no-soft-fallback`.
 
 ## Output
 

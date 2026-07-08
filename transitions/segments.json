@@ -533,15 +533,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 1.99,
+        "end": 3.667,
         "label": "person",
-        "dur": 1.99
+        "dur": 3.667
       },
       {
-        "start": 1.99,
+        "start": 3.667,
         "end": 8.5,
         "label": "meme",
-        "dur": 6.51
+        "dur": 4.833
       }
     ]
   },
@@ -887,15 +887,15 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 5.186,
+        "end": 4.24,
         "label": "person",
-        "dur": 5.186
+        "dur": 4.24
       },
       {
-        "start": 5.186,
+        "start": 4.24,
         "end": 8.252,
         "label": "meme",
-        "dur": 3.066
+        "dur": 4.012
       }
     ]
   },
