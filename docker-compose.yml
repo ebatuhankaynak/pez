@@ -45,7 +45,9 @@ services:
 
   segment:
     <<: *common
-    command: ["segment_clips.py", "--split", "--workers", "8"]
+    entrypoint: ["bash", "-c"]
+    # stage 3 = face_cut: A) dense sim + luma curves (GPU), B) hybrid+refine segments + cut videos
+    command: ["python face_cut.py --dump-curves && python face_cut.py --split segments"]
 
   report:
     <<: *common
@@ -55,7 +57,7 @@ services:
   all:
     <<: *common
     entrypoint: ["bash", "-c"]
-    command: ["python detect_transitions.py && python relabel_faces.py --qa && python segment_clips.py --split --workers 8 && python split_clips.py --workers 8 && python build_report.py --out transitions/report.html"]
+    command: ["python detect_transitions.py && python relabel_faces.py --qa && python face_cut.py --dump-curves && python face_cut.py --split segments && python split_clips.py --workers 8 && python build_report.py --out transitions/report.html"]
 
   # Static UI + batu-GT save endpoint (serve.py). `up serve` keeps it running.
   serve:

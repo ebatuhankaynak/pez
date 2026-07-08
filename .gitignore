@@ -17,5 +17,6 @@ __pycache__/
 .DS_Store
 .env
 .claude/
+transitions/_face/
 debug/
 transitions/*.bak*

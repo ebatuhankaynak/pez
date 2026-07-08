@@ -65,16 +65,19 @@ over-segmentations. Compare labelers with `ablation.py`.
 |--------|------|--------|
 | [`detect_transitions.py`](detect_transitions.py) | **stage 1** — TransNetV2 shot boundaries | `transitions/transitions.json` (raw shots) |
 | [`relabel_faces.py`](relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
-| [`segment_clips.py`](segment_clips.py) | **stage 3 (default)** — full creator/meme segment sequence per clip | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
+| [`face_cut.py`](face_cut.py) | **stage 3** — face-first multi-cut segments (hybrid + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
 | [`split_clips.py`](split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
 | [`evaluate.py`](evaluate.py) / [`ablation.py`](ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
 | [`build_report.py`](build_report.py) | static `report.html` | HTML |
 
-**Segments are the general representation:** merge consecutive same-label shots →
-`creator→meme` (2 segments), `creator→meme→creator…` (returns), or "no transition"
-(1 segment). `segment_clips.py` honors the stage-2 first cut so the leading boundary keeps
-the shipped accuracy. Knobs: `--face-threshold`, `--min-seg` (absorbs sub-N-second
-segments — suppresses stray face-dropout noise).
+**Stage 3 (`face_cut.py`) is face-first**, in two steps: (A) `--dump-curves` caches a dense
+per-frame creator-similarity curve + a luma/detail curve per clip (GPU, once →
+`transitions/_face/curves.json`); (B) segments from that cache — so re-tuning needs no GPU.
+It keeps the stage-2 first cut, adds creator **returns** (`creator→meme→creator…`) the raw
+shot labels miss, and places every soft-fade cut at the **luma neutral frame** (the
+washed-out frame the manual labeler picks — creator gone, meme not yet in). vs the manual GT:
+**98.3 % full-sequence, mean |Δ| 0.13 s** (2.3× tighter than the shot-label segmenter), 100 %
+first-cut. Ablate with `--no-hybrid` / `--no-refine-fade` / `--no-snap`; explore with `--sweep`.
 
 **Main UI: `app.html`.** `./serve.sh` → `http://localhost:8000/` (root redirects there).
 Reads `transitions.json` + `ground_truth.json` + `segments.json` live — after a run just
