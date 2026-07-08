@@ -47,10 +47,14 @@
         {
           "sec": 3.666,
           "to": "meme"
+        },
+        {
+          "sec": 5.596,
+          "to": "person"
         }
       ],
       "pattern": "person->meme->person",
-      "returns_to_creator": false,
+      "returns_to_creator": true,
       "confidence": "high",
       "notes": "Creator to 3.0, dark rabbit meme 3.5-5.0, creator returns 5.5. Hard cut.",
       "edited": true
