@@ -5,8 +5,10 @@ FACE-FIRST cut detector — cuts come from FINDING THE CREATOR, not from TransNe
 The TransNet+face pipeline collapses creator *returns* (person->meme->person->meme)
 when TransNet doesn't split there (e.g. 152407c208d2). Identity is strong enough
 (buffalo_l/ArcFace, 118 enrolled intros) to drive segmentation directly: keep the
-stage-2 first cut, then read the dense creator-similarity curve to recover returns in
-the meme tail. TransNet/luma say WHEN a shot changes; the face says WHO is in it.
+stage-2 first cut, then GLOBALLY DECODE the person/meme regime of the rest with a
+2-state Viterbi on the dense creator-similarity curve — strict person<->meme
+alternation (there are no meme->meme cuts) + a switch-hysteresis penalty — to recover
+returns. TransNet/luma say WHEN a shot changes; the face says WHO is in it.
 
 Two stages so tuning is cheap:
   A. dense sim + luma curves per clip (GPU, slow) -> cached in transitions/_face/curves.json
@@ -125,36 +127,36 @@ def _runs(bools):
     return runs
 
 
-def _morph(present, dt, max_gap, min_seg):
-    """Temporal cleanup of a boolean presence curve: (1) bridge short absent gaps flanked
-    by presence (occlusion/angle/blur — 'skipped frames = same shot'); (2) absorb any run
-    shorter than min_seg into its neighbour (kills blips)."""
-    present = list(present)
-    changed = True
-    while changed:                                        # gap-fill
-        changed = False
-        for idx, (val, a, b) in enumerate(_runs(present)):
-            runs = _runs(present)
-            if not val and 0 < idx < len(runs) - 1 and (b - a + 1) * dt < max_gap:
-                for k in range(a, b + 1):
-                    present[k] = True
-                changed = True
-                break
-    changed = True
-    while changed:                                        # min-seg absorb
-        changed = False
-        runs = _runs(present)
-        if len(runs) <= 1:
-            break
-        for k in sorted(range(len(runs)), key=lambda k: runs[k][2] - runs[k][1]):
-            val, a, b = runs[k]
-            if (b - a + 1) * dt < min_seg:
-                nb = runs[k - 1][0] if k > 0 else runs[k + 1][0]
-                for idx in range(a, b + 1):
-                    present[idx] = nb
-                changed = True
-                break
-    return present
+def viterbi_regime(sims, thr, switch_pen, seed_idx=0):
+    """Globally decode the person(0)/meme(1) regime of the sim curve. ONE objective
+    replaces the old gap-fill + min-seg-absorb + return-gate heuristics:
+      - emission = log-odds linear around the threshold center (sim>thr -> person),
+      - switching person<->meme costs `switch_pen` (hysteresis; a spurious blip must
+        outweigh 2 switches to survive, so single-cut clips don't sprout returns),
+      - the path is FORCED to PERSON up to `seed_idx` (creator always opens; the
+        stage-2 first cut is trusted and only the tail is decoded).
+    Strict 2-state alternation encodes the domain fact that there are no meme->meme cuts.
+    Returns a per-sample state list. Pure stdlib (Stage B stays GPU-free)."""
+    n = len(sims)
+    NEG = -1e9
+    ep = [s - thr for s in sims]                          # person favored when sim high
+    em = [thr - s for s in sims]                          # meme favored when sim low
+    dp = [[NEG, NEG] for _ in range(n)]
+    bp = [[0, 0] for _ in range(n)]
+    dp[0][0] = ep[0]                                       # sample 0 is always person
+    for i in range(1, n):
+        forced_person = i <= seed_idx
+        for s, e in ((0, ep[i]), (1, em[i])):
+            if s == 1 and forced_person:
+                continue                                  # meme disallowed inside the seed
+            stay = dp[i - 1][s]
+            switch = dp[i - 1][1 - s] - switch_pen
+            dp[i][s], bp[i][s] = (stay + e, s) if stay >= switch else (switch + e, 1 - s)
+    s = 0 if dp[n - 1][0] >= dp[n - 1][1] else 1
+    path = [0] * n
+    for i in range(n - 1, -1, -1):
+        path[i], s = s, bp[i][s]
+    return path
 
 
 def refine_fade(cur, b, thr=0.35, dark=48.0, bright=212.0, hard_step=34.0, back=0.3, fwd=0.5):
@@ -225,11 +227,10 @@ def place_boundaries(segs, cur, snap, snap_win, refine, snap_from=1, return_back
 
 
 def segment(cur, base_rec, p):
-    """Segment ONE clip. Keep the stage-2 first cut; recover creator RETURNS from the dense
-    face curve in the meme tail (gated so single-cut clips don't sprout spurious returns);
-    then place every boundary (return back-snap / luma fade-refine / TransNet snap)."""
-    times, sims = cur["times"], cur["sims"]
-    dt, dur = 1.0 / cur["sample_fps"], cur["dur"]
+    """Segment ONE clip. Keep the stage-2 first cut, then Viterbi-decode the whole
+    person/meme regime (returns fall out of the global path); place every boundary
+    (return back-snap / luma fade-refine / TransNet snap)."""
+    times, sims, dur = cur["times"], cur["sims"], cur["dur"]
     first, method = base_rec.get("transition_sec"), base_rec.get("method", "")
 
     if first is None:                                     # base found no cut -> trust it
@@ -237,27 +238,14 @@ def segment(cur, base_rec, p):
         segs = [{"start": 0.0, "end": round(dur, 3), "label": lab}]
         return place_boundaries(segs, cur, False, p["snap_win"], p["refine"]) + (method,)
 
-    idx = [k for k, t in enumerate(times) if t > first + 0.1]
-    present = _morph([sims[k] >= p["thr"] for k in idx], dt, p["max_gap"], p["min_seg"]) if idx else []
-    ttimes = [times[k] for k in idx]
-    tail = []
-    for val, a, b in _runs(present):
-        s0 = first if a == 0 else round((ttimes[a] + ttimes[a - 1]) / 2, 3)
-        s1 = round(dur, 3) if b == len(present) - 1 else round((ttimes[b] + ttimes[b + 1]) / 2, 3)
-        tail.append({"start": s0, "end": s1, "label": "person" if val else "meme"})
-    # conservative return gate: a tail 'person' run must be long enough AND strongly match
-    for s in tail:
-        if s["label"] == "person":
-            inside = [sims[k] for k, t in zip(idx, ttimes) if s["start"] <= t < s["end"]]
-            med = st.median(inside) if inside else 0.0
-            if not (s["end"] - s["start"] >= p["min_return"] and med >= p["ret_sim"]):
-                s["label"] = "meme"
-    segs = [{"start": 0.0, "end": round(first, 3), "label": "person"}]
-    for s in tail:                                        # merge consecutive same-label
-        if segs[-1]["label"] == s["label"]:
-            segs[-1]["end"] = s["end"]
-        else:
-            segs.append(dict(s))
+    seed_idx = max([i for i, t in enumerate(times) if t <= first], default=0)
+    path = viterbi_regime(sims, p["thr"], p["lam"], seed_idx)
+    n = len(path)
+    segs = []
+    for val, a, b in _runs(path):                         # runs -> segments (midpoint bounds)
+        s0 = 0.0 if a == 0 else round((times[a] + times[a - 1]) / 2, 3)
+        s1 = round(dur, 3) if b == n - 1 else round((times[b] + times[b + 1]) / 2, 3)
+        segs.append({"start": s0, "end": s1, "label": "person" if val == 0 else "meme"})
     segs[-1]["end"] = round(dur, 3)
     n_ret = sum(1 for s in segs if s["label"] == "person") - 1
     method = "creator_returns" if n_ret > 0 else (method or "creator_to_meme")
@@ -355,11 +343,8 @@ def main():
     ap.add_argument("--sample-fps", type=float, default=10.0)
     ap.add_argument("--luma-fps", type=float, default=15.0, help="Stage A: luma sampling rate")
     # knobs (defaults = the shipped config)
-    ap.add_argument("--thr", type=float, default=0.32, help="presence: sim>=thr -> creator")
-    ap.add_argument("--max-gap", type=float, default=0.7, help="bridge absent gaps shorter than this (s)")
-    ap.add_argument("--min-seg", type=float, default=0.5, help="absorb segments shorter than this (s)")
-    ap.add_argument("--min-return", type=float, default=0.5, help="min creator-return duration in the tail (s)")
-    ap.add_argument("--ret-sim", type=float, default=0.45, help="min median sim to accept a creator return")
+    ap.add_argument("--thr", type=float, default=0.32, help="Viterbi emission center: sim>thr favors creator")
+    ap.add_argument("--switch-pen", type=float, default=1.0, help="Viterbi person<->meme switch penalty (hysteresis)")
     ap.add_argument("--snap", action=argparse.BooleanOptionalAction, default=True,
                     help="snap boundaries to TransNet shot cuts (returns + hard cuts)")
     ap.add_argument("--snap-win", type=float, default=0.35, help="max distance for a nearest-cut snap (s)")
@@ -392,17 +377,16 @@ def main():
         return
 
     def mkp(**kw):
-        p = {"thr": args.thr, "max_gap": args.max_gap, "min_seg": args.min_seg,
-             "min_return": args.min_return, "ret_sim": args.ret_sim, "snap": args.snap,
+        p = {"thr": args.thr, "lam": args.switch_pen, "snap": args.snap,
              "snap_win": args.snap_win, "refine": args.refine_fade}
         p.update(kw)
         return p
 
     if args.sweep:
         base = json.load(open(args.base))
-        grid = [mkp(thr=t, min_return=mr, ret_sim=rs, refine=rf)
-                for t in (0.28, 0.32, 0.35) for mr in (0.4, 0.5, 0.7)
-                for rs in (0.40, 0.45) for rf in (True, False)]
+        grid = [mkp(thr=t, lam=lm, refine=rf)
+                for t in (0.28, 0.30, 0.32, 0.35) for lm in (0.5, 1.0, 1.5, 2.0)
+                for rf in (True, False)]
         rows = []
         for p in grid:
             _, seg_out = run(curves, base, p)
@@ -410,18 +394,17 @@ def main():
             rows.append((b["full_pct"], b["prec"], b["rec"], p))
         rows.sort(key=lambda r: (-r[0], -(r[1] + r[2])))
         print(f"\nsweep vs {Path(args.gt).name} — top 15 (of {len(grid)}):")
-        print("  full%   prec   rec   | thr  minret retsim refine")
+        print("  full%   prec   rec   | thr  switch-pen refine")
         for full, prec, rec, p in rows[:15]:
-            print(f"  {full:5.1f}  {prec:5.1f}  {rec:5.1f}  | {p['thr']:.2f} {p['min_return']:.1f}   "
-                  f"{p['ret_sim']:.2f}   {'Y' if p['refine'] else 'n'}")
+            print(f"  {full:5.1f}  {prec:5.1f}  {rec:5.1f}  | {p['thr']:.2f}  {p['lam']:.1f}      "
+                  f"{'Y' if p['refine'] else 'n'}")
         return
 
     trans_out, seg_out = run(curves, json.load(open(args.base)), mkp())
     Path(args.out_trans).write_text(json.dumps(trans_out, indent=2))
     Path(args.out_segs).write_text(json.dumps(seg_out, indent=2))
     b = score(seg_out, args.gt)
-    print(f"thr={args.thr} max_gap={args.max_gap} min_seg={args.min_seg} min_return={args.min_return} "
-          f"snap={args.snap} refine={args.refine_fade}")
+    print(f"thr={args.thr} switch_pen={args.switch_pen} snap={args.snap} refine={args.refine_fade}")
     print(f"vs {Path(args.gt).name}: FULL-seq {b['full']}/{b['tot']} = {b['full_pct']:.1f}%  "
           f"cut prec={b['prec']:.1f}% rec={b['rec']:.1f}%  (tp={b['tp']} miss={b['miss']} extra={b['extra']})")
     o = offset_stats(trans_out, args.gt)

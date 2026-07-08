@@ -65,19 +65,24 @@ over-segmentations. Compare labelers with `ablation.py`.
 |--------|------|--------|
 | [`detect_transitions.py`](detect_transitions.py) | **stage 1** — TransNetV2 shot boundaries | `transitions/transitions.json` (raw shots) |
 | [`relabel_faces.py`](relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
-| [`face_cut.py`](face_cut.py) | **stage 3** — face-first multi-cut segments (hybrid + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
+| [`face_cut.py`](face_cut.py) | **stage 3** — face-first multi-cut segments (Viterbi regime decode + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
 | [`split_clips.py`](split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
 | [`evaluate.py`](evaluate.py) / [`ablation.py`](ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
 | [`build_report.py`](build_report.py) | static `report.html` | HTML |
 
 **Stage 3 (`face_cut.py`) is face-first**, in two steps: (A) `--dump-curves` caches a dense
-per-frame creator-similarity curve + a luma/detail curve per clip (GPU, once →
+per-frame creator-similarity curve + a luma curve per clip (GPU, once →
 `transitions/_face/curves.json`); (B) segments from that cache — so re-tuning needs no GPU.
-It keeps the stage-2 first cut, adds creator **returns** (`creator→meme→creator…`) the raw
-shot labels miss, and places every soft-fade cut at the **luma neutral frame** (the
-washed-out frame the manual labeler picks — creator gone, meme not yet in). vs the manual GT:
-**98.3 % full-sequence, mean |Δ| 0.13 s** (2.3× tighter than the shot-label segmenter), 100 %
-first-cut. Ablate with `--no-hybrid` / `--no-refine-fade` / `--no-snap`; explore with `--sweep`.
+It keeps the stage-2 first cut, then **globally decodes** the person/meme regime with a
+**2-state Viterbi** on the sim curve — strict `person↔meme` alternation (there are *no*
+meme→meme cuts) plus one switch-hysteresis penalty — which recovers creator **returns**
+(`creator→meme→creator…`) the raw shot labels miss. Every soft-fade cut is then placed at the
+**luma neutral frame** (the washed-out frame the manual labeler picks — creator gone, meme not
+yet in). This global decode replaced a chain of local morphology heuristics (gap-fill /
+min-seg-absorb / return-gate, 5 knobs → **2**: `--thr` center, `--switch-pen`) with no change
+in accuracy and far less knob sensitivity. vs the manual GT: **99.2 % full-sequence
+(120/121), mean |Δ| 0.13 s** (2.3× tighter than the shot-label segmenter), 100 % first-cut.
+Ablate with `--no-refine-fade` / `--no-snap`; explore knobs with `--sweep`.
 
 **Main UI: `app.html`.** `./serve.sh` → `http://localhost:8000/` (root redirects there).
 Reads `transitions.json` + `ground_truth.json` + `segments.json` live — after a run just

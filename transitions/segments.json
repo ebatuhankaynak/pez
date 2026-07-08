@@ -776,16 +776,16 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.922,
+        "end": 3.855,
         "label": "person",
-        "dur": 3.922,
-        "face_sim": 0.423
+        "dur": 3.855,
+        "face_sim": 0.424
       },
       {
-        "start": 3.922,
+        "start": 3.855,
         "end": 8.782,
         "label": "meme",
-        "dur": 4.86,
+        "dur": 4.927,
         "face_sim": 0.0
       }
     ]
@@ -989,16 +989,16 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 4.713,
+        "end": 4.78,
         "label": "person",
-        "dur": 4.713,
+        "dur": 4.78,
         "face_sim": 0.673
       },
       {
-        "start": 4.713,
+        "start": 4.78,
         "end": 8.29,
         "label": "meme",
-        "dur": 3.577,
+        "dur": 3.51,
         "face_sim": 0.0
       }
     ]
@@ -1143,17 +1143,17 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.904,
+        "end": 3.837,
         "label": "person",
-        "dur": 3.904,
-        "face_sim": 0.523
+        "dur": 3.837,
+        "face_sim": 0.526
       },
       {
-        "start": 3.904,
+        "start": 3.837,
         "end": 11.546,
         "label": "meme",
-        "dur": 7.642,
-        "face_sim": 0.005
+        "dur": 7.709,
+        "face_sim": 0.004
       }
     ]
   },
@@ -1290,16 +1290,16 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 4.128,
+        "end": 4.195,
         "label": "person",
-        "dur": 4.128,
+        "dur": 4.195,
         "face_sim": 0.355
       },
       {
-        "start": 4.128,
+        "start": 4.195,
         "end": 7.987,
         "label": "meme",
-        "dur": 3.859,
+        "dur": 3.792,
         "face_sim": 0.04
       }
     ]
@@ -1466,16 +1466,16 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.177,
+        "end": 2.767,
         "label": "person",
-        "dur": 3.177,
-        "face_sim": 0.696
+        "dur": 2.767,
+        "face_sim": 0.705
       },
       {
-        "start": 3.177,
+        "start": 2.767,
         "end": 10.633,
         "label": "meme",
-        "dur": 7.456,
+        "dur": 7.866,
         "face_sim": 0.0
       }
     ]
@@ -2398,16 +2398,16 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.614,
+        "end": 3.604,
         "label": "person",
-        "dur": 3.614,
+        "dur": 3.604,
         "face_sim": 0.592
       },
       {
-        "start": 3.614,
+        "start": 3.604,
         "end": 9.009,
         "label": "meme",
-        "dur": 5.395,
+        "dur": 5.405,
         "face_sim": 0.0
       }
     ]
@@ -2464,16 +2464,16 @@
     "segments": [
       {
         "start": 0.0,
-        "end": 3.776,
+        "end": 3.825,
         "label": "person",
-        "dur": 3.776,
+        "dur": 3.825,
         "face_sim": 0.673
       },
       {
-        "start": 3.776,
+        "start": 3.825,
         "end": 8.252,
         "label": "meme",
-        "dur": 4.476,
+        "dur": 4.427,
         "face_sim": 0.0
       }
     ]
