@@ -58,17 +58,17 @@
       },
       {
         "start": 3.9,
-        "end": 6.352,
+        "end": 5.667,
         "label": "meme",
-        "dur": 2.452,
+        "dur": 1.767,
         "face_sim": 0.0
       },
       {
-        "start": 6.352,
+        "start": 5.667,
         "end": 8.067,
         "label": "person",
-        "dur": 1.715,
-        "face_sim": 0.745
+        "dur": 2.4,
+        "face_sim": 0.737
       }
     ]
   },

@@ -234,45 +234,43 @@ def refine_fade(cur, b, thr=0.35, dark=48.0, bright=212.0, hard_step=34.0, back=
 
 
 def _finalize(segs, cur, method, snap, snap_win, refine=False, fade_frac=0.4,
-              snap_fwd=1.0, snap_from=1):
-    # Place each interior boundary. Two regimes:
-    #  - SOFT FADE (refine): snap to the luma/detail NEUTRAL frame (the washed-out frame
-    #    the manual labeler picks — creator gone, meme not yet in). Model-free.
-    #  - HARD CUT (TransNet snap, DIRECTIONAL): the face signal dies mid-fade, so on a
-    #    person->meme snap to the LATER TransNet edge, meme->person the EARLIER edge.
-    # refine wins when a real wash exists; else fall back to TransNet; else keep face time.
+              snap_fwd=1.0, snap_from=1, return_back=0.8):
+    # Place each interior boundary. TransNet/luma say WHEN the shot changes; the face
+    # says WHO. Priority per boundary:
+    #  - RETURN (meme->person): the shot changed back to the creator (a TransNet cut),
+    #    possibly BEFORE her face resolves (she enters dark/turned). Snap to a TransNet
+    #    cut in a back-biased window so the return isn't placed late at face-recognition.
+    #  - person->meme SOFT FADE (refine): snap to the luma NEUTRAL frame (the washed-out
+    #    frame the manual labeler picks).
+    #  - fallback: nearest TransNet hard cut (or the refine-off directional edge).
     dur, sims, times, tn_cuts = cur["dur"], cur["sims"], cur["times"], cur.get("transnet_cuts", [])
     snapped = fades = 0
     if len(segs) > 1:
         for i in range(max(1, snap_from), len(segs)):
             b = segs[i]["start"]
             prev_lab, cur_lab = segs[i - 1]["label"], segs[i]["label"]
-            new = refine_fade(cur, b) if refine else None
-            if new is not None:
-                fades += 1
-            elif snap and tn_cuts:
-                if refine:
-                    # refine already handles fade timing; snap only nudges HARD cuts to
-                    # the NEAREST TransNet boundary — no directional overshoot.
+            new, via = None, None
+            if prev_lab == "meme" and cur_lab == "person" and snap and tn_cuts:
+                cand = [c for c in tn_cuts if b - return_back <= c <= b + 0.3]
+                if cand:
+                    new, via = min(cand, key=lambda x: abs(x - b)), "snap"
+            if new is None and refine:                     # person->meme fade -> neutral frame
+                r = refine_fade(cur, b)
+                if r is not None:
+                    new, via = r, "fade"
+            if new is None and snap and tn_cuts:
+                if not refine and prev_lab == "person" and cur_lab == "meme":
+                    c2 = [c for c in tn_cuts if b - 0.25 <= c <= b + snap_fwd]
+                    if c2:
+                        new, via = max(c2), "snap"
+                if new is None:                            # nearest hard cut
                     near = min(tn_cuts, key=lambda x: abs(x - b))
-                    new = near if abs(near - b) <= snap_win else None
-                else:
-                    # no refine: directional snap compensates for face-death firing
-                    # mid-fade (person->meme -> LATER edge, meme->person -> EARLIER edge).
-                    if prev_lab == "person" and cur_lab == "meme":
-                        cand = [c for c in tn_cuts if b - 0.25 <= c <= b + snap_fwd]
-                        new = max(cand) if cand else None
-                    elif prev_lab == "meme" and cur_lab == "person":
-                        cand = [c for c in tn_cuts if b - snap_fwd <= c <= b + 0.25]
-                        new = min(cand) if cand else None
-                    if new is None:
-                        near = min(tn_cuts, key=lambda x: abs(x - b))
-                        new = near if abs(near - b) <= snap_win else None
-                if new is not None:
-                    snapped += 1
+                    if abs(near - b) <= snap_win:
+                        new, via = near, "snap"
             if new is not None:
                 segs[i]["start"] = round(new, 3)
                 segs[i - 1]["end"] = round(new, 3)
+                fades += (via == "fade"); snapped += (via == "snap")
     # representative face_sim per segment (median of samples inside it) for the workbench
     for s in segs:
         inside = [sims[k] for k, t in enumerate(times) if s["start"] <= t < s["end"]]
