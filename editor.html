@@ -4,19 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pezevenk — cut editor (batu)</title>
+<link rel="stylesheet" href="peznav.css">
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
   body { margin:0; background:#0d1117; color:#e6edf3; font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }
   a { color:#58a6ff; text-decoration:none; }
-  /* shared nav */
-  .peznav { position:sticky; top:0; z-index:30; display:flex; gap:4px; align-items:center;
-        background:#010409ee; backdrop-filter:blur(6px); border-bottom:1px solid #21262d; padding:9px 16px; flex-wrap:wrap; }
-  .peznav .brand { font-weight:600; margin-right:12px; color:#e6edf3; }
-  .peznav a { padding:5px 12px; border-radius:14px; color:#adbac7; }
-  .peznav a.on { background:#1f6feb; color:#fff; }
-  .peznav a:hover { background:#21262d; }
-  .peznav .sp { flex:1; }
+  /* nav styles live in peznav.css (shared across all pages) */
   .save { font-size:13px; padding:4px 11px; border-radius:12px; border:1px solid #30363d; }
   .save.saved { color:#3fb950; border-color:#1a7f37; }
   .save.saving { color:#e3b341; }
@@ -51,7 +45,9 @@
   .tl { position:relative; height:34px; background:#161b22; border-radius:5px; margin:10px 0 6px; cursor:pointer; }
   .tl .ph { position:absolute; top:0; width:2px; height:100%; background:#e6edf3; }
   .tl .mk { position:absolute; top:-4px; width:2px; height:42px; }
-  .tl .mk.det { background:#e3873a; } .tl .mk.cla { background:#f0f6fc; } .tl .mk.batu { background:#3fb950; width:3px; }
+  .tl .mk.det { background:#e3873a; } .tl .mk.cla { background:#f0f6fc; } .tl .mk.batu { background:#3fb950; width:3px; cursor:pointer; }
+  .tl .mk.batu.sel { width:4px; background:#58ff8f; box-shadow:0 0 6px #3fb950; z-index:2; }
+  .tl .mk .cn { position:absolute; top:-15px; left:-3px; font-size:10px; color:#3fb950; font-family:ui-monospace,monospace; }
   .tl .seg { position:absolute; top:0; height:100%; opacity:.35; }
   .tlab { display:flex; justify-content:space-between; font-size:12px; color:#6e7681; }
 
@@ -75,6 +71,21 @@
   .refs .det b { color:#e3873a; } .refs .cla b { color:#f0f6fc; } .refs .batu b { color:#3fb950; }
   .pat button { margin:0 5px 5px 0; background:#161b22; border:1px solid #30363d; color:#adbac7; border-radius:14px; padding:5px 12px; cursor:pointer; font-size:13px; }
   .pat button.on { background:#1f6feb; border-color:#1f6feb; color:#fff; }
+  .cutlist { display:flex; flex-direction:column; gap:5px; margin:4px 0; }
+  .cutrow { display:flex; align-items:center; gap:7px; padding:5px 9px; border:1px solid #30363d;
+        border-radius:8px; background:#161b22; cursor:pointer; font-size:13px; }
+  .cutrow:hover { border-color:#3d444d; }
+  .cutrow.sel { border-color:#1f6feb; background:#132030; box-shadow:inset 3px 0 0 #1f6feb; }
+  .cutrow .cnum { color:#6e7681; font-family:ui-monospace,monospace; }
+  .cutrow .cto { padding:1px 8px; border-radius:11px; font-size:12px; font-weight:600; }
+  .cutrow .cto.meme { background:#10243f; color:#6cb6ff; } .cutrow .cto.person { background:#0e2a16; color:#3fb950; }
+  .cutrow .csec { margin-left:auto; font-family:ui-monospace,monospace; }
+  .cutrow button { background:#21262d; color:#adbac7; border:1px solid #30363d; border-radius:6px;
+        padding:2px 8px; font-size:12px; cursor:pointer; }
+  .cutrow button:hover { background:#30363d; }
+  .cutrow button.danger { border-color:#6e2b2b; color:#f0883e; }
+  .cutseq { font-size:12.5px; color:#8b949e; margin:2px 0 6px; }
+  .cutseq b { color:#adbac7; font-weight:600; }
   .hint { color:#6e7681; font-size:12.5px; margin-top:4px; }
   kbd { background:#21262d; border:1px solid #30363d; border-bottom-width:2px; border-radius:4px; padding:1px 6px; font-family:ui-monospace,monospace; font-size:12px; }
   .load { padding:40px; color:#8b949e; }
@@ -85,7 +96,7 @@
   <div class="load" v-if="loading">loading…</div>
   <div class="load" v-else-if="error" style="color:#f85149">{{ error }}</div>
   <template v-else>
-    <nav class="peznav">
+    <nav class="peznav sticky">
       <span class="brand">pezevenk</span>
       <a href="app.html">workbench</a>
       <a href="editor.html" class="on">cut editor</a>
@@ -106,7 +117,7 @@
              :class="{sel: c.short===cur.short, diff: differs(c)}" @click="selectShort(c.short)">
           <span class="dot" :class="c.batu.edited?'ed':'un'"></span>
           <span class="mono">{{ c.short }}</span>
-          <span class="cut">{{ c.batu.has_transition===false ? 'none' : fmt(c.batu.cut_sec) }}</span>
+          <span class="cut">{{ !c.batu.edited ? '—' : (c.batu.has_transition===false ? 'none' : fmt(c.batu.cut_sec)) }}</span>
         </div>
       </div>
 
@@ -116,19 +127,21 @@
           <span class="sid">{{ cur.short }}</span>
           <span class="ix">{{ selIdx+1 }} / {{ clips.length }} · {{ cur.dur.toFixed(2) }}s · {{ cur.fps.toFixed(2) }} fps</span>
           <span v-if="cur.batu.edited" style="color:#3fb950;font-size:13px">● edited</span>
-          <span v-else style="color:#6e7681;font-size:13px">○ inherited from claude</span>
+          <span v-else style="color:#6e7681;font-size:13px">○ not addressed yet</span>
         </div>
 
         <div class="stage">
           <div class="vcol">
             <video ref="vid" :src="cur.vsrc" preload="auto" @timeupdate="now=$event.target.currentTime"
-                   @loadedmetadata="onMeta" @click="togglePlay"></video>
+                   @seeked="now=$event.target.currentTime" @loadedmetadata="onMeta" @click="togglePlay"></video>
             <div class="tl" @click="scrub($event)">
               <div v-for="(s,i) in cur.shots" :key="i" class="seg"
                    :style="{left:pc(s.start_sec), width:pc(s.end_sec-s.start_sec), background:'#30363d'}"></div>
               <div v-if="cur.det!=null" class="mk det" :style="{left:pc(cur.det)}" title="detected"></div>
               <div v-if="cur.claude!=null" class="mk cla" :style="{left:pc(cur.claude)}" title="claude GT"></div>
-              <div v-if="cur.batu.cut_sec!=null && cur.batu.has_transition!==false" class="mk batu" :style="{left:pc(cur.batu.cut_sec)}" title="your cut"></div>
+              <div v-for="(c,ci) in cur.batu.cuts" :key="'b'+ci" class="mk batu" :class="{sel:ci===selCut}"
+                   :style="{left:pc(c.sec)}" :title="'cut #'+(ci+1)+' → '+c.to+' @ '+c.sec.toFixed(3)+'s'"
+                   @click.stop="selectCut(ci)"><span class="cn">{{ ci+1 }}</span></div>
               <div class="ph" :style="{left:pc(now)}"></div>
             </div>
             <div class="tlab"><span>0.000</span><span>playhead {{ now.toFixed(3) }}s</span><span>{{ cur.dur.toFixed(3) }}</span></div>
@@ -148,24 +161,40 @@
             <div class="refs">
               <span class="r det">detected <b>{{ fmt(cur.det) }}</b></span>
               <span class="r cla">claude <b>{{ fmt(cur.claude) }}</b></span>
-              <span class="r batu">yours <b>{{ cur.batu.has_transition===false ? 'none' : fmt(cur.batu.cut_sec) }}</b></span>
+              <span class="r batu">yours <b>{{ cur.batu.cuts.length ? cur.batu.cuts.map(c=>c.sec.toFixed(3)).join(', ') : 'none' }}</b></span>
             </div>
 
             <div class="btnrow">
-              <button class="prim" @click="setCutHere" title="Enter">◉ set cut = playhead ({{ now.toFixed(3) }}s)</button>
-              <button @click="nudgeCut(-0.001)">cut −1ms</button>
-              <button @click="nudgeCut(0.001)">cut +1ms</button>
+              <button class="prim" @click="addCutHere" title="Enter">＋ add cut at playhead ({{ now.toFixed(3) }}s)</button>
+              <button @click="nudgeCut(-0.001)" :disabled="selCut<0">sel −1ms</button>
+              <button @click="nudgeCut(0.001)" :disabled="selCut<0">sel +1ms</button>
             </div>
 
             <div class="field">
-              <label>cut_sec (seconds, 3-decimal / ms precision)</label>
-              <input type="number" step="0.001" min="0" :disabled="cur.batu.has_transition===false"
-                     :value="cur.batu.cut_sec==null ? '' : cur.batu.cut_sec"
-                     @change="setCut($event.target.value)">
+              <label>cuts ({{ cur.batu.cuts.length }}) — click a row to select; ⇥ jumps the playhead there</label>
+              <div class="cutseq">sequence: <b>{{ cutSeq }}</b></div>
+              <div class="cutlist">
+                <div v-for="(c,ci) in cur.batu.cuts" :key="ci" class="cutrow" :class="{sel:ci===selCut}" @click="selectCut(ci)">
+                  <span class="cnum">#{{ ci+1 }}</span>
+                  <span class="cto" :class="c.to">→ {{ c.to }}</span>
+                  <span class="csec">{{ c.sec.toFixed(3) }}s</span>
+                  <button @click.stop="seekTo(c.sec)" title="jump playhead here">⇥</button>
+                  <button @click.stop="nudgeCutI(ci,-0.001)" title="−1ms">−</button>
+                  <button @click.stop="nudgeCutI(ci,0.001)" title="+1ms">+</button>
+                  <button class="danger" @click.stop="removeCut(ci)" title="delete this cut">✕</button>
+                </div>
+                <div v-if="!cur.batu.cuts.length" class="hint">no cuts — this clip is “no transition”. Position the playhead and press <kbd>Enter</kbd> (or “add cut”) to place one.</div>
+              </div>
+            </div>
+
+            <div class="field" v-if="selCut>=0 && cur.batu.cuts[selCut]">
+              <label>selected cut #{{ selCut+1 }} → {{ cur.batu.cuts[selCut].to }} (seconds, ms precision)</label>
+              <input type="number" step="0.001" min="0" :value="cur.batu.cuts[selCut].sec"
+                     @change="setSelSec($event.target.value)">
             </div>
 
             <div class="field pat">
-              <label>pattern / transition type</label>
+              <label>pattern / transition type <span style="color:#6e7681">— auto-predicted from # of cuts; click to override</span></label>
               <button v-for="p in patterns" :key="p.k" :class="{on: patActive(p)}" @click="setPattern(p)">{{ p.lab }}</button>
             </div>
 
@@ -184,8 +213,8 @@
 
             <div class="hint">
               keys: <kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> ±1 frame · <kbd>Shift</kbd>+<kbd>←→</kbd> ±0.5s ·
-              <kbd>Enter</kbd> set cut · <kbd>Del</kbd> no-cut · <kbd>↑</kbd><kbd>↓</kbd> / <kbd>p</kbd><kbd>n</kbd> prev/next clip.
-              Autosaves to <span class="mono">ground_truth_batu.json</span>; pick <b>batu</b> in the workbench to score against it.
+              <kbd>Enter</kbd> add cut at playhead · <kbd>Del</kbd> remove selected cut (or clear all) · <kbd>↑</kbd><kbd>↓</kbd> / <kbd>p</kbd><kbd>n</kbd> prev/next clip.
+              Cuts auto-sort &amp; alternate creator↔meme. Autosaves to <span class="mono">ground_truth_batu.json</span>; pick <b>batu</b> in the workbench.
             </div>
           </div>
         </div>
@@ -199,7 +228,7 @@
 const { createApp } = Vue;
 const shortOf = n => n.slice(0,-4).slice(-12);
 const enc = p => p.split('/').map(encodeURIComponent).join('/');
-const LS = 'pez_batu_gt_v1';
+const LS = 'pez_batu_gt_v2';   // bumped for the cuts[] schema (v1 cache ignored)
 
 const PATTERNS = [
   { k:'person->meme', lab:'person→meme', has:true },
@@ -211,7 +240,7 @@ const PATTERNS = [
 
 createApp({
   data(){ return {
-    loading:true, error:'', clips:[], selIdx:0, filter:'all', now:0,
+    loading:true, error:'', clips:[], selIdx:0, filter:'all', now:0, selCut:-1,
     saveState:'idle', doc:null, saveTimer:null,
     filters:['all','unedited','edited','no-cut','differs'],
     patterns:PATTERNS,
@@ -226,9 +255,15 @@ createApp({
       if(f==='all') return this.clips;
       if(f==='unedited') return this.clips.filter(c=>!c.batu.edited);
       if(f==='edited') return this.clips.filter(c=>c.batu.edited);
-      if(f==='no-cut') return this.clips.filter(c=>c.batu.has_transition===false);
+      if(f==='no-cut') return this.clips.filter(c=>c.batu.edited && c.batu.has_transition===false);
       if(f==='differs') return this.clips.filter(c=>this.differs(c));
       return this.clips;
+    },
+    cutSeq(){
+      const n = this.cur?.batu?.cuts?.length || 0;
+      if(!n) return 'no transition';
+      const s=['creator']; for(let i=0;i<n;i++) s.push(i%2===0?'meme':'creator');
+      return s.join(' → ');
     },
   },
   methods:{
@@ -257,20 +292,33 @@ createApp({
           if(last && last.end_frame && last.end_sec) fps = last.end_frame/last.end_sec;
           const cla = claudeByShort[short] || {};
           const seed = localByShort[short] || batuByShort[short] || {};
+          const edited = seed.edited ?? false;
+          const batu = {
+            has_transition: seed.has_transition ?? cla.has_transition ?? true,
+            cut_sec: seed.cut_sec ?? cla.cut_sec ?? null,
+            cuts: Array.isArray(seed.cuts) ? seed.cuts.map(x=>({sec:x.sec, to:x.to})) : null,
+            pattern: seed.pattern ?? cla.pattern ?? '',
+            notes: seed.notes ?? cla.notes ?? '',
+            confidence: seed.confidence ?? cla.confidence ?? '',
+            returns_to_creator: seed.returns_to_creator ?? cla.returns_to_creator ?? false,
+            edited,
+          };
+          // Unaddressed clips start with a BLANK cut — don't pre-fill claude's
+          // cut/pattern (claude's cut still shows as a grey reference marker +
+          // chip, so you keep the hint). Notes are kept as a reference. Only
+          // clips you've actually edited carry a placed cut.
+          if(!edited){ batu.cuts=[]; batu.cut_sec=null; batu.has_transition=false;
+                       batu.pattern=''; batu.returns_to_creator=false; }
+          // seed cuts[] from the legacy single cut_sec if absent (edited clips), then normalize
+          if(!Array.isArray(batu.cuts))
+            batu.cuts = (batu.has_transition!==false && batu.cut_sec!=null) ? [{sec:batu.cut_sec}] : [];
+          this.normalizeCuts(batu);
           return {
             short, clip:c.clip, dur, fps, shots,
             det: c.transition_sec,
             claude: cla.cut_sec ?? null,
             vsrc: enc('freckled_spike_tiktok/'+c.clip),
-            batu: {
-              has_transition: seed.has_transition ?? cla.has_transition ?? true,
-              cut_sec: seed.cut_sec ?? cla.cut_sec ?? null,
-              pattern: seed.pattern ?? cla.pattern ?? '',
-              notes: seed.notes ?? cla.notes ?? '',
-              confidence: seed.confidence ?? cla.confidence ?? '',
-              returns_to_creator: seed.returns_to_creator ?? cla.returns_to_creator ?? false,
-              edited: seed.edited ?? false,
-            },
+            batu,
           };
         });
         this.doc = {
@@ -280,15 +328,18 @@ createApp({
           clips:[],
         };
         this.syncDoc();
+        this.afterSwitch();
       }catch(e){ this.error='Could not load JSON — serve the folder: python serve.py, then open http://localhost:8000/editor.html'; console.error(e); }
       this.loading=false;
     },
 
     // ---- selection / nav ----
-    selectShort(s){ const i=this.clips.findIndex(c=>c.short===s); if(i>=0){ this.selIdx=i; this.now=0; } },
-    next(){ if(this.selIdx<this.clips.length-1){ this.selIdx++; this.now=0; } },
-    prev(){ if(this.selIdx>0){ this.selIdx--; this.now=0; } },
+    afterSwitch(){ this.now=0; this.selCut = (this.cur && this.cur.batu.cuts.length) ? 0 : -1; },
+    selectShort(s){ const i=this.clips.findIndex(c=>c.short===s); if(i>=0){ this.selIdx=i; this.afterSwitch(); } },
+    next(){ if(this.selIdx<this.clips.length-1){ this.selIdx++; this.afterSwitch(); } },
+    prev(){ if(this.selIdx>0){ this.selIdx--; this.afterSwitch(); } },
     onMeta(e){ this.now=0; /* fps already derived from shots */ },
+    selectCut(i){ this.selCut=i; },
 
     // ---- transport ----
     vid(){ return this.$refs.vid; },
@@ -297,25 +348,82 @@ createApp({
     scrub(e){ const v=this.vid(); if(!v)return; const r=e.currentTarget.getBoundingClientRect();
       const t=(e.clientX-r.left)/r.width*this.cur.dur; v.pause(); v.currentTime=Math.max(0,Math.min(this.cur.dur,t)); },
 
-    // ---- editing the cut ----
-    setCutHere(){ this.setCut(Number(this.now.toFixed(3))); },
-    setCut(val){
-      let x = val===''||val==null ? null : Number(val);
-      if(x!=null && !isNaN(x)) x=Number(x.toFixed(3)); else x=null;
-      this.cur.batu.cut_sec = x;
-      this.cur.batu.has_transition = x!=null;
-      if(x!=null && !this.cur.batu.pattern) this.cur.batu.pattern='person->meme';
+    // ---- editing the cuts ----
+    // Keep cuts sorted, ms-rounded and de-duped; recompute the alternating
+    // to-labels and the back-compat scalars (cut_sec=cuts[0], has_transition,
+    // returns_to_creator) so the workbench + evaluate.py keep working.
+    normalizeCuts(b){
+      let cs = (b.cuts||[])
+        .filter(c=>c && c.sec!=null && !isNaN(c.sec))
+        .map(c=>({sec: Math.max(0, Number(Number(c.sec).toFixed(3)))}))
+        .sort((a,z)=>a.sec-z.sec);
+      cs = cs.filter((c,i)=> i===0 || c.sec-cs[i-1].sec > 0.0005);   // drop <1ms dups
+      cs.forEach((c,i)=> c.to = i%2===0 ? 'meme' : 'person');
+      b.cuts = cs;
+      b.cut_sec = cs.length ? cs[0].sec : null;
+      b.has_transition = cs.length > 0;
+      b.returns_to_creator = cs.length >= 2;
+    },
+    // guess the transition pattern straight from how many cuts you placed
+    // (creator→meme→creator→… alternation). fires as you add/remove a cut; you
+    // can still click a pattern button to override until the cut count changes.
+    predictPattern(b){
+      const n=b.cuts.length;
+      if(n>=1) b.pattern = n===1 ? 'person->meme'
+                         : n===2 ? 'person->meme->person'
+                         : 'person->meme->person->meme';   // 3+ cuts
+      else if(b.pattern && !b.pattern.startsWith('all')) b.pattern='';  // cuts gone -> drop stale cut-pattern
+    },
+    addCutHere(){
+      const b=this.cur.batu;
+      const sec=Math.max(0, Number(this.now.toFixed(3)));
+      (b.cuts=b.cuts||[]).push({sec});
+      this.normalizeCuts(b);
+      this.predictPattern(b);
+      const i=b.cuts.findIndex(c=>c.sec===sec); this.selCut = i>=0 ? i : b.cuts.length-1;
       this.mark();
     },
-    nudgeCut(d){ if(this.cur.batu.cut_sec==null) return; this.setCut(Number((this.cur.batu.cut_sec+d).toFixed(3))); },
-    clearCut(){ this.cur.batu.cut_sec=null; this.cur.batu.has_transition=false; this.mark(); },
-    setPattern(p){ this.cur.batu.pattern=p.k; this.cur.batu.has_transition=p.has;
-      if(!p.has) this.cur.batu.cut_sec=null; this.mark(); },
+    nudgeCutI(i,d){
+      const b=this.cur.batu; if(!b.cuts||!b.cuts[i]) return;
+      const ns=Math.max(0, Number((b.cuts[i].sec+d).toFixed(3)));
+      b.cuts[i].sec=ns; this.normalizeCuts(b);
+      this.selCut=b.cuts.findIndex(c=>c.sec===ns); this.mark();
+    },
+    nudgeCut(d){ if(this.selCut>=0) this.nudgeCutI(this.selCut,d); },
+    setSelSec(val){
+      const b=this.cur.batu; if(this.selCut<0) return;
+      if(val===''||val==null){ this.removeCut(this.selCut); return; }
+      const x=Math.max(0, Number(Number(val).toFixed(3))); if(isNaN(x)) return;
+      b.cuts[this.selCut].sec=x; this.normalizeCuts(b);
+      this.selCut=b.cuts.findIndex(c=>c.sec===x); this.mark();
+    },
+    removeCut(i){
+      const b=this.cur.batu; if(!b.cuts||!b.cuts[i]) return;
+      b.cuts.splice(i,1); this.normalizeCuts(b); this.predictPattern(b);
+      this.selCut = b.cuts.length ? Math.min(i, b.cuts.length-1) : -1;
+      this.mark();
+    },
+    removeSelOrClear(){
+      const b=this.cur.batu;
+      if(this.selCut>=0 && b.cuts && b.cuts[this.selCut]) return this.removeCut(this.selCut);
+      b.cuts=[]; this.normalizeCuts(b); this.predictPattern(b); this.selCut=-1; this.mark();
+    },
+    seekTo(sec){ const v=this.vid(); if(!v) return; v.pause();
+      v.currentTime=Math.max(0, Math.min(this.cur.dur, sec)); },
+    setPattern(p){
+      const b=this.cur.batu;
+      if(!p.has){ b.cuts=[]; this.normalizeCuts(b); this.selCut=-1; }
+      b.pattern=p.k; this.mark();
+    },
     patActive(p){ return this.cur.batu.pattern===p.k; },
     edit(field,val){ this.cur.batu[field]=val; this.mark(); },
-    copyClaude(){ this.cur.batu.cut_sec=this.cur.claude;
-      this.cur.batu.has_transition=this.cur.claude!=null; this.mark(); },
-    resetClip(){ this.cur.batu.edited=false; this.syncDoc(); this.queueSave(); },
+    copyClaude(){
+      const b=this.cur.batu;
+      b.cuts = this.cur.claude!=null ? [{sec:this.cur.claude}] : [];
+      this.normalizeCuts(b); this.predictPattern(b);
+      this.selCut = b.cuts.length ? 0 : -1; this.mark();
+    },
+    resetClip(){ this.cur.batu.edited=false; this.syncDoc(); this.queueSave(); this.afterSwitch(); },
     mark(){ this.cur.batu.edited=true; this.syncDoc(); this.queueSave(); },
 
     // ---- persistence ----
@@ -323,6 +431,7 @@ createApp({
       clip:c.clip, short:c.short,
       has_transition:c.batu.has_transition,
       cut_sec:c.batu.cut_sec,
+      cuts:c.batu.cuts.map(x=>({sec:x.sec, to:x.to})),
       pattern:c.batu.pattern,
       returns_to_creator:c.batu.returns_to_creator,
       confidence:c.batu.confidence,
@@ -346,7 +455,8 @@ createApp({
       const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ground_truth_batu.json'; a.click(); },
 
     // ---- helpers ----
-    differs(c){ const b = c.batu.has_transition===false ? null : c.batu.cut_sec;
+    differs(c){ if(!c.batu.edited) return false;   // only addressed clips can "differ" from claude
+      const b = c.batu.has_transition===false ? null : c.batu.cut_sec;
       if(b==null && c.claude==null) return false;
       if(b==null || c.claude==null) return true;
       return Math.abs(b-c.claude)>0.05; },
@@ -354,7 +464,7 @@ createApp({
       if(f==='all') return this.clips.length;
       if(f==='unedited') return this.clips.filter(c=>!c.batu.edited).length;
       if(f==='edited') return this.clips.filter(c=>c.batu.edited).length;
-      if(f==='no-cut') return this.clips.filter(c=>c.batu.has_transition===false).length;
+      if(f==='no-cut') return this.clips.filter(c=>c.batu.edited && c.batu.has_transition===false).length;
       if(f==='differs') return this.clips.filter(c=>this.differs(c)).length;
       return 0; },
     pc(x){ return (x/this.cur.dur*100)+'%'; },
@@ -366,8 +476,8 @@ createApp({
       if(k===' '){ e.preventDefault(); this.togglePlay(); }
       else if(k==='ArrowLeft'){ e.preventDefault(); this.step(e.shiftKey?-0.5:-1/this.cur.fps); }
       else if(k==='ArrowRight'){ e.preventDefault(); this.step(e.shiftKey?0.5:1/this.cur.fps); }
-      else if(k==='Enter'){ e.preventDefault(); this.setCutHere(); }
-      else if(k==='Delete'||k==='Backspace'){ e.preventDefault(); this.clearCut(); }
+      else if(k==='Enter'){ e.preventDefault(); this.addCutHere(); }
+      else if(k==='Delete'||k==='Backspace'){ e.preventDefault(); this.removeSelOrClear(); }
       else if(k==='ArrowDown'||k==='n'){ e.preventDefault(); this.next(); }
       else if(k==='ArrowUp'||k==='p'){ e.preventDefault(); this.prev(); }
     },
