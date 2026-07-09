@@ -31,8 +31,35 @@ def load_transnet(device):
     return model
 
 
+def _project_to_true_clock(video_path, shots):
+    """TransNetV2 decodes at a constant NOMINAL rate, so on variable-frame-rate clips its
+    shot times sit on the wrong clock (and its frame indices in a different space). Re-project
+    every boundary onto the real per-frame PTS — the clock the player and the ground truth use —
+    via the nearest real frame, so stage 2, the segments, and the UI all agree."""
+    import bisect
+    from decord import VideoReader
+    vr = VideoReader(str(video_path))
+    n = len(vr)
+    try:
+        pts = [float(x[0]) for x in vr.get_frame_timestamp(list(range(n)))]
+    except Exception:
+        pts = [float(vr.get_frame_timestamp(i)[0]) for i in range(n)]
+
+    def near(t):
+        i = bisect.bisect_left(pts, t)
+        if i <= 0:
+            return 0
+        return n - 1 if i >= n else (i if (pts[i] - t) < (t - pts[i - 1]) else i - 1)
+
+    for s in shots:
+        si, ei = near(s["start_sec"]), near(s["end_sec"])
+        s["start_frame"], s["end_frame"] = si, ei
+        s["start_sec"], s["end_sec"] = round(pts[si], 3), round(pts[ei], 3)
+    return shots
+
+
 def detect_shots(transnet, video_path, threshold):
-    """TransNetV2 shot boundaries -> list of shot dicts."""
+    """TransNetV2 shot boundaries -> list of shot dicts (times on the true per-frame clock)."""
     scenes = transnet.detect_scenes(str(video_path), threshold=threshold)
     shots = []
     for s in scenes:
@@ -42,7 +69,7 @@ def detect_shots(transnet, video_path, threshold):
             "start_frame": int(s["start_frame"]),
             "end_frame": int(s["end_frame"]),
         })
-    return shots
+    return _project_to_true_clock(video_path, shots)
 
 
 def main():
