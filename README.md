@@ -81,8 +81,15 @@ meme→meme cuts) plus one switch-hysteresis penalty — which recovers creator 
 yet in). This global decode replaced a chain of local morphology heuristics (gap-fill /
 min-seg-absorb / return-gate, 5 knobs → **2**: `--thr` center, `--switch-pen`) with no change
 in accuracy and far less knob sensitivity. vs the manual GT: **99.2 % full-sequence
-(120/121), mean |Δ| 0.13 s** (2.3× tighter than the shot-label segmenter), 100 % first-cut.
-Ablate with `--no-refine-fade` / `--no-snap`; explore knobs with `--sweep`.
+(120/121), mean |Δ| 0.068 s**, 100 % first-cut. Ablate with `--no-refine-fade` / `--no-snap`;
+explore knobs with `--sweep`.
+
+**True-clock timing.** All Stage-A samples and cut times are placed on the video's **true
+per-frame PTS** (`vr.get_frame_timestamp`), not `int(t·avg_fps)`. TikTok re-encodes are
+*variable frame rate* — ~40 % of clips drift under an avg-fps clock (up to 0.83 s), and
+TransNetV2 decodes at a constant nominal rate in a different frame space entirely, so its cut
+*times* are re-projected onto the true clock via the nearest real frame. This halved mean |Δ|
+(0.13 → 0.068 s) and put the model on the same clock as the ground truth (convention gap ≈ 0).
 
 **Main UI: `app.html`.** `./serve.sh` → `http://localhost:8000/` (root redirects there).
 Reads `transitions.json` + `ground_truth.json` + `segments.json` live — after a run just

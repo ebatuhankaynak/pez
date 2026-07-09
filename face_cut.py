@@ -25,6 +25,7 @@ Writes transitions/segments.json (+ transitions/_face/trans.json), both scorable
 evaluate.py:  python evaluate.py transitions/_face/trans.json --segments transitions/segments.json
 """
 import argparse
+import bisect
 import json
 import shutil
 import statistics as st
@@ -47,43 +48,52 @@ def short(name):
     return name[:-4][-12:]
 
 
+def _nearest(pts, t):
+    """Index of the frame whose true PTS is closest to time t (pts is sorted)."""
+    i = bisect.bisect_left(pts, t)
+    if i <= 0:
+        return 0
+    if i >= len(pts):
+        return len(pts) - 1
+    return i if (pts[i] - t) < (t - pts[i - 1]) else i - 1
+
+
 # ------------------------------------------------------------------ stage A (GPU)
 def dense_sims(app, src, centroid, sample_fps):
-    import numpy as np  # noqa: F401 (kept for parity with faces_at pipeline)
+    """Dense creator-similarity curve on the TRUE video clock: sample uniformly in real time,
+    pick the nearest actual frame by PTS, and label it with that frame's true PTS (VFR-correct)."""
     from decord import VideoReader
-    from relabel_faces import normed, faces_at
+    from relabel_faces import normed, frame_pts, _faces_in_frame
     vr = VideoReader(str(src))
-    fps = vr.get_avg_fps() or 25.0
-    total = len(vr)
-    dur = total / fps if fps else 0.0
+    pts = frame_pts(vr)
+    dur = pts[-1] + (pts[-1] - pts[-2] if len(pts) > 1 else 0.0)
     n = max(2, int(dur * sample_fps))
     times, sims = [], []
     for k in range(n):
-        t = dur * (k + 0.5) / n
+        idx = _nearest(pts, dur * (k + 0.5) / n)
         best = 0.0
-        for f in faces_at(app, vr, fps, t, total):
+        for f in _faces_in_frame(app, vr, idx):
             best = max(best, float(normed(f.normed_embedding) @ centroid))
-        times.append(round(t, 3))
+        times.append(round(pts[idx], 3))
         sims.append(round(best, 4))
-    return dur, fps, times, sims
+    return dur, pts, times, sims
 
 
 def dense_luma(src, luma_fps):
-    """Per-frame luminance at luma_fps. A soft fade washes the frame to white/black/gray;
-    the manual 'neutral' cut frame is the luma extremum. Model-free (no GPU)."""
+    """Per-frame luminance at luma_fps on the TRUE video clock. A soft fade washes the frame to
+    white/black/gray; the manual 'neutral' cut frame is the luma extremum. Model-free (no GPU)."""
     import cv2
     from decord import VideoReader
+    from relabel_faces import frame_pts
     vr = VideoReader(str(src))
-    fps = vr.get_avg_fps() or 25.0
-    total = len(vr)
-    dur = total / fps if fps else 0.0
+    pts = frame_pts(vr)
+    dur = pts[-1] + (pts[-1] - pts[-2] if len(pts) > 1 else 0.0)
     n = max(2, int(dur * luma_fps))
     times, luma = [], []
     for k in range(n):
-        t = dur * (k + 0.5) / n
-        idx = min(int(t * fps), total - 1)
+        idx = _nearest(pts, dur * (k + 0.5) / n)
         g = cv2.cvtColor(vr[idx].asnumpy(), cv2.COLOR_RGB2GRAY)
-        times.append(round(t, 3))
+        times.append(round(pts[idx], 3))
         luma.append(round(float(g.mean()), 2))
     return times, luma
 
@@ -100,14 +110,20 @@ def dump_curves(sample_fps, luma_fps):
         src = CLIPS_DIR / c["clip"]
         if not src.exists():
             continue
-        dur, fps, times, sims = dense_sims(app, src, centroid, sample_fps)
+        dur, pts, times, sims = dense_sims(app, src, centroid, sample_fps)
         tl, luma = dense_luma(src, luma_fps)
-        # TransNet hard-cut times = shot boundaries (shots[1:]).
-        tn = [round(s["start_sec"], 3) for s in c.get("shots", [])[1:]]
+        # TransNet decodes at a constant NOMINAL rate (its frame indices live in a different
+        # space on VFR clips), so its cut TIMES are on the wrong clock. Re-project them (and the
+        # stage-2 first cut) onto the true clock via the nearest real frame's PTS.
+        def true_t(x):
+            return round(pts[_nearest(pts, x)], 3) if x is not None else None
+        tn = [true_t(s["start_sec"]) for s in c.get("shots", [])[1:]]
         curves[short(c["clip"])] = {"clip": c["clip"], "dur": round(dur, 3),
                                     "sample_fps": sample_fps, "times": times, "sims": sims,
                                     "transnet_cuts": tn, "luma_fps": luma_fps,
-                                    "times_l": tl, "luma": luma}
+                                    "times_l": tl, "luma": luma,
+                                    "first_true": true_t(c.get("transition_sec")),
+                                    "method": c.get("method", "")}
         if i % 20 == 0:
             print(f"  {i}/{len(recs)}", flush=True)
     CURVES.write_text(json.dumps(curves))
@@ -231,7 +247,8 @@ def segment(cur, base_rec, p):
     person/meme regime (returns fall out of the global path); place every boundary
     (return back-snap / luma fade-refine / TransNet snap)."""
     times, sims, dur = cur["times"], cur["sims"], cur["dur"]
-    first, method = base_rec.get("transition_sec"), base_rec.get("method", "")
+    first = cur["first_true"] if "first_true" in cur else base_rec.get("transition_sec")
+    method = cur.get("method") or base_rec.get("method", "")
 
     if first is None:                                     # base found no cut -> trust it
         lab = "meme" if method == "all_meme_no_creator" else "person"

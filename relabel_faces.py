@@ -155,8 +155,22 @@ def load_face_app(det_size=640):
     return app
 
 
-def faces_at(app, vr, fps, t, total):
-    idx = min(int(t * fps), total - 1)
+def frame_pts(vr):
+    """True per-frame presentation timestamps (s). Correct under VARIABLE frame rate,
+    unlike idx/avg_fps — TikTok re-encodes are VFR, so `int(t*avg_fps)` picks the wrong
+    frame and mis-times cuts by up to ~0.8s. Use this to place samples/cuts on the real
+    video clock (the clock the player and the ground truth use)."""
+    n = len(vr)
+    try:
+        ts = vr.get_frame_timestamp(list(range(n)))
+        return [float(x[0]) for x in ts]
+    except Exception:
+        return [float(vr.get_frame_timestamp(i)[0]) for i in range(n)]
+
+
+def _faces_in_frame(app, vr, idx):
+    """Detect + gate faces in ONE decoded frame (by index). Body shared by faces_at and
+    face_cut's dense curve, so the low-light retry / gating / recognizer logic stays in one place."""
     if idx < 0:
         return []
     rgb = vr[idx].asnumpy()
@@ -184,6 +198,12 @@ def faces_at(app, vr, fps, t, total):
     if faces:
         _stat("frames_with_face")
     return faces
+
+
+def faces_at(app, vr, fps, t, total):
+    """Time-based sampler (unchanged): frame = int(t*avg_fps). Callers that need VFR-correct
+    timing sample by true PTS instead (see face_cut). Kept for stage-2 shot labeling."""
+    return _faces_in_frame(app, vr, min(int(t * fps), total - 1))
 
 
 def largest_face_emb(faces):
