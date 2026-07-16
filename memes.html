@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pezevenk — text removal</title>
+<link rel="stylesheet" href="peznav.css">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#0d1117; color:#e6edf3; font:16px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }
+  a { color:#58a6ff; }
+  .bar { position:sticky; top:0; z-index:40; background:#010409ee; backdrop-filter:blur(6px);
+         border-bottom:1px solid #21262d; padding:11px 18px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .bar h1 { font-size:19px; margin:0 8px 0 0; font-weight:500; }
+  .bar .sp { flex:1; }
+  .chip { background:#21262d; color:#adbac7; border:1px solid #30363d; border-radius:16px;
+          padding:5px 13px; cursor:pointer; font-size:14px; }
+  .chip.on { background:#1f6feb; border-color:#1f6feb; color:#fff; }
+  .stat { font-size:13.5px; color:#8b949e; }
+  .stat b { color:#e6edf3; font-weight:600; }
+  .hint { padding:8px 18px; font-size:13px; color:#8b949e; border-bottom:1px solid #21262d; }
+  .load { padding:40px; text-align:center; color:#8b949e; }
+  .grid { display:flex; flex-wrap:wrap; gap:16px; padding:16px 18px; align-items:flex-start; }
+  .card { width:288px; background:#161b22; border:1px solid #21262d; border-radius:10px; overflow:hidden;
+          cursor:pointer; }
+  .card.pin { border-color:#1f6feb; box-shadow:0 0 0 1px #1f6feb55; }
+  .pair { display:flex; gap:2px; background:#000; position:relative; }
+  .pane { position:relative; flex:1 1 0; min-width:0; }
+  .pane video { width:100%; height:300px; object-fit:cover; display:block; background:#000; }
+  .tag { position:absolute; top:6px; left:6px; font-size:11px; font-weight:700; letter-spacing:.03em;
+         padding:2px 7px; border-radius:10px; background:#000a; }
+  .tag.i { color:#ff7b72; } .tag.o { color:#3fb950; }
+  .meta { padding:8px 10px; }
+  .nm { font-family:ui-monospace,monospace; font-size:11px; color:#8b949e; word-break:break-all; line-height:1.35; }
+  .tags { display:flex; gap:6px; align-items:center; margin-top:6px; flex-wrap:wrap; }
+  .badge { font-size:11.5px; padding:1px 8px; border-radius:11px; white-space:nowrap; }
+  .badge.done { background:#0e2a16; color:#3fb950; }
+  .badge.nocap { background:#21262d; color:#adbac7; }
+  .badge.err { background:#2a0e12; color:#f85149; }
+  .badge.cov { background:#161b22; color:#8b949e; border:1px solid #30363d; }
+  .playing .pane::after { content:"▮▮"; position:absolute; inset:0; display:none; }
+</style>
+</head>
+<body>
+<nav class="peznav sticky">
+  <span class="brand">pezevenk</span>
+  <a href="app.html">workbench</a>
+  <a href="editor.html">cut editor</a>
+  <a href="report.html">report</a>
+  <a href="memes.html" class="on">text removal</a>
+</nav>
+<div class="bar">
+  <h1>text removal</h1>
+  <span class="chip on" data-f="all">all</span>
+  <span class="chip" data-f="done">removed</span>
+  <span class="chip" data-f="no-caption">no caption</span>
+  <span class="chip" data-f="error">errors</span>
+  <span class="sp"></span>
+  <span class="stat" id="stat"></span>
+  <span class="chip" id="refresh">↻ refresh</span>
+</div>
+<div class="hint">Left = original (with text) · right = text removed (big-LaMa, auto-located via OCR). Hover a card to preview both in sync; click to pin it playing.</div>
+<div class="load" id="load">loading manifest…</div>
+<div class="grid" id="grid"></div>
+
+<script>
+const SRC = "split/meme/", OUT = "inpaint/eval/out/";
+let recs = [], filter = "all";
+
+function badge(r){
+  if(r.status==="done") return `<span class="badge done">removed</span>`;
+  if(r.status==="no-caption") return `<span class="badge nocap">no caption</span>`;
+  return `<span class="badge err">${(r.status||"error").slice(0,40)}</span>`;
+}
+
+function card(r){
+  const inSrc = SRC + r.name + "#t=0.4";
+  const outSrc = (r.status==="done" ? OUT : SRC) + r.name + "#t=0.4";
+  const cov = r.cov!=null ? `<span class="badge cov">${r.cov}% masked</span>` : "";
+  const rn = (r.rects!=null && r.status==="done") ? `<span class="badge cov">${r.rects.length} rect</span>` : "";
+  const el = document.createElement("div");
+  el.className = "card"; el.dataset.status = r.status;
+  el.innerHTML = `
+    <div class="pair">
+      <div class="pane"><span class="tag i">IN</span>
+        <video muted loop playsinline preload="metadata" src="${inSrc}"></video></div>
+      <div class="pane"><span class="tag o">OUT</span>
+        <video muted loop playsinline preload="metadata" src="${outSrc}"></video></div>
+    </div>
+    <div class="meta">
+      <div class="nm">${r.name}</div>
+      <div class="tags">${badge(r)}${cov}${rn}</div>
+    </div>`;
+  const vids = el.querySelectorAll("video");
+  const play = ()=>{ vids.forEach(v=>{ v.currentTime=0; v.play().catch(()=>{}); }); };
+  const stop = ()=>{ if(el.classList.contains("pin")) return;
+                     vids.forEach(v=>{ v.pause(); v.currentTime=0.4; }); };
+  el.addEventListener("mouseenter", play);
+  el.addEventListener("mouseleave", stop);
+  el.addEventListener("click", ()=>{
+    el.classList.toggle("pin");
+    el.classList.contains("pin") ? play() : stop();
+  });
+  return el;
+}
+
+function render(){
+  const g = document.getElementById("grid"); g.innerHTML="";
+  const shown = recs.filter(r => filter==="all" ? true
+                 : filter==="error" ? (r.status||"").startsWith("error")
+                 : r.status===filter);
+  shown.sort((a,b)=> (a.status==="done"?0:1)-(b.status==="done"?0:1)
+                    || (b.cov||0)-(a.cov||0));
+  shown.forEach(r => g.appendChild(card(r)));
+  const done = recs.filter(r=>r.status==="done").length;
+  const nocap = recs.filter(r=>r.status==="no-caption").length;
+  const err = recs.filter(r=>(r.status||"").startsWith("error")).length;
+  const covs = recs.filter(r=>r.cov!=null).map(r=>r.cov);
+  const avg = covs.length ? (covs.reduce((a,b)=>a+b,0)/covs.length).toFixed(2) : "–";
+  document.getElementById("stat").innerHTML =
+    `<b>${recs.length}</b> clips · <b>${done}</b> removed · ${nocap} no-caption · ${err} err · avg <b>${avg}%</b> masked`;
+}
+
+async function load(){
+  try{
+    const r = await fetch("inpaint/eval/manifest.json", {cache:"no-store"});
+    recs = await r.json();
+    document.getElementById("load").style.display = recs.length ? "none":"block";
+    if(!recs.length) document.getElementById("load").textContent = "manifest empty — batch still running?";
+    render();
+  }catch(e){
+    document.getElementById("load").textContent = "no manifest yet (run inpaint/batch_eval.py) — "+e;
+  }
+}
+
+document.querySelectorAll(".chip[data-f]").forEach(c=>c.addEventListener("click",()=>{
+  document.querySelectorAll(".chip[data-f]").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on"); filter=c.dataset.f; render();
+}));
+document.getElementById("refresh").addEventListener("click", load);
+load();
+</script>
+</body>
+</html>
