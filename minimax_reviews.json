@@ -1,0 +1,164 @@
+{
+ "13e1913568fd": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "None of note in either panel. The caption lies over a solid black letterbox band, so both fill pure black. No halo, no block edge, no window seam, no global softening or color shift; the grayscale wall content below is essentially pixel-identical to the original in both LaMa and MiniMax.",
+  "note": "Text overlays a pure black band (no real background behind it), so both LaMa and MiniMax remove it completely and identically, leaving the scene untouched."
+ },
+ "25f3d4bd75de": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa (middle): faint reddish/green chroma speckles in the upper-center forehead where the first text line sat \u2014 minor residual inpaint noise; otherwise natural skin, no halo/seam/block edge. MiniMax (right): mild softening of the reconstructed skin (slightly blurrier) plus a faint smudge on the left forehead; no chroma specks. Neither panel shows a window seam, hard block edge, halo, or global color shift \u2014 non-masked regions (cheek, background) are pixel-identical between the two and match the original.",
+  "note": "The caption lies entirely on flat forehead skin, so both methods fully erase the text with no real background structure to differentiate; LaMa leaves faint chroma specks while MiniMax is a touch soft, but the differences are marginal."
+ },
+ "3abeca2e0204": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa: faint bluish haze/foggy patch in the caption-band center, visible only under ~6x brightening. MiniMax: none; fill is a marginally cleaner/darker black. No halo, block edge, window seam, global softening, or color shift in either panel at normal brightness; image content below the band is identical between the two.",
+  "note": "Caption sits on a solid black letterbox bar, so both fully remove the text over black with no real structure to preserve or smear; the only difference is LaMa's faint bluish haze under strong brightening vs MiniMax's cleaner black, negligible at normal viewing."
+ },
+ "4520783daa95": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "Neither panel shows meaningful artifacts in the caption band: no halo, block edge, window seam, or global color shift, and the dark-to-jersey transition is smooth in both. Under 3x brightness boost LaMa's reconstruction shows slightly blockier red/blue crowd-bokeh specks while MiniMax's is smoother and more uniform, but both are near-invisible at normal exposure.",
+  "note": "The caption sits over featureless dark out-of-focus crowd, so both methods fully erase the text with clean, near-identical dark reconstructions and there is no real structure for either to preserve or smear."
+ },
+ "4524f14810ff": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "None in either panel's caption band. The caption \"ChatGPT 1.0:\" sits entirely in the pure-black letterbox bar, so both LaMa and MiniMax render clean black there \u2014 no halo, no block edge, no window seam, no global softening or color shift. Verified by row-brightness profiling: original rows y400-425 read 38-52 (white text) while both inpaint panels read 0.0 in those rows.",
+  "note": "Text lies on the black letterbox with no background structure behind it, so both models remove it perfectly and there is nothing for either to preserve or smear \u2014 a clean tie on this frame."
+ },
+ "46f82f8d9ce1": {
+  "winner": "minimax",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": true,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa: foggy dark smear/blur in the right caption zone where the woman's hanging forearm and hand were \u2014 the hand is blurred away into a soft dark patch. MiniMax: only mild softening on the reconstructed hand, structurally coherent. No halos, block edges, window seams, or global color shift in either panel.",
+  "note": "Both remove the captions completely, but MiniMax reconstructs the real hanging arm/hand behind \"a gynecologist\" that LaMa smears into a foggy dark blob."
+ },
+ "48f587e6637e": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "Neither panel shows a meaningful artifact: no halo at the jacket edge, no block/window seam, no color shift (untouched top region matches within ~1/255). Both fills are very slightly soft over the dirt, but that softness is inherent to the motion-blurred source, not introduced; MiniMax is marginally grainier/more natural, LaMa marginally smoother.",
+  "note": "Both fully remove the caption across dirt and jacket with no leftover text and no artifacts; the featureless blurred background offers no detail for MiniMax to preserve nor for LaMa to smear, making them effectively indistinguishable on this frame."
+ },
+ "4d32abcf2b06": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "Negligible in both. The burned-in caption is only the small white \"\u2022\u2022\u2022\" dots on the cat's soft orange cheek fur (the Korean \"\uc81c\" and blue banner are real background, present in all three panels and correctly left intact). LaMa's fill is a hair smoother/softer over the dot patch; MiniMax keeps slightly more natural pixel/fur mottling. No halo, block seam, or color shift in either.",
+  "note": "Both cleanly erased the dot caption on featureless fur with no ghost, hallucination, or artifact, and nothing structured behind it to differentiate them."
+ },
+ "62a28230430b": {
+  "winner": "minimax",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": true,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa: a foggy gray-blue vertical smear column in the upper-middle where the tan table-leg strip and dark trousers were, and the blue-mat diagonal top edge is blurred/lost into a hazy patch (heavy local softening, no hard seam). MiniMax: only a faint wispy lighter smudge on the blue mat mid-left; edges stay crisp, no halo/block/seam/color shift.",
+  "note": "MiniMax fully removes the caption while faithfully reconstructing the tan vertical strip, dark trousers, and crisp diagonal mat edge that LaMa smears into a foggy blur, with no hallucinated content."
+ },
+ "74c5c4e9472c": {
+  "winner": "lama",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": true,
+  "lama_text_removed": false,
+  "mm_text_removed": false,
+  "artifacts": "LaMa: the paper-gap strip that originally showed the phone screen (photo icon, \"our mo/photo\" text, red Upload button) is smeared into a flat foggy-white patch, plus faint leftover ghost letters \"D\" and a smudged \"T\" on the left paper. MiniMax: caption largely unremoved and warped (\"DAY\", \"TIK T\" legible, right piece garbled to \"1UE\"), and the red Upload badge is kept but rendered with garbled/nonsense white glyphs; no strong global color shift or halo.",
+  "note": "LaMa removes most of the target handwriting (only faint D/T ghosts) while MiniMax leaves \"DAY/TIK T\" clearly readable, so LaMa is the better removal here despite smearing the real red Upload button that MiniMax preserves."
+ },
+ "86c7842440c5": {
+  "winner": "lama",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "MiniMax (right): mild global softening/haze and a slight warm color shift across the ENTIRE frame \u2014 the face and right-side window/curtain background are softer and more washed than orig/LaMa, because it reprocessed the whole frame. LaMa (middle): faint low-contrast mottled ghost residual only inside the caption band (visible only at heavy brightening) plus a faint warm seam at the image/letterbox boundary; the rest of the frame is untouched and matches the original.",
+  "note": "Both fully clear the white-on-black caption with no legible residue, but the text sits on a plain black letterbox (no structure to preserve), and MiniMax needlessly softens/hazes the untouched face and background while LaMa leaves them pixel-identical to the original."
+ },
+ "880ae8b0 (1)": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "None in either panel \u2014 no halo, block edge, window seam, softening, or color shift; the torso content region is identical between LaMa and MiniMax (matching mean RGB and sharpness), and both caption bands are clean uniform black.",
+  "note": "The caption sits on a pure-black letterbox band with no background structure behind it, so both methods simply restore clean black (residual max 4 vs 6) and there is nothing for either to smear or preserve."
+ },
+ "9a9c5c11adb1": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa: a faint foggy pinkish/colored-speckle residue smudge along the old caption baseline, barely visible at normal contrast and clearer under a 3x boost. MiniMax: marginally cleaner, no meaningful residue. Neither panel shows halos, hard block edges, a window/mask seam, global softening, or color shift (verified: blinds-region sharpness and non-band diff vs original are near-identical between the two).",
+  "note": "Both fully remove the caption from a flat featureless wall with no structure to preserve; MiniMax is only marginally cleaner in faint residue, so neither is meaningfully better on this frame."
+ },
+ "afbe0b3572a7": {
+  "winner": "tie",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "None meaningful in either panel: both restore the caption band to clean flat black (LaMa max residual 17/255, MiniMax 12/255), no halo, block edge, window seam, or color shift; image content is essentially identical to the original in both (mean abs diff ~1.3).",
+  "note": "The caption overlays a pure black letterbox bar with no background structure behind it, so both methods fully and cleanly erase the text to flat black with no residual or artifacts, and the LaMa-smear differentiator does not apply."
+ },
+ "d73d0e65c380": {
+  "winner": "minimax",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": true,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa: localized foggy smear / softening in the caption band \u2014 the dark shadow gap between the two converging ladder rails is blurred into a uniform tan patch and rail edges go soft. MiniMax: minor softening but keeps the rail gap and edges; no halo, block edge, or window seam in either. No meaningful global color shift or global softening in either panel (outside-band mean|\u0394|\u22481.6 for both).",
+  "note": "Both fully removed \"POV: every guy in spring\" with no ghosting, but MiniMax preserved the real dark gap/shadow between the converging ladder legs that LaMa blurred into a foggy patch."
+ },
+ "e76c740e701a": {
+  "winner": "minimax",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": false,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa (middle): faint foggy/hazy gray smear patch in the black letterbox band where the text was, visible when brightened - a low-contrast cloud-like smudge along the old text baseline. MiniMax (right): clean, only natural film grain, no halo/seam/smear. No block edges, window seams, or global color/softening shift in either panel; the flag region is near-identical across all three.",
+  "note": "Both remove the text fully, but LaMa leaves a foggy gray smudge in the flat black band while MiniMax keeps it clean black; no real structure existed behind the text to preserve here."
+ },
+ "f1919f772a8b": {
+  "winner": "lama",
+  "mm_hallucination": true,
+  "mm_preserves_structure_lama_smears": true,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa (middle): text fully gone, black shirt clean, but heavy global softening/smear over the right-side corkboard turning pinned notes/box/photos into featureless brown fog, plus mild blur on the man's jaw; no halo or block edges. MiniMax (right): text gone, but a hallucinated furry tan/brown blob invented on the center of the chest, a dark rectangular block artifact at the left edge, and jaw smear; corkboard structure better preserved but partly invented note textures.",
+  "note": "Both fully remove the caption; MiniMax reconstructs corkboard structure that LaMa fogs, but its prominent hallucinated blob on the subject's chest (where LaMa is clean) is the more objectionable defect on this still, so LaMa edges it."
+ },
+ "fd763bd6a01f": {
+  "winner": "minimax",
+  "mm_hallucination": false,
+  "mm_preserves_structure_lama_smears": true,
+  "lama_text_removed": true,
+  "mm_text_removed": true,
+  "artifacts": "LaMa: global softening / foggy smear across the caption band \u2014 the hand-and-finger boundary collapses into a blurry pink blob and the comb teeth smear where they enter the band. MiniMax: a faint horizontal window/box seam near the top-center of the inpaint region, plus a mild overall motion-blur softness, but structure stays coherent.",
+  "note": "Both fully erase the text, but MiniMax preserves the comb teeth and hand/fur structure behind the caption that LaMa blurs into a foggy patch, and its only defect is a faint top seam."
+ }
+}
