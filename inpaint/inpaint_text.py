@@ -19,11 +19,12 @@ Usage:
 Each -r is the SEARCH region where the caption may appear (generous is fine); the
 glyph detector tightens the actual mask within it per frame.
 """
-import argparse, glob, json, os, shutil, subprocess, time
+import argparse, glob, json, os, shutil, subprocess, sys, time
 import cv2, numpy as np
 
-PROP_DIR = os.path.expanduser("~/dev/ProPainter")
-PY = os.path.join(PROP_DIR, "venv", "bin", "python")
+# MiniMax-Remover (distilled Wan2.1 video inpainter) lives alongside this file.
+MINIMAX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_minimax")
+MM_WDST, MM_WIN, MM_OVL = 480, 81, 8            # DiT width, window frames, window overlap
 
 
 def sh(cmd, **kw):
@@ -451,6 +452,112 @@ def temporal_max(masks, radius):
     return out
 
 
+def band_flatness(frames_bgr, masks, sample=12):
+    """Median `_ring_flat` over sampled frames: how near-uniform the background just
+    outside the caption is. High (~1) only for solid/letterbox bands where a plain fill
+    is exact; skin, walls, and any texture read ~0. This is the RELIABLE end of the
+    flat/textured axis (detecting 'hard for LaMa' is not -- see the gate diagnostics),
+    so `auto` routes only these trivially-flat clips away from the diffusion model."""
+    idx = np.linspace(0, len(frames_bgr) - 1, min(sample, len(frames_bgr))).astype(int)
+    ws = [_ring_flat(frames_bgr[i], masks[i]) for i in idx if masks[i].any()]
+    return float(np.median(ws)) if ws else 0.0
+
+
+def solid_fill_frames(frames_bgr, masks, final, feather=5):
+    """Flat-band fill: replace the masked strokes with the ring's median colour. On a
+    near-uniform band this is exact by construction -- clean where LaMa's network leaves
+    a faint colour-haze on flat black (the e76c smudge) and where MiniMax would waste a
+    diffusion pass for an identical result. Only fires under the `band_flatness` gate."""
+    for i, (full, m) in enumerate(zip(frames_bgr, masks)):
+        out = full.copy()
+        if m.any():
+            d = 4
+            md = cv2.dilate(m, np.ones((2 * d + 1, 2 * d + 1), np.uint8))
+            ann = (cv2.dilate(md, np.ones((51, 51), np.uint8)) > 0) & (md == 0)
+            if int(ann.sum()) >= 50:
+                med = np.median(full[ann].reshape(-1, 3), axis=0)
+                fe = cv2.GaussianBlur(md, (0, 0), feather).astype(np.float32) / 255.0
+                fe = np.maximum(fe, (md > 0).astype(np.float32))[..., None]
+                out = (full.astype(np.float32) * (1 - fe) + med[None, None, :] * fe).clip(0, 255).astype(np.uint8)
+        cv2.imwrite(os.path.join(final, f"{i:05d}.png"), out)
+
+
+def _mm_win_weight(k, win, ovl):
+    w = 1.0
+    if k < ovl:
+        w = (k + 1) / (ovl + 1)
+    if k >= win - ovl:
+        w = min(w, (win - k) / (ovl + 1))
+    return max(w, 1e-3)
+
+
+def load_minimax(device="cuda:0"):
+    """Load the MiniMax-Remover pipeline (Wan VAE + distilled transformer)."""
+    import torch
+    if MINIMAX_DIR not in sys.path:
+        sys.path.insert(0, MINIMAX_DIR)
+    from diffusers.models import AutoencoderKLWan
+    from diffusers.schedulers import UniPCMultistepScheduler
+    from transformer_minimax_remover import Transformer3DModel
+    from pipeline_minimax_remover import Minimax_Remover_Pipeline
+    wd = os.path.join(MINIMAX_DIR, "weights")
+    vae = AutoencoderKLWan.from_pretrained(os.path.join(wd, "vae"), torch_dtype=torch.float16)
+    tr = Transformer3DModel.from_pretrained(os.path.join(wd, "transformer"), torch_dtype=torch.float16)
+    sch = UniPCMultistepScheduler.from_pretrained(os.path.join(wd, "scheduler"))
+    return Minimax_Remover_Pipeline(transformer=tr, vae=vae, scheduler=sch).to(torch.device(device))
+
+
+def minimax_frames(frames_bgr, masks, final, by1, by2, W, feather=5,
+                   pipe=None, iters=6, steps=12):
+    """Band-crop MiniMax: run the DiT only on the caption band (rects +- pad) at that
+    band's aspect, not the whole 480x832 frame -- ~2-4x fewer latent tokens and no
+    whole-frame softening. Windowed (81f, triangular-blended seams), band-only composite
+    onto the pristine original so unmasked pixels stay untouched."""
+    import torch
+    if pipe is None:
+        pipe = load_minimax()
+    dev = pipe._execution_device
+    bh = by2 - by1
+    H_DST = int(np.clip(int(round((MM_WDST * bh / W) / 16) * 16), 128, 832))
+    bands = [fb[by1:by2] for fb in frames_bgr]
+    bmasks = [m[by1:by2] for m in masks]
+    N = len(bands)
+    acc = [None] * N
+    wsum = np.zeros(N, np.float32)
+    stride = MM_WIN - MM_OVL
+    starts = list(range(0, max(1, N - MM_WIN + 1), stride))
+    if N > MM_WIN and starts[-1] < N - MM_WIN:
+        starts.append(N - MM_WIN)
+    for s in starts:
+        idx = list(range(s, min(s + MM_WIN, N)))
+        sel = idx + [idx[-1]] * (MM_WIN - len(idx))
+        imgs = np.stack([cv2.cvtColor(bands[i], cv2.COLOR_BGR2RGB) for i in sel]).astype(np.float32)
+        images = torch.from_numpy(imgs) / 127.5 - 1.0
+        msk = np.stack([(bmasks[i] > 0).astype(np.float32) for i in sel])[..., None]
+        out = pipe(images=images, masks=torch.from_numpy(msk), num_frames=MM_WIN,
+                   height=H_DST, width=MM_WDST, num_inference_steps=steps,
+                   generator=torch.Generator(device=dev).manual_seed(42), iterations=iters).frames[0]
+        out = out.detach().float().cpu().numpy() if torch.is_tensor(out) else np.asarray(out)
+        for k in range(MM_WIN):
+            if k >= len(idx):
+                break
+            i = sel[k]
+            fr = cv2.cvtColor((np.clip(out[k], 0, 1) * 255).astype(np.uint8), cv2.COLOR_RGB2BGR)
+            fr = cv2.resize(fr, (W, bh), interpolation=cv2.INTER_LANCZOS4).astype(np.float32)
+            w = _mm_win_weight(k, MM_WIN, MM_OVL)
+            acc[i] = fr * w if acc[i] is None else acc[i] + fr * w
+            wsum[i] += w
+    for i, (fb, m) in enumerate(zip(frames_bgr, masks)):
+        out = fb.copy()
+        if m.any() and acc[i] is not None:
+            band = (acc[i] / max(wsum[i], 1e-3)).astype(np.uint8)
+            full_fill = fb.copy(); full_fill[by1:by2] = band
+            fe = cv2.GaussianBlur(m, (0, 0), feather).astype(np.float32) / 255.0
+            fe = np.maximum(fe, (m > 0).astype(np.float32))[..., None]
+            out = (fb.astype(np.float32) * (1 - fe) + full_fill.astype(np.float32) * fe).clip(0, 255).astype(np.uint8)
+        cv2.imwrite(os.path.join(final, f"{i:05d}.png"), out)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("-i", "--input", required=True)
@@ -461,22 +568,20 @@ def main():
     ap.add_argument("--auto", action="store_true",
                     help="auto-locate caption region(s) from persistent outlined-text "
                          "(implied when no -r is given). General across memes.")
-    ap.add_argument("--engine", choices=("lama", "propainter"), default="lama",
-                    help="lama = per-frame spatial inpaint (best when the background behind "
-                         "the caption is never revealed, e.g. static centred text; runs in the "
-                         "pezevenk docker). propainter = temporal (best when camera motion "
-                         "reveals the real background across frames).")
-    ap.add_argument("--pad", type=int, default=200, help="vertical context around band (propainter)")
-    ap.add_argument("--pp-scale", type=float, default=1.0,
-                    help="downscale the caption band by this factor before ProPainter, upscale "
-                         "after (0.5 = quarter the pixels: far less VRAM -> larger subvideo_length "
-                         "-> much faster; the temporal inpaint is soft anyway so the loss is small)")
+    ap.add_argument("--engine", choices=("auto", "lama", "minimax"), default="auto",
+                    help="auto (default) = per clip, solid-fill flat/letterbox bands (exact, "
+                         "instant) and route textured bands to band-crop MiniMax. minimax = "
+                         "band-crop MiniMax on every clip (distilled Wan2.1 video inpaint; best "
+                         "reconstruction of revealed background). lama = per-frame big-LaMa "
+                         "spatial inpaint (fast, softer on textured backgrounds). All run in the "
+                         "pezevenk docker.")
+    ap.add_argument("--pad", type=int, default=200, help="vertical context around the caption band")
+    ap.add_argument("--flat-thr", type=float, default=0.6,
+                    help="auto: band_flatness >= this routes to instant solid fill (else MiniMax)")
     ap.add_argument("--feather", type=int, default=5, help="mask edge blur sigma")
     ap.add_argument("--rect-mask", action="store_true", help="mask the whole rect (no glyph detect)")
     ap.add_argument("--mask-temporal", type=int, default=3, help="+-N frame mask union (stability)")
     ap.add_argument("--mask-preview", help="write a mask montage PNG and exit (no inpaint)")
-    ap.add_argument("--subvideo_length", type=int, default=80)
-    ap.add_argument("--neighbor_length", type=int, default=10)
     ap.add_argument("--keep-work", action="store_true")
     a = ap.parse_args()
 
@@ -500,21 +605,18 @@ def main():
 
     work = os.path.join(os.path.dirname(os.path.abspath(a.output or a.input)),
                         ".work_" + os.path.splitext(os.path.basename(a.input))[0])
-    bandin, origdir, maskdir, res, final = (
-        os.path.join(work, d) for d in ("band_in", "orig", "masks", "results", "final"))
-    for d in (bandin, origdir, maskdir, res, final):
+    origdir, final = (os.path.join(work, d) for d in ("orig", "final"))
+    for d in (origdir, final):
         os.makedirs(d, exist_ok=True)
 
-    # 1) extract full-res frames (+ native caption band, only needed for propainter)
+    # 1) extract full-res frames
     t = time.time()
-    if a.engine == "propainter":
-        sh(["ffmpeg", "-y", "-v", "error", "-i", a.input,
-            "-vf", f"crop={W}:{bh}:0:{by1}", os.path.join(bandin, "%05d.png")])
     sh(["ffmpeg", "-y", "-v", "error", "-i", a.input, os.path.join(origdir, "%05d.png")])
     T["extract"] = time.time() - t
     origs = sorted(glob.glob(os.path.join(origdir, "*.png")))
+    frames = [cv2.imread(of) for of in origs]
 
-    # 2) build per-frame glyph masks (full-frame), then band-crop them for ProPainter
+    # 2) build per-frame full-frame glyph masks
     t = time.time()
     if a.rect_mask:
         base = np.zeros((H, W), np.uint8)
@@ -522,7 +624,7 @@ def main():
             cv2.rectangle(base, (x1, ry1), (x2, ry2), 255, -1)
         full_masks = [base] * len(origs)
     else:
-        full_masks = [glyph_mask(cv2.imread(of), rects) for of in origs]
+        full_masks = [glyph_mask(fb, rects) for fb in frames]
         full_masks = temporal_max(full_masks, a.mask_temporal)
     T["mask"] = time.time() - t
 
@@ -543,66 +645,20 @@ def main():
         return
 
     # 3) inpaint the masked caption region -> full-frame results in `final/`
-    if a.engine == "lama":
-        t = time.time()
+    engine = a.engine
+    if engine == "auto":
+        flat = band_flatness(frames, full_masks)
+        engine = "solid" if flat >= a.flat_thr else "minimax"
+        print(f"[auto] band_flatness={flat:.2f} (thr {a.flat_thr}) -> {engine}")
+    t = time.time()
+    if engine == "solid":
+        solid_fill_frames(frames, full_masks, final, feather=a.feather)
+    elif engine == "lama":
         win = int(np.clip(2.5 * np.median([r[3] - r[1] for r in rects]), 61, 221))
         lama_frames(origs, full_masks, final, feather=a.feather, win=win)
-        T["lama"] = time.time() - t
-    else:
-        for i, m in enumerate(full_masks):
-            cv2.imwrite(os.path.join(maskdir, f"{i:05d}.png"), m[by1:by2])
-        # optional downscale of the band (+masks) so ProPainter fits a larger temporal
-        # window in VRAM and runs much faster; composite upscales the result back.
-        if a.pp_scale < 1.0:
-            sw = snap8(max(64, int(W * a.pp_scale))); sh_ = snap8(max(64, int(bh * a.pp_scale)))
-            for d in (bandin, maskdir):
-                interp = cv2.INTER_AREA if d == bandin else cv2.INTER_NEAREST
-                for f in glob.glob(os.path.join(d, "*.png")):
-                    cv2.imwrite(f, cv2.resize(cv2.imread(f), (sw, sh_), interpolation=interp))
-            print(f"[propainter] band downscaled {W}x{bh} -> {sw}x{sh_} (pp_scale={a.pp_scale})")
-        # ProPainter on the band, per-frame masks. Retry with smaller temporal chunks on
-        # CUDA OOM (VRAM headroom varies with whatever else is on the GPU), robust w/o tuning.
-        t = time.time()
-        env = dict(os.environ, PYTORCH_ALLOC_CONF="expandable_segments:True")
-        ladder = sorted({s for s in (a.subvideo_length, 40, 24, 12) if s <= a.subvideo_length},
-                        reverse=True) or [a.subvideo_length]
-        err = None
-        for sv in ladder:
-            try:
-                sh([PY, os.path.join(PROP_DIR, "inference_propainter.py"),
-                    "-i", bandin, "-m", maskdir, "-o", res,
-                    "--subvideo_length", str(sv),
-                    "--neighbor_length", str(min(a.neighbor_length, sv)),
-                    "--fp16", "--save_frames", "--save_fps", str(int(round(fps)))],
-                   cwd=PROP_DIR, env=env)
-                print(f"[propainter] ok at subvideo_length={sv}")
-                err = None
-                break
-            except subprocess.CalledProcessError as e:
-                err = e
-                print(f"[propainter] subvideo_length={sv} failed (likely OOM); retrying smaller")
-                for d in glob.glob(os.path.join(res, "*")):
-                    shutil.rmtree(d, ignore_errors=True)
-        if err is not None:
-            raise err
-        T["propainter"] = time.time() - t
-        ip = sorted(glob.glob(os.path.join(res, "*", "frames", "*.png")))
-        assert ip and len(ip) == len(origs), f"frame mismatch: {len(ip)} vs {len(origs)}"
-
-        # composite band back onto full-res original, feathered per-frame mask
-        t = time.time()
-        for i, (of, ipf) in enumerate(zip(origs, ip)):
-            full = cv2.imread(of)
-            band = cv2.imread(ipf)
-            if band.shape[:2] != (bh, W):
-                band = cv2.resize(band, (W, bh), interpolation=cv2.INTER_LANCZOS4)
-            mb = full_masks[i][by1:by2]
-            fe = cv2.GaussianBlur(mb, (0, 0), a.feather).astype(np.float32) / 255.0
-            fe = np.maximum(fe, (mb > 0).astype(np.float32))[..., None]  # full opacity over mask
-            reg = full[by1:by2].astype(np.float32)
-            full[by1:by2] = (reg * (1 - fe) + band.astype(np.float32) * fe).clip(0, 255).astype(np.uint8)
-            cv2.imwrite(os.path.join(final, f"{i:05d}.png"), full)
-        T["composite"] = time.time() - t
+    else:                                                # minimax band-crop
+        minimax_frames(frames, full_masks, final, by1, by2, W, feather=a.feather)
+    T[engine] = time.time() - t
 
     # 5) encode at native fps + copy original audio
     t = time.time()
