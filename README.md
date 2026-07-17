@@ -59,15 +59,32 @@ Remaining errors: a soft dissolve merged into one shot (`0b9bf76f76fa`), one cli
 creator-returns the model collapses to a single cut (`152407c208d2`), and a couple of
 over-segmentations. Compare labelers with `ablation.py`.
 
+## Repo layout
+
+```
+src/      headless compute pipeline (run in the container, GPU): detect_transitions,
+          relabel_faces, face_cut, split_clips, evaluate, ablation
+./        the web app + orchestration served/run from the repo root: serve.py, build_report.py,
+          peznav.py/.css, index/app/editor.html, vendor/, Docker* / compose / requirements
+tools/    re-runnable utilities: debug_faces.py, blank_unaddressed_cuts.py
+attic/    archived one-offs (done migrations / superseded experiments)
+transitions/  data — ground-truth JSON (tracked) + generated transitions.json/segments.json
+```
+
+The compute scripts anchor their data paths at the repo root (`Path(__file__)…parent.parent`),
+and Docker runs them from the root with `python src/<stage>.py`, so `transitions/`,
+`freckled_spike_tiktok/`, `split/`, `segments/` all resolve at the repo root regardless of the
+`src/` nesting.
+
 ## The pipeline
 
 | script | does | writes |
 |--------|------|--------|
-| [`detect_transitions.py`](detect_transitions.py) | **stage 1** — TransNetV2 shot boundaries | `transitions/transitions.json` (raw shots) |
-| [`relabel_faces.py`](relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
-| [`face_cut.py`](face_cut.py) | **stage 3** — face-first multi-cut segments (Viterbi regime decode + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
-| [`split_clips.py`](split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
-| [`evaluate.py`](evaluate.py) / [`ablation.py`](ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
+| [`src/detect_transitions.py`](src/detect_transitions.py) | **stage 1** — TransNetV2 shot boundaries | `transitions/transitions.json` (raw shots) |
+| [`src/relabel_faces.py`](src/relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
+| [`src/face_cut.py`](src/face_cut.py) | **stage 3** — face-first multi-cut segments (Viterbi regime decode + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
+| [`src/split_clips.py`](src/split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
+| [`src/evaluate.py`](src/evaluate.py) / [`src/ablation.py`](src/ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
 | [`build_report.py`](build_report.py) | static `report.html` | HTML |
 
 **Stage 3 (`face_cut.py`) is face-first**, in two steps: (A) `--dump-curves` caches a dense
@@ -121,7 +138,7 @@ docker compose run --rm all               # detect → relabel → segment → s
 docker compose up serve                   # UI + editor at http://localhost:8000/  (or ./serve.sh)
 ```
 
-No compose? `./docker-run.sh detect_transitions.py` (set `GPU=0` to force CPU).
+No compose? `./docker-run.sh src/detect_transitions.py` (set `GPU=0` to force CPU).
 
 **GPU / CPU.** Both stages use the GPU when the container is started with the NVIDIA
 runtime (compose does this via `gpus: all`); on a CPU-only host they fall back
@@ -129,8 +146,8 @@ automatically. The fallback keys on an *actual* visible device (`torch.cuda.is_a
 not onnxruntime's compiled-in provider list, which always advertises CUDA and would
 otherwise segfault a CPU-only run.
 
-**Key flags:** `detect_transitions.py --threshold` (0.5, cut sensitivity) `--limit N`
-(smoke test); `relabel_faces.py --det-size` (640, SCRFD input scale) `--face-threshold` (0.35,
+**Key flags:** `src/detect_transitions.py --threshold` (0.5, cut sensitivity) `--limit N`
+(smoke test); `src/relabel_faces.py --det-size` (640, SCRFD input scale) `--face-threshold` (0.35,
 cosine cutoff) `--frames-per-shot` (3) `--qa` (dump before|after cut frames) `--no-soft-fallback`.
 
 ## Output

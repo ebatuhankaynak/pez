@@ -17,7 +17,7 @@ Pipeline (reuses the cached shots in transitions.json — no TransNetV2 re-run):
 
 Writes transitions_face.json and prints accuracy vs transitions/verification.json.
 
-    python relabel_faces.py
+    python src/relabel_faces.py
 """
 
 import argparse
@@ -29,7 +29,7 @@ from pathlib import Path
 import numpy as np
 from decord import VideoReader
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 VERIFICATION = SCRIPT_DIR / "transitions" / "verification.json"

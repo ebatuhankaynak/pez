@@ -14,9 +14,9 @@ No-transition clips are routed whole to the side that matches their method:
 Cuts are frame-accurate (re-encoded). Whole-clip copies are stream-copied (lossless).
 
 Usage:
-    python split_clips.py                 # split everything per transitions.json
-    python split_clips.py --workers 8
-    python split_clips.py --dry-run
+    python src/split_clips.py                 # split everything per transitions.json
+    python src/split_clips.py --workers 8
+    python src/split_clips.py --dry-run
 """
 
 import argparse
@@ -25,7 +25,7 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 OUT_DIR = SCRIPT_DIR / "split"

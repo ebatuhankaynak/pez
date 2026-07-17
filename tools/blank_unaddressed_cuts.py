@@ -13,14 +13,14 @@ still shows as the grey reference marker in the editor.
 A fresh backup (with all your current labels) is written before anything is
 overwritten. Idempotent: re-running only affects clips that still carry a cut.
 
-    python blank_unaddressed_cuts.py
+    python tools/blank_unaddressed_cuts.py
 """
 
 import json
 import shutil
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parent.parent   # repo root (this file lives in tools/)
 GT = HERE / "transitions" / "ground_truth_batu.json"
 BAK = HERE / "transitions" / "ground_truth_batu.json.bak2"   # pre-blank snapshot
 

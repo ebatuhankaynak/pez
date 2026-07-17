@@ -4,11 +4,14 @@ curve — sample the clip, mark each frame creator/meme by sim>=thr, merge short
 and cut at every present<->absent boundary. Writes a transitions-shaped file so
 evaluate.py can score it. Does NOT touch the canonical pipeline.
 
-    python face_only.py --sample-fps 8 --out <scratch>/faceonly.json
+    python attic/face_only.py --sample-fps 8 --out <scratch>/faceonly.json
 """
-import argparse, json
+import argparse, json, sys
+from pathlib import Path
 import numpy as np
 from decord import VideoReader
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))  # import the pipeline modules
 from relabel_faces import load_face_app, enroll_creator, normed, CLIPS_DIR, TRANSITIONS, short
 
 

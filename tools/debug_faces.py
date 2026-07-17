@@ -9,19 +9,20 @@ WHY a shot was labeled meme — is the face missed, or detected-but-under-thresh
 
 Writes debug/<stem>.mp4 (H.264, browser-playable). Shown next to the original in app.html.
 
-    python debug_faces.py                 # all clips (Docker/GPU: ~5-7 min)
-    python debug_faces.py --only 0b9bf76f76fa --limit 1
+    python tools/debug_faces.py                 # all clips (Docker/GPU: ~5-7 min)
+    python tools/debug_faces.py --only 0b9bf76f76fa --limit 1
 """
-import argparse, json, subprocess
+import argparse, json, subprocess, sys
 from pathlib import Path
 import numpy as np
 import cv2
 from decord import VideoReader
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))  # import the pipeline modules
 from relabel_faces import (load_face_app, enroll_creator, normed, faces_at,
                            CLIPS_DIR, TRANSITIONS, short)
 
-DEBUG_DIR = Path(__file__).resolve().parent / "debug"
+DEBUG_DIR = Path(__file__).resolve().parent.parent / "debug"   # repo root/debug (this file lives in tools/)
 
 
 def color(sim, thr):

@@ -13,9 +13,9 @@ Every cut is scored, not just the first: each GT cut is matched one-to-one to th
 nearest predicted cut within --tol; we report how many clips get their WHOLE
 sequence right, plus cut-level precision / recall.
 
-    python evaluate.py                                   # transitions.json vs the MANUAL GT (batu, multi-cut)
-    python evaluate.py --gt transitions/ground_truth.json  # vs the Claude/agent GT (single-cut labels)
-    python evaluate.py --tol 1.5                          # looser (within 1.5s)
+    python src/evaluate.py                                   # transitions.json vs the MANUAL GT (batu, multi-cut)
+    python src/evaluate.py --gt transitions/ground_truth.json  # vs the Claude/agent GT (single-cut labels)
+    python src/evaluate.py --tol 1.5                          # looser (within 1.5s)
 
 Per-clip verdicts:
   correct        whole cut sequence right (all GT cuts matched, none missed, none extra)
@@ -31,7 +31,7 @@ import statistics as st
 from collections import Counter
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 # Default to the manual cut-editor GT: it's the only label set with multi-cut ('cuts')
 # arrays, so it's the correct reference for this multi-cut eval. Pass --gt for the Claude one.
 GT = SCRIPT_DIR / "transitions" / "ground_truth_batu.json"

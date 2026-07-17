@@ -16,14 +16,14 @@ cut 0 -> meme, cut 1 -> person, cut 2 -> meme, ...
 Idempotent: clips that already have `cuts` are left alone. A backup is written
 next to the file before anything is overwritten.
 
-    python migrate_batu_cuts.py
+    python attic/migrate_batu_cuts.py
 """
 
 import json
 import shutil
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parent.parent   # repo root (this file lives in attic/)
 GT = HERE / "transitions" / "ground_truth_batu.json"
 BAK = HERE / "transitions" / "ground_truth_batu.json.bak"
 

@@ -16,13 +16,13 @@ Two stages so tuning is cheap:
      plain python3 + ffmpeg, no GPU env needed.
 
     # stage 3 of the pipeline (after relabel_faces), two steps:
-    python face_cut.py --dump-curves        # A: dense sim + luma curves (GPU, once)
-    python face_cut.py --split segments      # B: segment + cut videos
+    python src/face_cut.py --dump-curves        # A: dense sim + luma curves (GPU, once)
+    python src/face_cut.py --split segments      # B: segment + cut videos
     #   -> transitions/segments.json (99.2% batu, mean|Δ| 0.13s) + segments/<clip>/*.mp4
     # ablate with --no-refine-fade / --no-snap; explore knobs with --sweep.
 
 Writes transitions/segments.json (+ transitions/_face/trans.json), both scorable by
-evaluate.py:  python evaluate.py transitions/_face/trans.json --segments transitions/segments.json
+evaluate.py:  python src/evaluate.py transitions/_face/trans.json --segments transitions/segments.json
 """
 import argparse
 import bisect
@@ -35,7 +35,7 @@ from pathlib import Path
 
 # Stage A needs numpy/decord/insightface; imported lazily inside it so Stage B + --split
 # run on plain python3 + ffmpeg once the curves are cached.
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 SEGMENTS = SCRIPT_DIR / "transitions" / "segments.json"

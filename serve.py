@@ -33,6 +33,15 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
         super().__init__(*a, directory=str(HERE), **k)
 
+    def do_GET(self):
+        p = self.path.split("?", 1)[0]
+        if p == "/healthz":                       # uptime probe (pc_home etc.)
+            return self._json(200, {"ok": True, "app": "pezevenk"})
+        # never serve dotfiles (.git/.env/…) even though we sit at the repo root
+        if any(seg.startswith(".") for seg in p.split("/") if seg):
+            return self._json(404, {"error": "not found"})
+        return super().do_GET()
+
     # --- HTTP Range support (the stdlib handler has none) -------------------
     # Without this, <video> can't seek to an unbuffered position: the seek
     # stalls, no `seeked`/`timeupdate` fires, and the cut editor's playhead
@@ -145,8 +154,10 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def main():
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
-    srv = ThreadingHTTPServer(("0.0.0.0", port), Handler)
+    # PORT/HOST env win (so a supervisor can place it), then argv, then default.
+    port = int(os.environ.get("PORT") or (sys.argv[1] if len(sys.argv) > 1 else 8000))
+    host = os.environ.get("HOST", "0.0.0.0")
+    srv = ThreadingHTTPServer((host, port), Handler)
     print(f"app     ->  http://localhost:{port}/            (workbench; pick claude/batu truth)")
     print(f"editor  ->  http://localhost:{port}/editor.html  (input cuts, autosaves to batu GT)")
     print(f"report  ->  http://localhost:{port}/report.html")

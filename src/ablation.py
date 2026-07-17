@@ -11,7 +11,7 @@ The +fallback column grafts the face-based soft-cut recoveries from the shipped 
 import json
 from pathlib import Path
 
-P = Path(__file__).resolve().parent / "transitions"
+P = Path(__file__).resolve().parent.parent / "transitions"   # repo root/transitions (this file lives in src/)
 clip = {c["clip"]: c for c in json.load(open(P / "transitions_clip.json"))}
 face = {c["clip"]: c for c in json.load(open(P / "transitions.json"))}
 gt = {c["short"]: c for c in json.load(open(P / "ground_truth.json"))["clips"]}

@@ -1,0 +1,12 @@
+# Lightweight Instagram fetcher — kept SEPARATE from the heavy CUDA pipeline image
+# so downloading never rebuilds torch/insightface. Reels come as direct mp4s from
+# IG's CDN, so no ffmpeg is needed here.
+FROM python:3.12-slim
+
+RUN pip install --no-cache-dir instaloader==4.15.2
+
+# HOME is set to the mounted dir at run time so instaloader can write its
+# (optional) config/session without touching a root-owned /home.
+WORKDIR /data
+ENTRYPOINT ["instaloader"]
+CMD ["--version"]

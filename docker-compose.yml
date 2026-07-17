@@ -33,31 +33,33 @@ x-common: &common
 services:
   detect:
     <<: *common
-    command: ["detect_transitions.py"]
+    command: ["src/detect_transitions.py"]
 
   relabel:
     <<: *common
-    command: ["relabel_faces.py", "--qa"]
+    command: ["src/relabel_faces.py", "--qa"]
 
   split:
     <<: *common
-    command: ["split_clips.py", "--workers", "8"]
+    command: ["src/split_clips.py", "--workers", "8"]
 
   segment:
     <<: *common
     entrypoint: ["bash", "-c"]
     # stage 3 = face_cut: A) dense sim + luma curves (GPU), B) hybrid+refine segments + cut videos
-    command: ["python face_cut.py --dump-curves && python face_cut.py --split segments"]
+    command: ["python src/face_cut.py --dump-curves && python src/face_cut.py --split segments"]
 
   report:
     <<: *common
-    command: ["build_report.py", "--out", "transitions/report.html"]
+    # report.html lands at the repo root — that's where serve.py serves it (/report.html)
+    # and its nav links (app.html/editor.html) are root-relative.
+    command: ["build_report.py", "--out", "report.html"]
 
   # Run all stages in sequence in one container.
   all:
     <<: *common
     entrypoint: ["bash", "-c"]
-    command: ["python detect_transitions.py && python relabel_faces.py --qa && python face_cut.py --dump-curves && python face_cut.py --split segments && python split_clips.py --workers 8 && python build_report.py --out transitions/report.html"]
+    command: ["python src/detect_transitions.py && python src/relabel_faces.py --qa && python src/face_cut.py --dump-curves && python src/face_cut.py --split segments && python src/split_clips.py --workers 8 && python build_report.py --out report.html"]
 
   # Static UI + batu-GT save endpoint (serve.py). `up serve` keeps it running.
   serve:

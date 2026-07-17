@@ -38,14 +38,14 @@ RUN chmod -R a+rwX /opt/insightface /app
 
 # Application code + UI last (cheap layer to rebuild). In compose the whole repo is
 # bind-mounted over /app anyway; baking these keeps a plain `docker run` self-contained.
-COPY detect_transitions.py relabel_faces.py split_clips.py face_cut.py \
-     build_report.py serve.py \
+COPY src /app/src
+COPY build_report.py peznav.py peznav.css serve.py \
      app.html editor.html index.html /app/
 COPY vendor /app/vendor
 
 EXPOSE 8000
 
 # `python` is the entrypoint; pick the script + args at `docker run` time
-# (e.g. `serve.py 8000`, `detect_transitions.py`, `relabel_faces.py --qa`).
+# (e.g. `serve.py 8000`, `src/detect_transitions.py`, `src/relabel_faces.py --qa`).
 ENTRYPOINT ["python"]
-CMD ["detect_transitions.py", "--help"]
+CMD ["src/detect_transitions.py", "--help"]

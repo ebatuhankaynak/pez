@@ -8,8 +8,8 @@ decided in stage 2 by relabel_faces.py, using the creator's face.
 
 This stage runs ONLY TransNetV2 - no OpenCLIP / no CLIP.
 
-    python detect_transitions.py            # all clips
-    python detect_transitions.py --limit 5
+    python src/detect_transitions.py            # all clips
+    python src/detect_transitions.py --limit 5
 """
 
 import argparse
@@ -19,7 +19,7 @@ from pathlib import Path
 
 import torch
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 DEFAULT_CLIPS = SCRIPT_DIR / "freckled_spike_tiktok"
 DEFAULT_OUT = SCRIPT_DIR / "transitions"
 
