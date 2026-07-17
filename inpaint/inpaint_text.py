@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Remove burned-in text/captions from a video with ProPainter.
+"""Remove burned-in text/captions from a video (auto / big-LaMa / MiniMax engines).
 
 Strategy for speed + quality on a 16GB GPU:
   * Crop only the horizontal band containing the caption (full width + vertical
@@ -7,7 +7,7 @@ Strategy for speed + quality on a 16GB GPU:
     upscaling.
   * Mask only the actual TEXT STROKES (+ emoji flag), not a big rectangle, so the
     real background between/around the letters is preserved and never hallucinated.
-    A rectangle mask is what makes ProPainter output look blurry; a glyph-tight
+    A rectangle mask is what makes the inpainter's output look blurry; a glyph-tight
     per-frame mask keeps the untouched scenery sharp.
   * Composite the inpainted band back onto the pristine full-res original.
 
@@ -422,7 +422,7 @@ def inpaint_composite(full, mask, lama, feather=5, win=121):
 
 def lama_frames(origs, full_masks, final, lama=None, feather=5, log=True, win=121):
     """Per-frame background reconstruction where motion NEVER reveals the truth
-    (static centred captions) -- the case ProPainter can't handle. Uses a Telea/LaMa
+    (static centred captions) -- the case a temporal/flow inpainter can't handle. Uses a Telea/LaMa
     hybrid (see `inpaint_composite`) so flat backgrounds fill clean and textured ones
     stay plausible. Writes full-frame results to `final/%05d.png`. Pass a preloaded
     `lama` (SimpleLama) to share the model across clips when batching."""

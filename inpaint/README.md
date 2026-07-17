@@ -3,14 +3,22 @@
 Removes hardcoded captions/watermarks from the meme clips and re-encodes with the
 original audio. Auto-locates the caption, masks the glyph strokes, and fills them in.
 
-## Engine — per-frame big-LaMa (spatial), not temporal
+## Engines
 These captions are **static centred text over near-static scenery**, so the pixels
-behind the text are rarely revealed by motion. A temporal/flow method (ProPainter)
-has nothing reliable to propagate and drags moving subjects into the band as a dark
-blob. So the default is **big-LaMa** (`simple-lama-inpainting`): a per-frame spatial
-inpaint that hallucinates a plausible background even where it's never revealed.
-`--engine propainter` is kept for the opposite case (camera motion genuinely reveals
-the real background) but is not used for these clips.
+behind the text are rarely revealed by motion — a temporal/flow method has nothing
+reliable to propagate. Three engines, picked per clip by `--engine auto` (default):
+
+- **`solid`** *(auto-selected)* — when the band is near-uniform (letterbox, flat wall)
+  the strokes are just replaced with the ring's median colour. Exact, instant, no smudge.
+- **`minimax`** *(auto default for textured bands)* — band-cropped MiniMax-Remover
+  (distilled Wan2.1 video DiT). Runs on the caption band only, so few latent tokens and
+  no whole-frame softening. Needs the vendored repo + weights (see setup below).
+- **`lama`** — per-frame big-LaMa (`simple-lama-inpainting`), a spatial inpaint that
+  hallucinates a plausible background even where motion never reveals it. Self-contained
+  (weights auto-download to `.cache/`); good fallback when minimax isn't provisioned.
+
+`--engine auto` computes band flatness per clip: flat → `solid`, else → `minimax`.
+Force any engine explicitly with `--engine {auto,lama,minimax}`.
 
 ### Fill (`inpaint_composite`)
 1. **One-sided feather** — full opacity everywhere the mask is set, soft falloff only
@@ -33,14 +41,30 @@ background text doesn't), and emits a tight box per line. Pass `-r x1,y1,x2,y2`
 (repeatable) to override.
 
 ## Usage
-Runs in the pezevenk docker (`pez-inpaint`; venv `/opt/venv`, repo at `/app`):
 ```bash
 python inpaint/inpaint_text.py -i split/meme/<clip>.mp4 -o out.mp4
 ```
 - `-r x1,y1,x2,y2`  caption bbox override (repeatable; default = auto-locate).
-- `--engine`        `lama` (default) | `propainter`.
+- `--engine`        `auto` (default) | `lama` | `minimax`.
+- `--flat-thr F`    band-flatness cutoff for auto → solid-fill (default 0.6).
+- `--pad N`         vertical context around the caption band (default 200).
 - `--feather N`     mask edge blur sigma (default 5).
 - `--mask-preview P` write a mask montage and exit (no inpaint).
+
+### MiniMax engine setup (not baked into the Docker image)
+`minimax` (and therefore `auto` on textured bands) needs a vendored third-party repo
+plus its HuggingFace weights, **provisioned separately** — the pezevenk Docker image
+does *not* install `diffusers`/download these, and `inpaint/` is not a compose service.
+They live under `inpaint/_minimax/` (git-ignored):
+```bash
+# from inpaint/
+git clone https://github.com/zibojia/MiniMax-Remover _minimax
+pip install -r _minimax/requirements.txt          # diffusers==0.33.1 etc.
+huggingface-cli download zibojia/minimax-remover --local-dir _minimax/weights
+```
+Without this, use `--engine lama` (self-contained). Running the pipeline inside the
+transitions container also requires `pip install rapidocr-onnxruntime simple-lama-inpainting`
+— these are likewise not in the image's requirements yet.
 
 ## Batch eval
 ```bash

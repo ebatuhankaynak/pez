@@ -7,7 +7,12 @@ __pycache__/
 # downloaded model weights (big-lama etc. — regenerable)
 .cache/
 
-# eval run outputs + scratch montages (regenerable via batch_eval.py)
-eval/out/
-eval/manifest.json
-eval/_*
+# eval run outputs + scratch montages (all regenerable via batch_eval.py)
+eval/
+
+# vendored MiniMax-Remover (own git repo + ~2.6G HF weights) — provisioned
+# separately, see README "MiniMax engine setup". Never committed here.
+_minimax/
+
+# ad-hoc diagnostics (gate/flicker probes) — scratch, regenerable
+_diag/

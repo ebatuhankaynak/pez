@@ -20,3 +20,6 @@ __pycache__/
 transitions/_face/
 debug/
 transitions/*.bak*
+
+# --- scratch A/B comparison pages (regenerable review artifacts) ---
+*_compare.html
