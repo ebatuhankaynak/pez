@@ -217,7 +217,22 @@ def _iou(a, b):
     return inter / ua if ua > 0 else 0.0
 
 
-def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5):
+def _cooc_density(gray_box, white_thr=200, black_thr=60):
+    """Outlined-text cue: fraction of pixels where a near-white FILL and a near-black
+    OUTLINE occur within a few px of each other -- the signature of a burned-in caption.
+    Printed real-world text (a sign, a phone/app UI label, a shipping label on a held
+    box) has no black outline, so this reads ~0 for it. Used to tell an added caption
+    from text that belongs to the footage."""
+    if gray_box.size == 0:
+        return 0.0
+    w = (gray_box >= white_thr).astype(np.uint8)
+    b = (gray_box <= black_thr).astype(np.uint8)
+    pr = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
+    return float(cv2.bitwise_and(cv2.dilate(w, pr), cv2.dilate(b, pr)).mean())
+
+
+def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5,
+                    style_thr=0.12, drift_thr=3.0, txtvar_thr=0.9):
     """OCR-driven caption locator returning TIGHT per-line boxes.
 
     A burned-in caption is screen-static, so each text LINE's OCR box recurs at the
@@ -226,14 +241,25 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5)
     text/signs), and emit each cluster's MEDIAN box with a small pad -- a little extra
     to the RIGHT for a trailing inline emoji the OCR can't read. Tight per-line boxes
     keep the downstream stroke mask OFF the subject; an earlier ballooned block box let
-    the mask fire on the scene (a shoebill's beak, a taped package) and smear it."""
+    the mask fire on the scene (a shoebill's beak, a taped package) and smear it.
+
+    Persistence alone is NOT enough: static real-world text -- a sign in a locked shot,
+    a held phone/app screen, a shipping label on a slowly-moving box -- also recurs and
+    was being masked (erasing footage the viewer expects, and, when it moved through a
+    region, smearing a whole band via the +-N temporal mask union). So a persistent
+    cluster is rejected as scene text when it is NOT outlined caption (`style` co-occ
+    below `style_thr`) AND is either moving with an object (centroid `drift` over
+    `drift_thr` px) or garbled/unstable (`txtvar` = distinct strings / occurrences, at
+    or above `txtvar_thr`). Outlined captions clear it on style; plain captions on a
+    flat band clear it by being screen-locked with stable text. Thresholds were
+    measured on 40 clips: every rejected cluster was real scene/UI text, none a caption."""
     if ocr is None:
         from rapidocr_onnxruntime import RapidOCR       # ONNX, no torch dep
         ocr = RapidOCR()
     cap = cv2.VideoCapture(path)
     N = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 1
     idx = np.linspace(0, N - 1, min(sample, N)).astype(int)
-    clusters = []                                        # each: [list of boxes, set of frame idxs]
+    clusters = []                                        # each: [list of {b,text,style}, set of frame idxs]
     n = 0
     for fi, i in enumerate(idx):
         cap.set(cv2.CAP_PROP_POS_FRAMES, int(i))
@@ -241,6 +267,7 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5)
         if not ok:
             continue
         n += 1
+        g = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
         res, _ = ocr(f)
         for box, _text, score in (res or []):
             if score < min_score:
@@ -252,14 +279,15 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5)
                 continue
             best, bj = 0.0, -1
             for j, (boxes, _fr) in enumerate(clusters):
-                v = _iou(b, boxes[-1])
+                v = _iou(b, boxes[-1]["b"])
                 if v > best:
                     best, bj = v, j
+            rec = {"b": b, "text": (_text or "").strip(),
+                   "style": _cooc_density(g[b[1]:b[3], b[0]:b[2]])}
             if best >= 0.3:
-                clusters[bj][0].append(b); clusters[bj][1].add(fi)
+                clusters[bj][0].append(rec); clusters[bj][1].add(fi)
             else:
-                clusters.append([[b], {fi}])
-        cap.grab()
+                clusters.append([[rec], {fi}])
     cap.release()
     if n == 0:
         return []
@@ -268,10 +296,19 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5)
     for boxes, frames in clusters:
         if len(frames) < need:                          # not persistent -> transient bg text
             continue
-        arr = np.array(boxes)
+        arr = np.array([r["b"] for r in boxes])
         x0, y0, x1, y1 = (int(np.median(arr[:, k])) for k in range(4))
         h = y1 - y0
         if h < 0.008 * H or (x1 - x0) < 20:
+            continue
+        cx = (arr[:, 0] + arr[:, 2]) / 2.0; cy = (arr[:, 1] + arr[:, 3]) / 2.0
+        drift = float(np.hypot(cx.std(), cy.std()))
+        style = float(np.mean([r["style"] for r in boxes]))
+        txts = [r["text"] for r in boxes]
+        txtvar = len(set(txts)) / max(1, len(txts))
+        if style < style_thr and (drift > drift_thr or txtvar >= txtvar_thr):
+            print(f"[auto] skip scene-text (style={style:.3f} drift={drift:.1f} "
+                  f"txtvar={txtvar:.2f}): '{txts[len(txts) // 2][:30]}'")
             continue
         pv, pl = int(0.22 * h), int(0.12 * h)           # tight pad; extra right for inline emoji
         rects.append((max(0, x0 - pl), max(0, y0 - pv),
