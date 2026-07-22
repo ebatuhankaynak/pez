@@ -22,7 +22,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent.parent   # repo root (this file lives in tools/)
 GT = HERE / "transitions" / "ground_truth_batu.json"
-BAK = HERE / "transitions" / "ground_truth_batu.json.bak2"   # pre-blank snapshot
+BAK = HERE / "transitions" / "ground_truth_batu.json.bak2"
 
 
 def main():
@@ -39,7 +39,7 @@ def main():
     cleared = 0
     for c in clips:
         if c.get("edited"):
-            continue                      # your work — never touch
+            continue
         if c.get("cuts") or c.get("cut_sec") is not None or c.get("has_transition") \
            or c.get("pattern") or c.get("returns_to_creator"):
             cleared += 1

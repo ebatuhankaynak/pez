@@ -110,7 +110,7 @@ def main():
             results.append({
                 "clip": clip.name,
                 "transition_sec": None,          # filled by relabel_faces.py
-                "method": "shots_detected",       # ""
+                "method": "shots_detected",
                 "num_shots": len(shots),
                 "shots": shots,
             })

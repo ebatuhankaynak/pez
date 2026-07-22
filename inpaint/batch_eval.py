@@ -13,7 +13,7 @@ Resumable: clips whose output already exists are skipped.
 import argparse, glob, json, os, shutil, time
 import cv2, numpy as np
 
-import inpaint_text as it   # same dir; provides probe/auto_rects/glyph_mask/lama_frames
+import inpaint_text as it   # sibling module in the same dir (not a package)
 
 SRC = "/app/split/meme"
 OUT = "/app/inpaint/eval/out"

@@ -18,7 +18,7 @@ Two stages so tuning is cheap:
     # stage 3 of the pipeline (after relabel_faces), two steps:
     python src/face_cut.py --dump-curves        # A: dense sim + luma curves (GPU, once)
     python src/face_cut.py --split segments      # B: segment + cut videos
-    #   -> transitions/segments.json (99.2% batu, mean|Δ| 0.13s) + segments/<clip>/*.mp4
+    #   -> transitions/segments.json (99.2% batu, mean|Δ| 0.068s) + segments/<clip>/*.mp4
     # ablate with --no-refine-fade / --no-snap; explore knobs with --sweep.
 
 Writes transitions/segments.json (+ transitions/_face/trans.json), both scorable by
@@ -201,21 +201,21 @@ def refine_fade(cur, b, thr=0.35, dark=48.0, bright=212.0, hard_step=34.0, back=
         return None
     lo = min(cand, key=lambda i: lu[i])
     hi = max(cand, key=lambda i: lu[i])
-    if lu[lo] <= dark:                                    # fade-to-black -> darkest frame
+    if lu[lo] <= dark:
         return round(tl[lo], 3)
-    if lu[hi] >= bright:                                  # fade-to-white -> brightest frame
+    if lu[hi] >= bright:
         return round(tl[hi], 3)
     return None                                          # mid-luma, no clear wash
 
 
-def place_boundaries(segs, cur, snap, snap_win, refine, snap_from=1, return_back=0.8):
+def place_boundaries(segs, cur, snap, snap_win, refine, return_back=0.8):
     """Position each interior boundary. TransNet/luma = WHEN the shot changes, face = WHO.
       - RETURN (meme->person): snap back to a TransNet cut in a back-biased window — the
         shot changed back to her, possibly before her face resolves (she enters dark/turned).
       - person->meme SOFT FADE: place at the luma neutral frame (refine_fade).
       - else: nearest TransNet hard cut within snap_win."""
     tn = cur.get("transnet_cuts", [])
-    for i in range(max(1, snap_from), len(segs)):
+    for i in range(1, len(segs)):
         b = segs[i]["start"]
         prev_lab, cur_lab = segs[i - 1]["label"], segs[i]["label"]
         new = None

@@ -15,7 +15,7 @@ Pipeline (reuses the cached shots in transitions.json — no TransNetV2 re-run):
      matches the creator embedding (cosine >= --face-threshold), else "meme".
   3. PICK: transition = start of the first meme shot after the leading creator run.
 
-Writes transitions_face.json and prints accuracy vs transitions/verification.json.
+Rewrites transitions.json in place and prints accuracy vs transitions/verification.json.
 
     python src/relabel_faces.py
 """
@@ -45,7 +45,7 @@ RUNCFG = {
     "adaface_model": "",     # path to adaface .onnx when recognizer == "adaface"
     "stats": None,           # dict accumulator for detection-level stats, or None
 }
-_ADAFACE = None              # lazy AdaFace onnxruntime session
+_ADAFACE = None
 
 
 def _stat(key, n=1):
@@ -244,7 +244,7 @@ def enroll_creator(app, records):
     return centroid
 
 
-def label_shots(app, src, shots, centroid, thr, frames_per_shot=5):
+def label_shots(app, src, shots, centroid, frames_per_shot=3):
     vr = VideoReader(str(src))
     fps = vr.get_avg_fps()
     total = len(vr)
@@ -420,7 +420,7 @@ def redetect_lowthr(src, threshold, device="auto"):
 def label_and_pick(app, src, shots, centroid, args):
     """Face-label the shots, pick the person->meme cut, and apply the soft-cut
     fallbacks. Returns (trans, method, sims, is_creator)."""
-    sims = label_shots(app, src, shots, centroid, args.face_threshold, args.frames_per_shot)
+    sims = label_shots(app, src, shots, centroid, args.frames_per_shot)
     is_creator = [sim >= args.face_threshold for sim in sims]
     idx, method = pick(is_creator, sims)
     trans = shots[idx]["start_sec"] if idx is not None else None

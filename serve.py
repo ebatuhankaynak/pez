@@ -24,7 +24,6 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-# Only these files may be written by the save endpoint.
 SAVE_WHITELIST = {"ground_truth_batu.json"}
 _RANGE_RE = re.compile(r"bytes=(\d*)-(\d*)\s*$")
 
@@ -67,7 +66,7 @@ class Handler(SimpleHTTPRequestHandler):
         m = _RANGE_RE.match(rng.strip())
         path = self.translate_path(self.path)
         if not m or not os.path.isfile(path):
-            return super().send_head()          # dirs / malformed -> stdlib
+            return super().send_head()
         try:
             f = open(path, "rb")
         except OSError:
@@ -135,7 +134,7 @@ class Handler(SimpleHTTPRequestHandler):
         try:
             n = int(self.headers.get("Content-Length", 0))
             raw = self.rfile.read(n)
-            doc = json.loads(raw)                      # validate it's JSON
+            doc = json.loads(raw)
         except Exception as e:
             self._json(400, {"error": f"bad body: {e}"})
             return
@@ -148,7 +147,7 @@ class Handler(SimpleHTTPRequestHandler):
         self._json(200, {"ok": True, "wrote": str(dst.relative_to(HERE)),
                          "clips": len(doc.get("clips", []))})
 
-    def log_message(self, fmt, *args):               # quieter logs
+    def log_message(self, fmt, *args):
         if self.command == "POST":
             super().log_message(fmt, *args)
 

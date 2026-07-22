@@ -18,8 +18,8 @@ import numpy as np
 import cv2
 from decord import VideoReader
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))  # import the pipeline modules
-from relabel_faces import (load_face_app, enroll_creator, normed, faces_at,
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+from relabel_faces import (load_face_app, enroll_creator, normed,
                            CLIPS_DIR, TRANSITIONS, short)
 
 DEBUG_DIR = Path(__file__).resolve().parent.parent / "debug"   # repo root/debug (this file lives in tools/)
@@ -27,8 +27,8 @@ DEBUG_DIR = Path(__file__).resolve().parent.parent / "debug"   # repo root/debug
 
 def color(sim, thr):
     if sim >= thr:            return (80, 220, 80)      # green  (BGR)
-    if sim >= thr - 0.10:     return (60, 210, 230)     # yellow
-    return (70, 70, 235)                                # red
+    if sim >= thr - 0.10:     return (60, 210, 230)
+    return (70, 70, 235)
 
 
 def render(app, src, out, centroid, thr, stride):

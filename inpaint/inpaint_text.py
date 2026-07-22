@@ -53,96 +53,6 @@ def _fill_holes(mask):
     return cv2.bitwise_or(mask, cv2.bitwise_not(ff))
 
 
-def caption_mask(bgr, white_thr=200, black_thr=60, margin=5):
-    """General, background-INDEPENDENT mask of one outlined caption line (+ any
-    inline trailing emoji) in the crop `bgr`. Returns uint8 (255 = remove).
-
-    Core cue: outlined caption text is the ONLY place a near-white fill pixel and a
-    near-black outline pixel occur within a few px of each other. Smooth sky, cloud,
-    road and mountain never pair bright-white directly against near-black, so they
-    are rejected with NO colour/hue, "cloud" or "flag" special-casing. The cue is a
-    property of the text itself, so it transfers to arbitrary clips/backgrounds and
-    to either polarity (light text/dark outline or dark text/light outline).
-
-    The inline trailing emoji is NOT outlined text; it is found generically as
-    same-line foreground that deviates from the vertically-continuous scenery just
-    above and below the text band (an emoji pasted on top stands out; sky/road do
-    not), reinforced by local edge energy -- again colour-agnostic. It is filled as
-    a band-clamped box so no anti-aliased emoji fringe can survive."""
-    H, W = bgr.shape[:2]
-    gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
-
-    # 1) outlined-text co-occurrence -> the caption letters
-    white = (gray >= white_thr).astype(np.uint8)
-    black = (gray <= black_thr).astype(np.uint8)
-    prox = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
-    cooc = cv2.bitwise_and(cv2.dilate(white, prox), cv2.dilate(black, prox)) * 255
-    cooc = cv2.morphologyEx(cooc, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
-    cooc = cv2.dilate(cooc, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
-    n, lab, stats, _ = cv2.connectedComponentsWithStats(cooc, 8)
-    txt = np.zeros_like(cooc)
-    for i in range(1, n):                                    # drop micro-texture specks
-        if stats[i, cv2.CC_STAT_AREA] >= 80 and stats[i, cv2.CC_STAT_HEIGHT] >= 12:
-            txt[lab == i] = 255
-    txt = _fill_holes(txt)
-    if not txt.any():
-        return np.zeros((H, W), np.uint8)
-
-    ys = np.where(txt.any(axis=1))[0]
-    xs = np.where(txt.any(axis=0))[0]
-    y0, y1 = int(ys.min()), int(ys.max())
-    x_right = int(xs.max())
-    band_h = y1 - y0 + 1
-    out = txt.copy()
-
-    # 2) inline trailing emoji: same-band foreground vs. scenery above/below
-    by0, by1 = max(0, y0 - 2), min(H, y1 + 3)
-    strip = max(5, band_h // 2)
-    t0, b1 = max(0, by0 - strip), min(H, by1 + strip)
-    lab_img = cv2.cvtColor(bgr, cv2.COLOR_BGR2LAB).astype(np.float32)
-    salband = np.zeros((H, W), np.uint8)
-    refs = []
-    if by0 - t0 >= 3:
-        refs.append(np.median(lab_img[t0:by0], axis=0))
-    if b1 - by1 >= 3:
-        refs.append(np.median(lab_img[by1:b1], axis=0))
-    if refs:
-        pred = np.mean(refs, axis=0)                          # per-column bg colour
-        resid = np.abs(lab_img[by0:by1] - pred[None]).sum(axis=2)
-        salband[by0:by1] |= (resid > 35).astype(np.uint8) * 255
-    gx = cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=3)
-    gy = cv2.Sobel(gray, cv2.CV_32F, 0, 1, ksize=3)
-    grad = cv2.magnitude(gx, gy)
-    salband[by0:by1] |= (grad[by0:by1] > 70).astype(np.uint8) * 255
-    salband = cv2.morphologyEx(salband, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
-    wx1 = min(W, x_right + int(2.3 * band_h))                 # don't reach far scenery
-    colfg = salband[by0:by1].mean(axis=0) / 255.0
-    thr, GAP = 0.12, max(6, int(0.4 * band_h))
-    start = end = None
-    gap = 0
-    c = x_right + 1
-    while c < wx1:                                            # walk right until a real gap
-        if colfg[c] >= thr:
-            if start is None:
-                start = c
-            end = c
-            gap = 0
-        elif start is not None:
-            gap += 1
-            if gap > GAP:
-                break
-        c += 1
-    if start is not None and end is not None:                # height clamped to text band
-        pad = max(3, int(0.12 * band_h))                     # generous: LaMa fills big masks cleanly,
-        out[by0:by1, max(0, start - pad):min(W, end + pad)] = 255  # so never leave a flag remnant
-
-    # 3) small uniform margin so no thin anti-alias halo survives
-    out = _fill_holes(out)
-    k = max(3, 2 * margin - 1)
-    out = cv2.dilate(out, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
-    return out
-
-
 def glyph_mask(bgr, rects):
     """Full-frame caption mask (255 = remove). OCR already LOCATED the caption line(s)
     in `rects`; inside each box we mask only the actual TEXT STROKES so LaMa fills a
@@ -196,7 +106,6 @@ def auto_rects(path, W, H, ocr=None):
     We sample frames, keep PERSISTENT text boxes (a burned-in caption sits at the
     same place across the clip; transient background text/signs do not), merge
     per-line and pad generously (extra to the right for a trailing inline emoji).
-    caption_mask then tightens the actual per-frame stroke mask inside each rect.
 
     Falls back to the co-occurrence locator if RapidOCR is unavailable. Pass a
     preloaded `ocr` (RapidOCR instance) to avoid re-init when batching."""
@@ -660,7 +569,7 @@ def main():
         minimax_frames(frames, full_masks, final, by1, by2, W, feather=a.feather)
     T[engine] = time.time() - t
 
-    # 5) encode at native fps + copy original audio
+    # 4) encode at native fps + copy original audio
     t = time.time()
     sh(["ffmpeg", "-y", "-v", "error", "-framerate", f"{fps:.6f}",
         "-i", os.path.join(final, "%05d.png"), "-i", a.input,

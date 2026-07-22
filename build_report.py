@@ -101,7 +101,6 @@ def make_thumb(clip, section, tmp):
         ok_m = strip(meme, 4, RED, m_png)
         if ok_p and ok_m and hstack(p_png, m_png, combo):
             return b64(combo)
-        # fall back to whichever worked
         if ok_p:
             return b64(p_png)
         if ok_m:
@@ -170,8 +169,9 @@ def main():
 
     records = json.load(open(args.transitions))
     try:
-        ver_by = json.load(open(args.verification)).get("by_clip", {})
-        ver_summary = json.load(open(args.verification)).get("summary", {})
+        with open(args.verification) as vf:
+            ver = json.load(vf)
+        ver_by, ver_summary = ver.get("by_clip", {}), ver.get("summary", {})
     except Exception:
         ver_by, ver_summary = {}, {}
 
@@ -206,7 +206,7 @@ def main():
     for key, title, desc in SECTION_META:
         clips = sections[key]
         cards = []
-        for i, clip in enumerate(clips, 1):
+        for clip in clips:
             thumb = make_thumb(clip, key, tmp)
             cards.append(card_html(clip, ver_by.get(short(clip["clip"])), thumb))
         body.append(f"""
