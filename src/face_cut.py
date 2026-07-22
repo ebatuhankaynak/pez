@@ -33,6 +33,8 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from pezutil import short
+
 # Stage A needs numpy/decord/insightface; imported lazily inside it so Stage B + --split
 # run on plain python3 + ffmpeg once the curves are cached.
 SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
@@ -42,10 +44,6 @@ SEGMENTS = SCRIPT_DIR / "transitions" / "segments.json"
 GT = SCRIPT_DIR / "transitions" / "ground_truth_batu.json"
 OUT = SCRIPT_DIR / "transitions" / "_face"
 CURVES = OUT / "curves.json"
-
-
-def short(name):
-    return name[:-4][-12:]
 
 
 def _nearest(pts, t):
@@ -59,22 +57,34 @@ def _nearest(pts, t):
 
 
 # ------------------------------------------------------------------ stage A (GPU)
-def dense_sims(app, src, centroid, sample_fps):
-    """Dense creator-similarity curve on the TRUE video clock: sample uniformly in real time,
-    pick the nearest actual frame by PTS, and label it with that frame's true PTS (VFR-correct)."""
+def _sample_frames(src, fps):
+    """Uniform-in-real-time sampling on the TRUE PTS clock (VFR-correct): for each of n bins,
+    pick the nearest actual frame and label it with that frame's true PTS. Returns
+    (vr, pts, dur, [(idx, t_pts), ...])."""
     from decord import VideoReader
-    from relabel_faces import normed, frame_pts, _faces_in_frame
+    from relabel_faces import frame_pts
     vr = VideoReader(str(src))
     pts = frame_pts(vr)
     dur = pts[-1] + (pts[-1] - pts[-2] if len(pts) > 1 else 0.0)
-    n = max(2, int(dur * sample_fps))
-    times, sims = [], []
+    n = max(2, int(dur * fps))
+    centers = []
     for k in range(n):
         idx = _nearest(pts, dur * (k + 0.5) / n)
+        centers.append((idx, round(pts[idx], 3)))
+    return vr, pts, dur, centers
+
+
+def dense_sims(app, src, centroid, sample_fps):
+    """Dense creator-similarity curve on the TRUE video clock: sample uniformly in real time,
+    pick the nearest actual frame by PTS, and label it with that frame's true PTS (VFR-correct)."""
+    from relabel_faces import normed, _faces_in_frame
+    vr, pts, dur, centers = _sample_frames(src, sample_fps)
+    times, sims = [], []
+    for idx, t in centers:
         best = 0.0
         for f in _faces_in_frame(app, vr, idx):
             best = max(best, float(normed(f.normed_embedding) @ centroid))
-        times.append(round(pts[idx], 3))
+        times.append(t)
         sims.append(round(best, 4))
     return dur, pts, times, sims
 
@@ -83,17 +93,11 @@ def dense_luma(src, luma_fps):
     """Per-frame luminance at luma_fps on the TRUE video clock. A soft fade washes the frame to
     white/black/gray; the manual 'neutral' cut frame is the luma extremum. Model-free (no GPU)."""
     import cv2
-    from decord import VideoReader
-    from relabel_faces import frame_pts
-    vr = VideoReader(str(src))
-    pts = frame_pts(vr)
-    dur = pts[-1] + (pts[-1] - pts[-2] if len(pts) > 1 else 0.0)
-    n = max(2, int(dur * luma_fps))
+    vr, _pts, _dur, centers = _sample_frames(src, luma_fps)
     times, luma = [], []
-    for k in range(n):
-        idx = _nearest(pts, dur * (k + 0.5) / n)
+    for idx, t in centers:
         g = cv2.cvtColor(vr[idx].asnumpy(), cv2.COLOR_RGB2GRAY)
-        times.append(round(pts[idx], 3))
+        times.append(t)
         luma.append(round(float(g.mean()), 2))
     return times, luma
 
@@ -309,17 +313,25 @@ def split_segments(seg_out, seg_dir, workers=8):
 
 
 # ------------------------------------------------------------------ scoring (mirrors evaluate.py)
-def score(seg_out, gt_path, tol=0.5):
-    gt = {c["short"]: c for c in json.load(open(gt_path))["clips"]}
-    segs = {r["short"]: r for r in seg_out}
+def _load_gt(path):
+    return {c["short"]: c for c in json.load(open(path))["clips"]}
 
-    def gt_cuts(g):
-        cs = g.get("cuts") or []
-        return [c["sec"] for c in cs] if cs else ([g["cut_sec"]] if g.get("cut_sec") is not None else [])
+
+def _gt_cuts(g):
+    """All GT cut times for one clip: multi-cut `cuts[].sec` if present, else `cut_sec`, else []."""
+    cs = g.get("cuts") or []
+    if cs:
+        return [c["sec"] for c in cs]
+    return [g["cut_sec"]] if g.get("cut_sec") is not None else []
+
+
+def score(seg_out, gt_path, tol=0.5):
+    gt = _load_gt(gt_path)
+    segs = {r["short"]: r for r in seg_out}
 
     TP = MISS = EXTRA = full = 0
     for sid, g in gt.items():
-        gc = gt_cuts(g)
+        gc = _gt_cuts(g)
         pool = [s["start"] for s in segs.get(sid, {}).get("segments", [])[1:]]
         tp = 0
         for x in gc:
@@ -340,11 +352,12 @@ def score(seg_out, gt_path, tol=0.5):
 def offset_stats(trans_out, gt_path):
     """Signed convention gap on the FIRST cut: gt_first - model_first (s), over clips where
     both exist within 1s. Positive = model fires BEFORE the manual label."""
-    gt = {c["short"]: c for c in json.load(open(gt_path))["clips"]}
+    gt = _load_gt(gt_path)
     tr = {short(c["clip"]): c for c in trans_out}
     d = []
     for sid, g in gt.items():
-        gc = (g.get("cuts") or [{}])[0].get("sec") if g.get("cuts") else g.get("cut_sec")
+        cuts = _gt_cuts(g)
+        gc = cuts[0] if cuts else None
         mc = tr.get(sid, {}).get("transition_sec")
         if gc is not None and mc is not None and abs(gc - mc) <= 1.0:
             d.append(gc - mc)
@@ -385,8 +398,8 @@ def main():
 
     if args.inspect:
         cur = curves[args.inspect]
-        g = {c["short"]: c for c in json.load(open(args.gt))["clips"]}.get(args.inspect, {})
-        gcuts = [c["sec"] for c in (g.get("cuts") or [])] or ([g["cut_sec"]] if g.get("cut_sec") is not None else [])
+        g = _load_gt(args.gt).get(args.inspect, {})
+        gcuts = _gt_cuts(g)
         print(f"{args.inspect}  dur={cur['dur']}s  GT cuts={gcuts}  TransNet cuts={cur['transnet_cuts']}")
         for t, s in zip(cur["times"], cur["sims"]):
             mark = "".join(" <GTCUT" for gc in gcuts if abs(gc - t) < 0.6)

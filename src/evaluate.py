@@ -31,6 +31,8 @@ import statistics as st
 from collections import Counter
 from pathlib import Path
 
+from pezutil import short
+
 SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 # Default to the manual cut-editor GT: it's the only label set with multi-cut ('cuts')
 # arrays, so it's the correct reference for this multi-cut eval. Pass --gt for the Claude one.
@@ -39,8 +41,6 @@ TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 SEGMENTS = SCRIPT_DIR / "transitions" / "segments.json"
 
 
-def short(name):
-    return name[:-4][-12:] if name.endswith(".mp4") else name
 
 
 def gt_cuts(g):

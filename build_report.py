@@ -21,21 +21,20 @@ import argparse
 import base64
 import json
 import subprocess
+import sys
 import tempfile
 from html import escape
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 import peznav
+from pezutil import short
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 SPLIT_DIR = SCRIPT_DIR / "split"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 VERIFICATION = SCRIPT_DIR / "transitions" / "verification.json"
-
-
-def short(name):
-    return name[:-4][-12:]
 
 
 def dur(path):

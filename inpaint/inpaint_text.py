@@ -290,6 +290,18 @@ def _ring_flat(bgr, mask, ring=25):
     return float(np.clip((HI - std) / (HI - LO), 0.0, 1.0))
 
 
+def _feather_blend(base_bgr, fill, mask, feather):
+    """One-sided feather composite: full opacity everywhere `mask` is set (a thin glyph
+    stroke is FULLY replaced, never left semi-transparent -- a two-sided Gaussian feather
+    let the original bright text bleed through thin strokes and show as a readable ghost,
+    worst on black bg), soft falloff ONLY outward past the edge. `fill` is BGR (a full
+    frame or a broadcastable colour)."""
+    fe = cv2.GaussianBlur(mask, (0, 0), feather).astype(np.float32) / 255.0
+    fe = np.maximum(fe, (mask > 0).astype(np.float32))[..., None]
+    out = base_bgr.astype(np.float32) * (1 - fe) + np.asarray(fill, np.float32) * fe
+    return out.clip(0, 255).astype(np.uint8)
+
+
 def inpaint_composite(full, mask, lama, feather=5, win=121):
     """Fill the masked text. LaMa is the default -- its plausible texture reads fine on
     busy backgrounds. Its ONE failure is a faint colour-speckle cloud on a flat region
@@ -319,14 +331,7 @@ def inpaint_composite(full, mask, lama, feather=5, win=121):
         fill = diff.astype(np.float32) * w + lo.astype(np.float32) * (1.0 - w)
     else:
         fill = lo.astype(np.float32)
-    # ONE-SIDED feather: full opacity everywhere the mask is set (so a thin glyph
-    # stroke is FULLY replaced, never left semi-transparent -- a two-sided Gaussian
-    # feather let the original bright text bleed through the thin strokes and show as
-    # a readable ghost, worst on black bg), soft falloff ONLY outward past the edge.
-    fe = cv2.GaussianBlur(md, (0, 0), feather).astype(np.float32) / 255.0
-    fe = np.maximum(fe, (md > 0).astype(np.float32))[..., None]
-    comp = full.astype(np.float32) * (1 - fe) + fill * fe
-    return comp.clip(0, 255).astype(np.uint8)
+    return _feather_blend(full, fill, md, feather)
 
 
 def lama_frames(origs, full_masks, final, lama=None, feather=5, log=True, win=121):
@@ -385,9 +390,7 @@ def solid_fill_frames(frames_bgr, masks, final, feather=5):
             ann = (cv2.dilate(md, np.ones((51, 51), np.uint8)) > 0) & (md == 0)
             if int(ann.sum()) >= 50:
                 med = np.median(full[ann].reshape(-1, 3), axis=0)
-                fe = cv2.GaussianBlur(md, (0, 0), feather).astype(np.float32) / 255.0
-                fe = np.maximum(fe, (md > 0).astype(np.float32))[..., None]
-                out = (full.astype(np.float32) * (1 - fe) + med[None, None, :] * fe).clip(0, 255).astype(np.uint8)
+                out = _feather_blend(full, med[None, None, :], md, feather)
         cv2.imwrite(os.path.join(final, f"{i:05d}.png"), out)
 
 
@@ -461,9 +464,7 @@ def minimax_frames(frames_bgr, masks, final, by1, by2, W, feather=5,
         if m.any() and acc[i] is not None:
             band = (acc[i] / max(wsum[i], 1e-3)).astype(np.uint8)
             full_fill = fb.copy(); full_fill[by1:by2] = band
-            fe = cv2.GaussianBlur(m, (0, 0), feather).astype(np.float32) / 255.0
-            fe = np.maximum(fe, (m > 0).astype(np.float32))[..., None]
-            out = (fb.astype(np.float32) * (1 - fe) + full_fill.astype(np.float32) * fe).clip(0, 255).astype(np.uint8)
+            out = _feather_blend(fb, full_fill, m, feather)
         cv2.imwrite(os.path.join(final, f"{i:05d}.png"), out)
 
 

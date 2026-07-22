@@ -29,6 +29,8 @@ from pathlib import Path
 import numpy as np
 from decord import VideoReader
 
+from pezutil import short
+
 SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file lives in src/)
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
@@ -103,10 +105,6 @@ def _embed_adaface(img_bgr, faces):
         # normed_embedding is a read-only @property computed from .embedding, so we
         # overwrite the raw embedding; downstream cosine code reads normed_embedding.
         f.embedding = emb.astype(np.float32)
-
-
-def short(name):
-    return name[:-4][-12:]
 
 
 def save_qa(video_path, transition_sec, out_dir, stem):
@@ -244,6 +242,25 @@ def enroll_creator(app, records):
     return centroid
 
 
+def _best_sim_at(app, vr, fps, t, total, centroid):
+    """Best cosine similarity to the creator centroid over all faces detected at time t."""
+    best = 0.0
+    for f in faces_at(app, vr, fps, t, total):
+        best = max(best, float(normed(f.normed_embedding) @ centroid))
+    return best
+
+
+def _max_agreement_split(flags):
+    """Split index i in 0..len(flags) maximizing (#True before i) + (#False after i).
+    Tolerates an isolated dropout: a momentary flip won't beat the real boundary."""
+    best_i, best = 0, -1
+    for i in range(len(flags) + 1):
+        score = sum(flags[:i]) + sum(1 for x in flags[i:] if not x)
+        if score > best:
+            best, best_i = score, i
+    return best_i
+
+
 def label_shots(app, src, shots, centroid, frames_per_shot=3):
     vr = VideoReader(str(src))
     fps = vr.get_avg_fps()
@@ -255,13 +272,7 @@ def label_shots(app, src, shots, centroid, frames_per_shot=3):
         # Per-frame best match to the creator, then take the MEDIAN across the shot
         # so a face merely *lingering* into a dissolve/text-card doesn't keep the
         # whole shot labeled "creator" (that pushed the cut one shot late).
-        frame_sims = []
-        for t in ts:
-            faces = faces_at(app, vr, fps, t, total)
-            fb = 0.0
-            for f in faces:
-                fb = max(fb, float(normed(f.normed_embedding) @ centroid))
-            frame_sims.append(fb)
+        frame_sims = [_best_sim_at(app, vr, fps, t, total, centroid) for t in ts]
         out.append(float(np.median(frame_sims)))
     return out
 
@@ -289,11 +300,7 @@ def pick(labels_creator, sims=None, evidence_floor=0.15):
         if sims is not None and max(sims) < evidence_floor:
             return None, "all_meme_no_creator"
         return None, "single_shot_creator"        # she's on screen throughout
-    best_i, best = 0, -1
-    for i in range(0, n + 1):
-        score = sum(labels_creator[:i]) + sum(1 for x in labels_creator[i:] if not x)
-        if score > best:
-            best, best_i = score, i
+    best_i = _max_agreement_split(labels_creator)
     if best_i == n:
         return None, "all_creator_no_transition"  # never leaves the creator
     if best_i == 0:
@@ -318,12 +325,7 @@ def dense_transition(app, src, centroid, thr, sample_fps=4.0):
     dur = total / fps if fps else 0
     n = max(2, int(dur * sample_fps))
     times = [dur * (k + 0.5) / n for k in range(n)]
-    present = []
-    for t in times:
-        best = 0.0
-        for f in faces_at(app, vr, fps, t, total):
-            best = max(best, float(normed(f.normed_embedding) @ centroid))
-        present.append(best >= thr)
+    present = [_best_sim_at(app, vr, fps, t, total, centroid) >= thr for t in times]
 
     m = len(present)
     # Conservative guards: only trust a soft cut when she clearly OPENS the clip
@@ -334,11 +336,7 @@ def dense_transition(app, src, centroid, thr, sample_fps=4.0):
     if sum(present[:lead]) < 0.7 * lead:
         return None
 
-    best_i, best = 0, -1
-    for i in range(m + 1):
-        score = sum(present[:i]) + sum(1 for x in present[i:] if not x)
-        if score > best:
-            best, best_i = score, i
+    best_i = _max_agreement_split(present)
     if best_i == 0 or best_i == m:
         return None
     if times[-1] - times[best_i] < 1.0:          # meme tail < 1s -> not a real meme; she's on
@@ -361,12 +359,7 @@ def refine_within_shot(app, src, a, b, centroid, thr, sample_fps=6.0, hi=0.45):
     total = len(vr)
     n = max(3, int((b - a) * sample_fps))
     times = [a + (b - a) * (k + 0.5) / n for k in range(n)]
-    sims = []
-    for t in times:
-        best = 0.0
-        for f in faces_at(app, vr, fps, t, total):
-            best = max(best, float(normed(f.normed_embedding) @ centroid))
-        sims.append(best)
+    sims = [_best_sim_at(app, vr, fps, t, total, centroid) for t in times]
     lead = max(2, n // 5)
     # Only trust an in-shot refine when she STRONGLY opens the shot. If her face
     # only weakly matches (~0.4) throughout, the confident threshold below would
@@ -374,13 +367,7 @@ def refine_within_shot(app, src, a, b, centroid, thr, sample_fps=6.0, hi=0.45):
     if sum(sims[:lead]) / lead < 0.55:
         return None
     present = [s >= hi for s in sims]            # confident-her (hi), so meme crowd faces don't count
-    # Max-agreement split: robust to brief mid-talk dips (a momentary drop with
-    # presence resuming won't beat the real leave point).
-    best_i, best = 0, -1
-    for i in range(n + 1):
-        score = sum(present[:i]) + sum(1 for x in present[i:] if not x)
-        if score > best:
-            best, best_i = score, i
+    best_i = _max_agreement_split(present)       # robust to brief mid-talk dips
     if best_i == 0 or best_i == n:               # she never clearly leaves this shot
         return None
     tail = present[best_i:]
