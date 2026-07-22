@@ -1,179 +1,206 @@
-# pezevid — person → meme transition detection
+# pezevid
 
-Find the timestamp where each `freckled_spike_tiktok` clip cuts from the creator
-talking to camera over to a meme (still image / meme video / text card).
+Two pipelines over vertical TikTok clips:
 
-## Dataset
+- **Cut detection** — find the person→meme shot boundary and every creator *return*.
+- **Caption inpainting** — remove burned-in captions from the meme segments.
 
-121 vertical clips (720×1280, ~8 s each). Frame rate varies per clip (TikTok
-re-encodes), so the pipeline reads each clip's native fps and works in seconds
-throughout — timestamps are comparable across clips regardless of fps.
+Traced below on clip `fa68486e668e` with real per-stage I/O. Dataset: **121 clips**, 720×1280,
+variable fps (TikTok re-encodes, ~8 s each). The pipeline reads each clip's native fps and works
+in **seconds** throughout, so timestamps are comparable across clips.
 
 | fps | 30.00 | 26.42 | 28.83 | 24.00 | 19.17 | 16.83 |
 |-----|-------|-------|-------|-------|-------|-------|
 | clips | 57 | 38 | 11 | 11 | 3 | 1 |
 
-## Approach
+---
 
-The core insight: the person→meme transition **is a shot boundary**, so TransNetV2
-detects it directly; labeling only decides *which* boundary it is. It's the **same
-creator in every clip**, so each shot is labeled by **her face** (InsightFace) rather
-than by content (an earlier CLIP labeler was fooled by memes containing people / dark
-footage, and is removed).
+## Output — `segments.json`
 
-| stage | model | job |
-|-------|-------|-----|
-| 1. shot boundaries | **TransNetV2** | split each clip into shots (the cut is one of these) |
-| 2. label each shot | **InsightFace (buffalo_l)** | is *the creator's* face in this shot? |
-| 3. pick the cut | max-agreement | best "creator prefix → meme suffix" split, tolerant of a stray face dropout |
-| 3b. soft-cut recovery | dense face scan | TransNetV2 only fires on hard cuts; when it finds *no* cut, scan the whole clip for where she leaves — or when it *merges* creator+meme into one shot, scan that shot (accepted only for a ≤2.5 s move, so a mid-talk self-occlusion can't drag the cut early) |
-| 3c. low-threshold re-detect | TransNetV2 retry | last resort: if a clip is a *single shot* and **neither** boundaries nor the face scan found a cut, re-detect just that clip at a lower TransNetV2 threshold (`--lowthr-redetect`, default 0.4) to recover a fast **match-cut** it merged away, then re-pick. Genuine creator-less clips stay silent (the evidence floor still applies), so it can't invent a cut |
+| # | label | start (s) | end (s) | face_sim |
+|---|-------|-----------|---------|----------|
+| 01 | person | 0.000 | 2.625 | 0.748 |
+| 02 | meme | 2.625 | 6.625 | 0.000 |
+| 03 | person | 6.625 | 7.917 | 0.674 |
+| 04 | meme | 7.917 | 10.500 | 0.000 |
 
-**Domain prior.** The creator is *always* present and opens every clip — a clip can be
-creator-only but never meme-only. So when the face pass finds no leading creator (her
-dark/occluded intro fell just under threshold), the first cut is taken as the transition.
-This resolves *ambiguity*, it's not a hard override: if the whole clip shows essentially
-no face of her (max similarity below a small evidence floor — e.g. reposted stadium
-footage), that's respected as genuinely creator-less. See `pick()` in `relabel_faces.py`.
+`pattern: pers→meme→pers→meme` · cuts at **2.625 / 6.625 / 7.917 s**
 
-**Accuracy.** The face stage runs SCRFD at `--det-size 640` (the detector's rated scale —
-benchmarked **+0.8 pts** over the old 384, with **0 regressions and 0 new false positives**; a
-fuller ablation of low-light preprocessing, face gating, and an AdaFace recognizer swap all did
-worse, so det-size is the only lever that helped).
+<table>
+<tr>
+<td align="center"><img src="examples/seg01_person.jpg" width="150"><br><sub><b>01 person</b><br>0.0–2.625 · sim .748</sub></td>
+<td align="center"><img src="examples/seg02_meme.jpg" width="150"><br><sub><b>02 meme</b><br>2.625–6.625 · sim .00</sub></td>
+<td align="center"><img src="examples/seg03_person.jpg" width="150"><br><sub><b>03 person</b> (return)<br>6.625–7.917 · sim .674</sub></td>
+<td align="center"><img src="examples/seg04_meme.jpg" width="150"><br><sub><b>04 meme</b><br>7.917–10.5 · sim .00</sub></td>
+</tr>
+</table>
 
-`evaluate.py` is **multi-cut aware**: a clip that returns to the creator has more than one cut,
-so it scores the *whole* cut sequence (the GT `cuts` array) against the model's segment
-boundaries, matching each cut one-to-one within `--tol` (0.5 s) — not just the first cut. Its
-**default GT is the manual cut-editor set** (`ground_truth_batu.json`), the only label set with
-multi-cut arrays:
+---
 
-- vs the **manual** GT (default): **95.9 % of clips fully correct** (whole sequence, 116/121),
-  cut-level **precision 95.8 % / recall 96.6 %**; **98.3 %** first-cut-only, **0 false positives**.
-- vs the **Claude/agent** GT (`--gt transitions/ground_truth.json`): 87.6 % full-sequence /
-  90.1 % first-cut — lower *only* because that set carries no multi-cut labels, so every real
-  creator-return the model emits is counted as an "extra." The model's cuts land within **0.04 s**
-  of the Claude marks (essentially on them); the manual labels sit ~0.35 s later by convention, so
-  scores below ~0.35 s tolerance measure annotation convention, not correctness.
-
-Remaining errors: a soft dissolve merged into one shot (`0b9bf76f76fa`), one clip whose two
-creator-returns the model collapses to a single cut (`152407c208d2`), and a couple of
-over-segmentations.
-
-## Repo layout
-
-```
-src/      headless compute pipeline (run in the container, GPU): detect_transitions,
-          relabel_faces, face_cut, split_clips, evaluate
-./        the web app + orchestration served/run from the repo root: serve.py, build_report.py,
-          peznav.py/.css, index/app/editor.html, vendor/, Docker* / compose / requirements
-tools/    re-runnable utilities: debug_faces.py, blank_unaddressed_cuts.py
-attic/    archived one-offs (done migrations / superseded experiments)
-transitions/  data — ground-truth JSON (tracked) + generated transitions.json/segments.json
-```
-
-The compute scripts anchor their data paths at the repo root (`Path(__file__)…parent.parent`),
-and Docker runs them from the root with `python src/<stage>.py`, so `transitions/`,
-`freckled_spike_tiktok/`, `split/`, `segments/` all resolve at the repo root regardless of the
-`src/` nesting.
-
-## The pipeline
-
-| script | does | writes |
-|--------|------|--------|
-| [`src/detect_transitions.py`](src/detect_transitions.py) | **stage 1** — TransNetV2 shot boundaries | `transitions/transitions.json` (raw shots) |
-| [`src/relabel_faces.py`](src/relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
-| [`src/face_cut.py`](src/face_cut.py) | **stage 3** — face-first multi-cut segments (Viterbi regime decode + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
-| [`src/split_clips.py`](src/split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
-| [`src/evaluate.py`](src/evaluate.py) | multi-cut score (vs manual GT by default) | prints tables |
-| [`build_report.py`](build_report.py) | static `report.html` | HTML |
-
-**Stage 3 (`face_cut.py`) is face-first**, in two steps: (A) `--dump-curves` caches a dense
-per-frame creator-similarity curve + a luma curve per clip (GPU, once →
-`transitions/_face/curves.json`); (B) segments from that cache — so re-tuning needs no GPU.
-It keeps the stage-2 first cut, then **globally decodes** the person/meme regime with a
-**2-state Viterbi** on the sim curve — strict `person↔meme` alternation (there are *no*
-meme→meme cuts) plus one switch-hysteresis penalty — which recovers creator **returns**
-(`creator→meme→creator…`) the raw shot labels miss. Every soft-fade cut is then placed at the
-**luma neutral frame** (the washed-out frame the manual labeler picks — creator gone, meme not
-yet in). This global decode replaced a chain of local morphology heuristics (gap-fill /
-min-seg-absorb / return-gate, 5 knobs → **2**: `--thr` center, `--switch-pen`) with no change
-in accuracy and far less knob sensitivity. vs the manual GT: **99.2 % full-sequence
-(120/121), mean |Δ| 0.068 s**, 100 % first-cut. Ablate with `--no-refine-fade` / `--no-snap`;
-explore knobs with `--sweep`.
-
-**True-clock timing.** All Stage-A samples and cut times are placed on the video's **true
-per-frame PTS** (`vr.get_frame_timestamp`), not `int(t·avg_fps)`. TikTok re-encodes are
-*variable frame rate* — ~40 % of clips drift under an avg-fps clock (up to 0.83 s), and
-TransNetV2 decodes at a constant nominal rate in a different frame space entirely, so its cut
-*times* are re-projected onto the true clock via the nearest real frame. This halved mean |Δ|
-(0.13 → 0.068 s) and put the model on the same clock as the ground truth (convention gap ≈ 0).
-
-**Main UI: `app.html`.** `./serve.sh` → `http://localhost:8000/` (root redirects there).
-Reads `transitions.json` + `ground_truth.json` + `segments.json` live — after a run just
-hit ↻ reload. Per clip: the timeline (every TransNetV2 cut as grey ticks,
-green=creator/blue=meme, orange=picked, white=ground-truth), the before|after cut frame
-(click to enlarge), the segment pattern with each piece playable next to the original, a
-live tolerance slider (client-side verdicts), filters, and ✗-flagging with export. Vue is
-vendored in `vendor/` so it runs offline. `report.html` is a static fallback.
-
-## Run it — Docker (recommended, reproducible)
-
-The env is pinned across [`requirements-torch.txt`](requirements-torch.txt) (torch cu128),
-[`requirements.txt`](requirements.txt) (TransNetV2 + I/O), and
-[`requirements-face.txt`](requirements-face.txt) (InsightFace on **`onnxruntime-gpu`**).
-TransNetV2 and buffalo_l are baked in, so runs are offline. **Both** stages use the GPU
-when started with the NVIDIA runtime (TransNetV2 via torch, InsightFace via
-onnxruntime-gpu — `relabel_faces.py` auto-detects CUDA, else CPU). `onnxruntime-gpu` is
-pinned to the CUDA-12 line (1.22.x) to match the `nvidia/cuda:12.8-cudnn` base; 1.23+
-moved to CUDA 13 and won't load here.
-
-Everything runs in the container — **no local Python.** The whole repo is bind-mounted,
-so runs use the live code and write outputs back to the host as your user (`.env` carries
-`HOST_UID/HOST_GID`).
+# Track 1 — cut detection
 
 ```bash
-docker compose build                      # one-time (cached after that)
-docker compose run --rm all               # detect → relabel → segment → split → report
-# or a single stage: docker compose run --rm {detect|relabel|segment|split|report}
-docker compose up serve                   # UI + editor at http://localhost:8000/  (or ./serve.sh)
+docker compose run --rm all      # detect → relabel → segment → split → report
 ```
 
-No compose? `./docker-run.sh src/detect_transitions.py` (set `GPU=0` to force CPU).
+### 1. Shot boundaries — TransNetV2
+Writes `transitions/transitions.json`.
 
-**GPU / CPU.** Both stages use the GPU when the container is started with the NVIDIA
-runtime (compose does this via `gpus: all`); on a CPU-only host they fall back
-automatically. The fallback keys on an *actual* visible device (`torch.cuda.is_available()`) —
-not onnxruntime's compiled-in provider list, which always advertises CUDA and would
-otherwise segfault a CPU-only run.
+The person→meme handoff **is a shot boundary**. TransNetV2 detects boundaries directly; labeling
+only decides which one. All times on the true per-frame PTS clock (not `int(t·avg_fps)`) — VFR clips
+drift up to 0.83 s under an avg-fps clock.
 
-**Key flags:** `src/detect_transitions.py --threshold` (0.5, cut sensitivity) `--limit N`
-(smoke test); `src/relabel_faces.py --det-size` (640, SCRFD input scale) `--face-threshold` (0.35,
-cosine cutoff) `--frames-per-shot` (3) `--qa` (dump before|after cut frames) `--no-soft-fallback`.
+- 6 shots; first hard cut at **2.625 s**.
+- Flags: `--threshold 0.5` (cut sensitivity), `--lowthr-redetect 0.4` (single-shot rescue).
 
-## Output
-
-`transitions/transitions.json` — one record per clip:
-
-```json
-{
-  "clip": "tikcdn_..._8a5c21466d03.mp4",
-  "transition_sec": 3.331,
-  "method": "creator_to_meme",
-  "shots": [ { "start_sec": 0.0, "end_sec": 3.331, "face_sim": 0.71, "label": "person" }, ... ]
-}
+```
+shots (s): 0.000–2.583 · 2.625–3.792 · 3.833–5.250 · 5.292–6.583 · 6.625–7.917 · 7.917–10.458
 ```
 
-`method`: `creator_to_meme` (leading creator shot(s) → meme) · `creator_to_meme_prior`
-(face missed her intro; domain prior takes the first cut) · `creator_to_meme_soft` /
-`creator_to_meme_softcut` (soft-cut recovery) · `single_shot_creator` /
-`all_creator_no_transition` (all creator, no cut) · `all_meme_no_creator` (genuinely no
-creator anywhere).
+<table>
+<tr>
+<td align="center"><img src="examples/02_precut.jpg" width="185"><br><sub>last person frame · <b>2.583 s</b></sub></td>
+<td align="center"><img src="examples/03_postcut.jpg" width="185"><br><sub>first meme frame · <b>2.625 s</b> — the boundary</sub></td>
+</tr>
+</table>
 
-## Verification
+### 2. Face labeling — InsightFace / SCRFD
+Rewrites `transitions.json` with per-shot labels (+ `--qa` before/after frames).
 
-Two independent multi-agent passes reviewed all 121 clips frame-by-frame. A blind *manual*
-pass (agents reading filmstrips) scored **98.3 %** and found every cut the algorithm
-misses — a human reads *content change*, not just hard-cut + face-identity — but is itself
-~2–6 % noisy at this scale (cross-checking the passes surfaced 8 ground-truth mistakes,
-since corrected). Some soft dissolves are genuinely ± a few frames. Per-clip verdicts are
-in `transitions/verification.json`; open `report.html` for the visual breakdown.
+Same creator every clip, so shots are scored by **her face** (cosine vs an enrolled centroid), not by
+content. Memes often contain a face — a prior CLIP labeler was fooled by that; cosine is not.
+
+- Flags: `--det-size 640` (+0.8 pts), `--face-threshold 0.35`, `--frames-per-shot 3`.
+
+<table>
+<tr>
+<td align="center"><img src="examples/debug_creator.jpg" width="200"><br><sub>creator · sim <b>0.72 ≥ 0.35</b> → <b>person</b></sub></td>
+<td align="center"><img src="examples/debug_meme.jpg" width="200"><br><sub>different face · sim <b>0.00 &lt; 0.35</b> → <b>meme</b></sub></td>
+</tr>
+</table>
+
+### 3. Cut selection — `pick()`
+Base pick: best **creator-prefix → meme-suffix** split → `transition_sec`. Four guards handle
+off-shape clips; none fabricates a cut on creator-less footage.
+
+| condition | action | method |
+|-----------|--------|--------|
+| no leading creator shot | domain prior: creator always opens → take first cut | `creator_to_meme_prior` |
+| no hard cut / creator+meme merged | dense face scan, ≤2.5 s move only | `creator_to_meme_soft` |
+| single shot, nothing found | re-detect that clip at `--lowthr-redetect 0.4`, re-pick | — |
+| her face nowhere above evidence floor | stay silent (genuinely creator-less) | `all_meme_no_creator` |
+
+### 4. Segmentation — 2-state Viterbi
+Writes `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4`.
+
+Global decode over a dense creator-sim curve: **2-state person↔meme Viterbi**, strict alternation
+(no meme→meme cuts) + one switch penalty. Recovers the **creator return at 6.625 s** that raw shot
+labels drop (segment 03, 1.3 s). Soft fades snapped to the luma-neutral frame.
+
+- Two steps: `--dump-curves` (GPU, once) → segment from cache (no GPU).
+- Knobs: `--thr` (center), `--switch-pen` (hysteresis). True-PTS placement: mean |Δ| **0.13 → 0.068 s**.
+
+### 5. Split / evaluate / report
+Binary transition → `split/person/`, `split/meme/`. `evaluate.py` scores the full cut sequence vs
+manual GT (`--tol 0.5`). `app.html` — live workbench (ticks, picked cut, per-segment playback);
+`build_report.py` → static `report.html`.
+
+---
+
+# Track 2 — caption removal
+
+```bash
+python inpaint/inpaint_text.py -i split/meme/<clip>.mp4 -o out.mp4
+```
+
+Input: the `split/meme` plates from Track 1. Remove burned-in text: locate → route → fill.
+
+### 1. Caption localization — RapidOCR (ONNX)
+Rects optional. Sample frames, cluster OCR boxes by IoU, keep **screen-static** boxes only
+(burned-in captions persist frame to frame; background text doesn't). One tight box per line.
+Override: `-r x1,y1,x2,y2` (repeatable).
+
+### 2. Engine selection — `--engine auto`
+Static centered text over near-static scenery → no reliable motion for a temporal/flow method to
+propagate. `auto` routes per clip by band flatness (`--flat-thr 0.6`).
+
+| band | engine | how |
+|------|--------|-----|
+| flat (letterbox / wall) | `solid` | strokes → ring median color; exact, instant, no smudge |
+| **textured (default)** | **`minimax`** | band-cropped MiniMax-Remover (distilled Wan2.1 video DiT); caption band only → few latent tokens, no whole-frame softening |
+| fallback | `lama` | per-frame big-LaMa, self-contained weights; softer on heavy texture |
+
+Blind A/B (n=18): **MiniMax 5 wins · LaMa 3 · 10 tie**. MiniMax needs the vendored repo + weights
+(see setup below); without it, use `--engine lama`.
+
+### 3. Composite + encode
+Writes `inpaint/out/<clip>.mp4`.
+
+**One-sided feather** (opacity outward only) prevents the original text ghosting back through.
+Uniform surround → snap to a diffused color; flatness-scaled dilation eats the glyph halo.
+Re-encode `CRF 16`, copy original audio.
+
+<table>
+<tr>
+<td align="center"><img src="examples/inpaint_before.jpg" width="200"><br><sub><b>before</b> · caption burned in</sub></td>
+<td align="center"><img src="examples/inpaint_after.jpg" width="200"><br><sub><b>after</b> · caption removed</sub></td>
+</tr>
+</table>
+
+---
+
+## Metrics
+
+**Cut** — vs manual cut-editor GT (n=121), multi-cut aware, `--tol 0.5`:
+
+| stage | full-sequence | first-cut | error |
+|-------|---------------|-----------|-------|
+| stage-3 segments (`face_cut`) | **99.2 %** (120/121) | 100 % | mean \|Δ\| **0.068 s** |
+| stage-2 pick (`relabel_faces`) | 95.9 % (116/121) | 98.3 % | precision 95.8 % / recall 96.6 % |
+
+0 false positives on creator-less clips. Two blind verification passes reviewed all 121 clips
+frame-by-frame (manual pass scored 98.3 %, surfaced 8 GT mistakes, since corrected —
+`transitions/verification.json`).
+
+**Clean** — blind MiniMax/LaMa A/B (n=18): MiniMax 5 / LaMa 3 / 10 tie (`minimax_reviews.json`).
+
+## `method` values (`transitions.json`)
+`creator_to_meme` · `creator_to_meme_prior` · `creator_to_meme_soft` / `_softcut` ·
+`single_shot_creator` / `all_creator_no_transition` · `all_meme_no_creator`.
+
+## Repo layout
+```
+src/          compute pipeline (GPU, in-container): detect_transitions, relabel_faces,
+              face_cut, split_clips, evaluate
+./            web app + orchestration: serve.py, build_report.py, peznav.py/.css,
+              index/app/editor.html, vendor/, Docker* / compose / requirements
+tools/        re-runnable utilities: debug_faces.py, blank_unaddressed_cuts.py
+inpaint/      caption removal: inpaint_text.py, batch_eval.py
+transitions/  data — ground-truth JSON (tracked) + generated transitions.json / segments.json
+examples/     the frames used in this README
+```
+Compute scripts anchor data paths at the repo root (`Path(__file__)…parent.parent`), so
+`transitions/`, `freckled_spike_tiktok/`, `split/`, `segments/` resolve regardless of `src/` nesting.
+
+## Run it — Docker
+```bash
+docker compose build                         # one-time (cached after)
+docker compose run --rm all                  # full pipeline
+docker compose run --rm {detect|relabel|segment|split|report}   # single stage
+docker compose up serve                      # UI at http://localhost:8000/  (or ./serve.sh)
+```
+No compose? `./docker-run.sh src/detect_transitions.py` (`GPU=0` forces CPU). Both stages use the
+GPU with the NVIDIA runtime and fall back to CPU on an actual visible-device check. TransNetV2 +
+buffalo_l are baked in — runs are offline.
+
+### MiniMax engine setup (not in the Docker image)
+`minimax` (and `auto` on textured bands) needs a vendored repo + HF weights under
+`inpaint/_minimax/` (git-ignored):
+```bash
+# from inpaint/
+git clone https://github.com/zibojia/MiniMax-Remover _minimax
+pip install -r _minimax/requirements.txt          # diffusers==0.33.1 etc.
+huggingface-cli download zibojia/minimax-remover --local-dir _minimax/weights
+```
+Running inpaint inside the transitions container also needs
+`pip install rapidocr-onnxruntime simple-lama-inpainting` (not yet in the image).
