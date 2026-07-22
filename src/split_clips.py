@@ -8,8 +8,8 @@ Split each clip at its detected person->meme transition into two folders:
 Reads transitions/transitions.json (produced by detect_transitions.py).
 
 No-transition clips are routed whole to the side that matches their method:
-    single_shot_person / all_person_no_transition  -> person/ only
-    single_shot_meme                               -> meme/ only
+    single_shot_creator / all_creator_no_transition  -> person/ only
+    all_meme_no_creator                              -> meme/ only
 
 Cuts are frame-accurate (re-encoded). Whole-clip copies are stream-copied (lossless).
 
@@ -33,10 +33,9 @@ OUT_DIR = SCRIPT_DIR / "split"
 
 FFMPEG = ["ffmpeg", "-y", "-v", "error"]
 
-# Recognize both the CLIP-based and the face-based method names.
-PERSON_ONLY = {"single_shot_person", "all_person_no_transition",
-               "single_shot_creator", "all_creator_no_transition"}
-MEME_ONLY = {"single_shot_meme", "all_meme_no_creator"}
+# No-transition method names emitted by the face-based labeler (relabel_faces.py).
+PERSON_ONLY = {"single_shot_creator", "all_creator_no_transition"}
+MEME_ONLY = {"all_meme_no_creator"}
 
 
 def run(cmd):

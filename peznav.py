@@ -23,15 +23,12 @@ def css():
     return _CSS.read_text() if _CSS.exists() else ""
 
 
-def nav(active, sticky=True):
-    """<nav> markup with `active` (e.g. 'report.html') highlighted.
-
-    sticky=True makes the nav its own sticky header (report). Pass sticky=False
-    when the nav is wrapped in a .pezhdr alongside a toolbar."""
+def nav(active):
+    """<nav> markup with `active` (e.g. 'report.html') highlighted; renders as its
+    own sticky header."""
     parts = []
     for href, label in LINKS:
         cls = ' class="on"' if href == active else ""
         parts.append(f'<a href="{href}"{cls}>{label}</a>')
-    wrap = " sticky" if sticky else ""
-    return (f'<nav class="peznav{wrap}"><span class="brand">pezevid</span>'
+    return (f'<nav class="peznav sticky"><span class="brand">pezevid</span>'
             f'{"".join(parts)}</nav>')

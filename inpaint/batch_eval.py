@@ -23,9 +23,11 @@ MANIFEST = "/app/inpaint/eval/manifest.json"
 # median caption glyph height and clamped to an odd px range.
 WIN_HEIGHT_FACTOR = 2.5
 WIN_MIN, WIN_MAX = 61, 221
+FEATHER = 5         # mask-edge feather (px) for the LaMa composite
+MASK_TEMPORAL = 3   # temporal-max window (frames) to stabilize the glyph mask
 
 
-def process(path, out_path, lama, ocr, feather=5, mask_temporal=3):
+def process(path, out_path, lama, ocr):
     """Locate + mask + LaMa one clip. Returns a manifest record."""
     name = os.path.basename(path)
     W, H, fps = it.probe(path)
@@ -41,10 +43,10 @@ def process(path, out_path, lama, ocr, feather=5, mask_temporal=3):
         it.sh(["ffmpeg", "-y", "-v", "error", "-i", path, os.path.join(origdir, "%05d.png")])
         origs = sorted(glob.glob(os.path.join(origdir, "*.png")))
         masks = it.temporal_max([it.glyph_mask(cv2.imread(of), rects) for of in origs],
-                                mask_temporal)
+                                MASK_TEMPORAL)
         cov = float(np.mean([(m > 0).mean() for m in masks])) if masks else 0.0
         win = int(np.clip(WIN_HEIGHT_FACTOR * np.median([r[3] - r[1] for r in rects]), WIN_MIN, WIN_MAX))
-        it.lama_frames(origs, masks, final, lama=lama, feather=feather, log=False, win=win)
+        it.lama_frames(origs, masks, final, lama=lama, feather=FEATHER, log=False, win=win)
         it.sh(["ffmpeg", "-y", "-v", "error", "-framerate", f"{fps:.6f}",
                "-i", os.path.join(final, "%05d.png"), "-i", path,
                "-map", "0:v", "-map", "1:a?", "-c:v", "libx264", "-crf", "18",
