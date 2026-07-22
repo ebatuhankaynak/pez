@@ -40,10 +40,7 @@ def _project_to_true_clock(video_path, shots):
     from decord import VideoReader
     vr = VideoReader(str(video_path))
     n = len(vr)
-    try:
-        pts = [float(x[0]) for x in vr.get_frame_timestamp(list(range(n)))]
-    except Exception:
-        pts = [float(vr.get_frame_timestamp(i)[0]) for i in range(n)]
+    pts = [float(x[0]) for x in vr.get_frame_timestamp(list(range(n)))]
 
     def near(t):
         i = bisect.bisect_left(pts, t)

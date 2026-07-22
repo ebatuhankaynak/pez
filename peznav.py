@@ -23,12 +23,12 @@ def css():
     return _CSS.read_text() if _CSS.exists() else ""
 
 
-def nav(active):
-    """<nav> markup with `active` (e.g. 'report.html') highlighted; renders as its
-    own sticky header."""
+def nav():
+    """<nav> markup for the generated report page (report.html tab active); renders
+    as its own sticky header."""
     parts = []
     for href, label in LINKS:
-        cls = ' class="on"' if href == active else ""
+        cls = ' class="on"' if href == "report.html" else ""
         parts.append(f'<a href="{href}"{cls}>{label}</a>')
     return (f'<nav class="peznav sticky"><span class="brand">pezevid</span>'
             f'{"".join(parts)}</nav>')

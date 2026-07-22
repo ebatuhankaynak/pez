@@ -302,7 +302,7 @@ def _feather_blend(base_bgr, fill, mask, feather):
     return out.clip(0, 255).astype(np.uint8)
 
 
-def inpaint_composite(full, mask, lama, feather=5, win=121):
+def inpaint_composite(full, mask, lama, feather=5):
     """Fill the masked text. LaMa is the default -- its plausible texture reads fine on
     busy backgrounds. Its ONE failure is a faint colour-speckle cloud on a flat region
     (a ghost on pure black), so ONLY where the immediate surround is near-uniform
@@ -314,7 +314,7 @@ def inpaint_composite(full, mask, lama, feather=5, win=121):
     change."""
     from PIL import Image
     H, W = full.shape[:2]
-    w = _ring_flat(full, mask)                              # tight fixed ring, not `win`
+    w = _ring_flat(full, mask)                              # tight fixed ring around the glyphs
     # A glyph's anti-aliased outline/drop-shadow extends a few px past the thresholded
     # stroke and survives as a faint ghost -- most visible on black. On a FLAT surround
     # (w high) the fill is one colour, so dilating to swallow that halo costs nothing;
@@ -334,7 +334,7 @@ def inpaint_composite(full, mask, lama, feather=5, win=121):
     return _feather_blend(full, fill, md, feather)
 
 
-def lama_frames(origs, full_masks, final, lama=None, feather=5, log=True, win=121):
+def lama_frames(origs, full_masks, final, lama=None, feather=5, log=True):
     """Per-frame background reconstruction where motion NEVER reveals the truth
     (static centred captions) -- the case a temporal/flow inpainter can't handle. Uses a Telea/LaMa
     hybrid (see `inpaint_composite`) so flat backgrounds fill clean and textured ones
@@ -346,7 +346,7 @@ def lama_frames(origs, full_masks, final, lama=None, feather=5, log=True, win=12
     for i, (of, m) in enumerate(zip(origs, full_masks)):
         full = cv2.imread(of)
         if m.any():
-            full = inpaint_composite(full, m, lama, feather=feather, win=win)
+            full = inpaint_composite(full, m, lama, feather=feather)
         cv2.imwrite(os.path.join(final, f"{i:05d}.png"), full)
         if log and i % 40 == 0:
             print(f"[lama] {i + 1}/{len(origs)}")
@@ -564,8 +564,7 @@ def main():
     if engine == "solid":
         solid_fill_frames(frames, full_masks, final, feather=a.feather)
     elif engine == "lama":
-        win = int(np.clip(2.5 * np.median([r[3] - r[1] for r in rects]), 61, 221))
-        lama_frames(origs, full_masks, final, feather=a.feather, win=win)
+        lama_frames(origs, full_masks, final, feather=a.feather)
     else:                                                # minimax band-crop
         minimax_frames(frames, full_masks, final, by1, by2, W, feather=a.feather)
     T[engine] = time.time() - t

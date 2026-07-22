@@ -43,11 +43,8 @@ RUNCFG = {
     "low_light": False,      # P0b: CLAHE-retry detection on zero-face frames
     "min_det_score": 0.0,    # P1: drop matched faces below this SCRFD score
     "min_face_frac": 0.0,    # P1: drop matched faces shorter than this frac of frame height
-    "recognizer": "arcface", # P2: "arcface" (native) or "adaface" (re-embed via AdaFace ONNX)
-    "adaface_model": "",     # path to adaface .onnx when recognizer == "adaface"
     "stats": None,           # dict accumulator for detection-level stats, or None
 }
-_ADAFACE = None
 
 
 def _stat(key, n=1):
@@ -79,32 +76,6 @@ def face_ok(f, frame_h):
         if fh < RUNCFG["min_face_frac"]:
             return False
     return True
-
-
-def _load_adaface():
-    global _ADAFACE
-    if _ADAFACE is None:
-        import onnxruntime as ort
-        _ADAFACE = ort.InferenceSession(RUNCFG["adaface_model"],
-                                        providers=["CPUExecutionProvider"])
-    return _ADAFACE
-
-
-def _embed_adaface(img_bgr, faces):
-    """P2: overwrite each face's normed_embedding with an AdaFace embedding computed
-    from the same 5-point aligned 112x112 crop insightface uses, so all downstream
-    cosine/centroid code is unchanged. AdaFace expects BGR, (x/255-0.5)/0.5, NCHW."""
-    from insightface.utils import face_align
-    sess = _load_adaface()
-    iname = sess.get_inputs()[0].name
-    for f in faces:
-        crop = face_align.norm_crop(img_bgr, f.kps, image_size=112)  # BGR 112x112
-        blob = ((crop.astype(np.float32) / 255.0) - 0.5) / 0.5
-        blob = np.transpose(blob, (2, 0, 1))[None]                    # 1x3x112x112
-        emb = sess.run(None, {iname: blob})[0][0]
-        # normed_embedding is a read-only @property computed from .embedding, so we
-        # overwrite the raw embedding; downstream cosine code reads normed_embedding.
-        f.embedding = emb.astype(np.float32)
 
 
 def save_qa(video_path, transition_sec, out_dir, stem):
@@ -168,7 +139,7 @@ def frame_pts(vr):
 
 def _faces_in_frame(app, vr, idx):
     """Detect + gate faces in ONE decoded frame (by index). Body shared by faces_at and
-    face_cut's dense curve, so the low-light retry / gating / recognizer logic stays in one place."""
+    face_cut's dense curve, so the low-light retry / gating logic stays in one place."""
     if idx < 0:
         return []
     rgb = vr[idx].asnumpy()
@@ -187,8 +158,6 @@ def _faces_in_frame(app, vr, idx):
     _stat("det_faces", len(faces))
     if faces:
         _stat("det_frames_with_face")
-    if RUNCFG["recognizer"] == "adaface" and faces:       # P2: re-embed with AdaFace
-        _embed_adaface(img_used, faces)
     if RUNCFG["min_det_score"] > 0 or RUNCFG["min_face_frac"] > 0:   # P1: gate weak/tiny faces
         frame_h = rgb.shape[0]
         faces = [f for f in faces if face_ok(f, frame_h)]
@@ -461,18 +430,13 @@ def main():
                     help="P1: drop matched faces with SCRFD score below this")
     ap.add_argument("--min-face-frac", type=float, default=0.0,
                     help="P1: drop matched faces shorter than this fraction of frame height")
-    ap.add_argument("--recognizer", choices=["arcface", "adaface"], default="arcface",
-                    help="P2: face embedder (arcface=native w600k_r50; adaface=ONNX re-embed)")
-    ap.add_argument("--adaface-model", default="",
-                    help="Path to AdaFace .onnx (required for --recognizer adaface)")
     ap.add_argument("--stats-out", default="",
                     help="Write detection-level stats + method distribution here")
     ap.add_argument("--limit", type=int, default=0, help="Only process first N clips (smoke test)")
     args = ap.parse_args()
 
     RUNCFG.update(low_light=args.low_light, min_det_score=args.min_det_score,
-                  min_face_frac=args.min_face_frac, recognizer=args.recognizer,
-                  adaface_model=args.adaface_model,
+                  min_face_frac=args.min_face_frac,
                   stats={k: 0 for k in ("frames", "det_faces", "det_frames_with_face",
                                         "faces", "frames_with_face", "lowlight_tried",
                                         "lowlight_rescued")})
@@ -553,8 +517,7 @@ def main():
         st["det_recall_pct"] = round(100 * st.get("det_frames_with_face", 0) / fr, 2) if fr else 0.0
         st["matched_after_gate_pct"] = round(100 * st.get("frames_with_face", 0) / fr, 2) if fr else 0.0
         st["config"] = {"det_size": args.det_size, "low_light": args.low_light,
-                        "min_det_score": args.min_det_score, "min_face_frac": args.min_face_frac,
-                        "recognizer": args.recognizer}
+                        "min_det_score": args.min_det_score, "min_face_frac": args.min_face_frac}
         Path(args.stats_out).write_text(json.dumps(st, indent=2))
         print(f"Wrote {args.stats_out}: frames={fr} det_recall={st['det_recall_pct']}% "
               f"after_gate={st['matched_after_gate_pct']}% lowlight_rescued={st.get('lowlight_rescued',0)}")

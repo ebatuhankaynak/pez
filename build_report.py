@@ -121,7 +121,6 @@ VERDICT_STYLE = {
     "wrong_time": ("#cf222e", "wrong time"),
     "missed": ("#cf222e", "missed"),
     "false_positive": ("#cf222e", "false positive"),
-    "unreadable": ("#57606a", "unreadable"),
 }
 
 
@@ -230,7 +229,7 @@ def main():
       </div>"""
 
     peznav_css = peznav.css()
-    peznav_nav = peznav.nav("report.html")
+    peznav_nav = peznav.nav()
 
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
