@@ -23,12 +23,13 @@ from relabel_faces import (load_face_app, enroll_creator, normed,
                            CLIPS_DIR, TRANSITIONS, short)
 
 DEBUG_DIR = Path(__file__).resolve().parent.parent / "debug"   # repo root/debug (this file lives in tools/)
+YELLOW_BAND = 0.10   # sim within this much below threshold: "right there but under the line"
 
 
 def color(sim, thr):
-    if sim >= thr:            return (80, 220, 80)      # green  (BGR)
-    if sim >= thr - 0.10:     return (60, 210, 230)
-    return (70, 70, 235)
+    if sim >= thr:                  return (80, 220, 80)      # green  (BGR)
+    if sim >= thr - YELLOW_BAND:    return (60, 210, 230)     # yellow
+    return (70, 70, 235)                                      # red
 
 
 def render(app, src, out, centroid, thr, stride):

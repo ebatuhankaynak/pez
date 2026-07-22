@@ -26,6 +26,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SAVE_WHITELIST = {"ground_truth_batu.json"}
 _RANGE_RE = re.compile(r"bytes=(\d*)-(\d*)\s*$")
+CHUNK_SIZE = 64 * 1024   # range-response copy granularity
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -109,7 +110,7 @@ class Handler(SimpleHTTPRequestHandler):
             return super().copyfile(source, outputfile)
         remaining = self._range_remaining
         while remaining > 0:
-            chunk = source.read(min(64 * 1024, remaining))
+            chunk = source.read(min(CHUNK_SIZE, remaining))
             if not chunk:
                 break
             outputfile.write(chunk)

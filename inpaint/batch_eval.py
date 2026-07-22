@@ -19,6 +19,11 @@ SRC = "/app/split/meme"
 OUT = "/app/inpaint/eval/out"
 MANIFEST = "/app/inpaint/eval/manifest.json"
 
+# LaMa context window: known-region band around the caption mask, sized from the
+# median caption glyph height and clamped to an odd px range.
+WIN_HEIGHT_FACTOR = 2.5
+WIN_MIN, WIN_MAX = 61, 221
+
 
 def process(path, out_path, lama, ocr, feather=5, mask_temporal=3):
     """Locate + mask + LaMa one clip. Returns a manifest record."""
@@ -38,7 +43,7 @@ def process(path, out_path, lama, ocr, feather=5, mask_temporal=3):
         masks = it.temporal_max([it.glyph_mask(cv2.imread(of), rects) for of in origs],
                                 mask_temporal)
         cov = float(np.mean([(m > 0).mean() for m in masks])) if masks else 0.0
-        win = int(np.clip(2.5 * np.median([r[3] - r[1] for r in rects]), 61, 221))
+        win = int(np.clip(WIN_HEIGHT_FACTOR * np.median([r[3] - r[1] for r in rects]), WIN_MIN, WIN_MAX))
         it.lama_frames(origs, masks, final, lama=lama, feather=feather, log=False, win=win)
         it.sh(["ffmpeg", "-y", "-v", "error", "-framerate", f"{fps:.6f}",
                "-i", os.path.join(final, "%05d.png"), "-i", path,
@@ -79,7 +84,8 @@ def main():
 
     records = {}
     if os.path.exists(MANIFEST):
-        records = {r["name"]: r for r in json.load(open(MANIFEST))}
+        with open(MANIFEST) as f:
+            records = {r["name"]: r for r in json.load(f)}
 
     for k, path in enumerate(sel):
         name = os.path.basename(path)
@@ -95,7 +101,8 @@ def main():
             print(f"[{k+1}/{len(sel)}] ERROR {name}: {e}")
         rec["secs"] = round(time.time() - t, 1)
         records[name] = rec
-        json.dump(list(records.values()), open(MANIFEST, "w"), indent=1)
+        with open(MANIFEST, "w") as f:
+            json.dump(list(records.values()), f, indent=1)
         print(f"[{k+1}/{len(sel)}] {rec['status']:12} {name}  "
               f"({rec.get('frames','?')}f, {rec['secs']}s, "
               f"{len(rec.get('rects',[]))} rect)")

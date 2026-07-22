@@ -22,6 +22,7 @@ Usage:
 import argparse
 import json
 import subprocess
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -29,6 +30,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent.parent   # repo root (this file liv
 CLIPS_DIR = SCRIPT_DIR / "freckled_spike_tiktok"
 TRANSITIONS = SCRIPT_DIR / "transitions" / "transitions.json"
 OUT_DIR = SCRIPT_DIR / "split"
+
+FFMPEG = ["ffmpeg", "-y", "-v", "error"]
 
 # Recognize both the CLIP-based and the face-based method names.
 PERSON_ONLY = {"single_shot_person", "all_person_no_transition",
@@ -43,7 +46,7 @@ def run(cmd):
 
 def cut_segment(src, dst, start=None, end=None):
     """Frame-accurate re-encode of [start, end]. None means clip boundary."""
-    cmd = ["ffmpeg", "-y", "-v", "error"]
+    cmd = list(FFMPEG)
     if start is not None:
         cmd += ["-ss", f"{start:.3f}"]
     cmd += ["-i", str(src)]
@@ -57,28 +60,28 @@ def cut_segment(src, dst, start=None, end=None):
 
 
 def copy_whole(src, dst):
-    return run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-c", "copy",
+    return run([*FFMPEG, "-i", str(src), "-c", "copy",
                 "-movflags", "+faststart", str(dst)])
 
 
-def plan_clip(rec):
+def plan_clip(rec, clips_dir, out_dir):
     """Return list of (kind, src, dst, start, end, mode) actions for one clip."""
     name = rec["clip"]
-    src = CLIPS_DIR / name
+    src = clips_dir / name
     t = rec.get("transition_sec")
     method = rec.get("method")
     actions = []
     if "error" in rec or not src.exists():
         return actions, "skip_missing_or_error"
     if t is not None:
-        actions.append(("person", src, OUT_DIR / "person" / name, None, t, "cut"))
-        actions.append(("meme", src, OUT_DIR / "meme" / name, t, None, "cut"))
+        actions.append(("person", src, out_dir / "person" / name, None, t, "cut"))
+        actions.append(("meme", src, out_dir / "meme" / name, t, None, "cut"))
         return actions, "split"
     if method in PERSON_ONLY:
-        actions.append(("person", src, OUT_DIR / "person" / name, None, None, "copy"))
+        actions.append(("person", src, out_dir / "person" / name, None, None, "copy"))
         return actions, "person_only"
     if method in MEME_ONLY:
-        actions.append(("meme", src, OUT_DIR / "meme" / name, None, None, "copy"))
+        actions.append(("meme", src, out_dir / "meme" / name, None, None, "copy"))
         return actions, "meme_only"
     return actions, "skip_unknown"
 
@@ -97,7 +100,6 @@ def execute(actions):
 
 
 def main():
-    global CLIPS_DIR, OUT_DIR
     ap = argparse.ArgumentParser()
     ap.add_argument("--transitions", default=str(TRANSITIONS))
     ap.add_argument("--clips-dir", default=str(CLIPS_DIR))
@@ -106,19 +108,19 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    CLIPS_DIR = Path(args.clips_dir)
-    OUT_DIR = Path(args.out)
+    clips_dir = Path(args.clips_dir)
+    out_dir = Path(args.out)
 
-    records = json.load(open(args.transitions))
-    (OUT_DIR / "person").mkdir(parents=True, exist_ok=True)
-    (OUT_DIR / "meme").mkdir(parents=True, exist_ok=True)
+    with open(args.transitions) as f:
+        records = json.load(f)
+    (out_dir / "person").mkdir(parents=True, exist_ok=True)
+    (out_dir / "meme").mkdir(parents=True, exist_ok=True)
 
-    from collections import Counter
     disposition = Counter()
     all_actions = []
     manifest = []
     for rec in records:
-        actions, disp = plan_clip(rec)
+        actions, disp = plan_clip(rec, clips_dir, out_dir)
         disposition[disp] += 1
         all_actions.append((rec["clip"], actions))
         manifest.append({"clip": rec["clip"], "disposition": disp,
@@ -131,7 +133,7 @@ def main():
     for disp, n in disposition.most_common():
         print(f"  {n:3d}  {disp}")
     total_out = sum(len(a) for _, a in all_actions)
-    print(f"  => {total_out} output files into {OUT_DIR}/person and {OUT_DIR}/meme")
+    print(f"  => {total_out} output files into {out_dir}/person and {out_dir}/meme")
 
     if args.dry_run:
         print("\n(dry run, nothing written)")
@@ -148,11 +150,11 @@ def main():
             if done % 20 == 0 or done == len(futs):
                 print(f"  processed {done}/{len(futs)} clips")
 
-    with open(OUT_DIR / "split_manifest.json", "w") as f:
+    with open(out_dir / "split_manifest.json", "w") as f:
         json.dump(manifest, f, indent=2)
 
-    n_person = len(list((OUT_DIR / "person").glob("*.mp4")))
-    n_meme = len(list((OUT_DIR / "meme").glob("*.mp4")))
+    n_person = len(list((out_dir / "person").glob("*.mp4")))
+    n_meme = len(list((out_dir / "meme").glob("*.mp4")))
     print(f"\nDone. person/={n_person} files, meme/={n_meme} files.")
     if all_errs:
         print(f"{len(all_errs)} errors:")

@@ -92,7 +92,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     clips = sorted(clips_dir.glob(args.pattern))
-    if args.limit:
+    if args.limit is not None:
         clips = clips[:args.limit]
     if not clips:
         print(f"No clips matching {args.pattern} in {clips_dir}")

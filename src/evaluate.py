@@ -94,10 +94,13 @@ def main():
     ap.add_argument("--tol", type=float, default=0.5)
     args = ap.parse_args()
 
-    gt = {c["short"]: c for c in json.load(open(args.gt))["clips"]}
-    recs = {short(c["clip"]): c for c in json.load(open(args.transitions))}
+    with open(args.gt) as f:
+        gt = {c["short"]: c for c in json.load(f)["clips"]}
+    with open(args.transitions) as f:
+        recs = {short(c["clip"]): c for c in json.load(f)}
     try:
-        segs = {r["short"]: r for r in json.load(open(args.segments))}
+        with open(args.segments) as f:
+            segs = {r["short"]: r for r in json.load(f)}
     except Exception:
         segs = {}
 
