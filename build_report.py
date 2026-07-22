@@ -235,7 +235,7 @@ def main():
 
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pezevenk — person→meme transitions</title>
+<title>pezevid — person→meme transitions</title>
 <style>
   :root {{ color-scheme: dark; }}
   body {{ margin:0; background:#0d1117; color:#e6edf3; font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }}
@@ -282,7 +282,7 @@ def main():
 </style><style>{peznav_css}</style></head><body>
 {peznav_nav}
 <header>
-  <h1>pezevenk — person → meme transition detection</h1>
+  <h1>pezevid — person → meme transition detection</h1>
   <p class="lede">Each TikTok clip cuts from the creator talking to camera over to a meme. Detector = TransNetV2 (shot boundaries) + InsightFace (is this shot <em>the creator's</em> face?). Accuracy below is from an independent verification pass (6 ground-truth entries corrected after visual re-check).</p>
   {summary_html}
   <p class="legend">Thumbnails:

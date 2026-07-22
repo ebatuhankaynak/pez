@@ -17,7 +17,7 @@
 
 x-common: &common
   build: .
-  image: pezevenk-transitions:latest
+  image: pezevid-transitions:latest
   # Write outputs as the host user (avoids root-owned files). HOST_UID/HOST_GID come
   # from the .env file (auto-generated to your id -u/-g); falls back to 1000:1000.
   user: "${HOST_UID:-1000}:${HOST_GID:-1000}"

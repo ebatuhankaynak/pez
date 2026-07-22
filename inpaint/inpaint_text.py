@@ -574,7 +574,7 @@ def main():
                          "band-crop MiniMax on every clip (distilled Wan2.1 video inpaint; best "
                          "reconstruction of revealed background). lama = per-frame big-LaMa "
                          "spatial inpaint (fast, softer on textured backgrounds). All run in the "
-                         "pezevenk docker.")
+                         "pezevid docker.")
     ap.add_argument("--pad", type=int, default=200, help="vertical context around the caption band")
     ap.add_argument("--flat-thr", type=float, default=0.6,
                     help="auto: band_flatness >= this routes to instant solid fill (else MiniMax)")

@@ -1,4 +1,4 @@
-# pezevenk — person → meme transition detection
+# pezevid — person → meme transition detection
 
 Find the timestamp where each `freckled_spike_tiktok` clip cuts from the creator
 talking to camera over to a meme (still image / meme video / text card).
@@ -57,13 +57,13 @@ multi-cut arrays:
 
 Remaining errors: a soft dissolve merged into one shot (`0b9bf76f76fa`), one clip whose two
 creator-returns the model collapses to a single cut (`152407c208d2`), and a couple of
-over-segmentations. Compare labelers with `ablation.py`.
+over-segmentations.
 
 ## Repo layout
 
 ```
 src/      headless compute pipeline (run in the container, GPU): detect_transitions,
-          relabel_faces, face_cut, split_clips, evaluate, ablation
+          relabel_faces, face_cut, split_clips, evaluate
 ./        the web app + orchestration served/run from the repo root: serve.py, build_report.py,
           peznav.py/.css, index/app/editor.html, vendor/, Docker* / compose / requirements
 tools/    re-runnable utilities: debug_faces.py, blank_unaddressed_cuts.py
@@ -84,7 +84,7 @@ and Docker runs them from the root with `python src/<stage>.py`, so `transitions
 | [`src/relabel_faces.py`](src/relabel_faces.py) | **stage 2** — label shots by the creator's face + pick the cut | rewrites `transitions.json` (+ `transitions/qa/` with `--qa`) |
 | [`src/face_cut.py`](src/face_cut.py) | **stage 3** — face-first multi-cut segments (Viterbi regime decode + luma fade-refine) | `transitions/segments.json`, `segments/<clip>/NN_<label>.mp4` |
 | [`src/split_clips.py`](src/split_clips.py) | binary cut at the transition | `split/person/*.mp4`, `split/meme/*.mp4` |
-| [`src/evaluate.py`](src/evaluate.py) / [`src/ablation.py`](src/ablation.py) | multi-cut score (vs manual GT by default) / compare approaches | prints tables |
+| [`src/evaluate.py`](src/evaluate.py) | multi-cut score (vs manual GT by default) | prints tables |
 | [`build_report.py`](build_report.py) | static `report.html` | HTML |
 
 **Stage 3 (`face_cut.py`) is face-first**, in two steps: (A) `--dump-curves` caches a dense

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Batch text-removal over the pezevenk meme clips for the eval tab.
+"""Batch text-removal over the pezevid meme clips for the eval tab.
 
 Loads RapidOCR (locate) and big-LaMa (inpaint) ONCE and reuses them across every
 clip -- so N clips cost ~one model load, not N. For each clip it auto-locates the
 caption(s), builds a per-frame glyph mask, LaMa-inpaints, and re-encodes with the
 original audio to inpaint/eval/out/<name>.mp4. Writes a manifest the tab reads.
 
-Run INSIDE the pezevenk docker:
+Run INSIDE the pezevid docker:
   python /app/inpaint/batch_eval.py --count 30
 Resumable: clips whose output already exists are skipped.
 """

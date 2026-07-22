@@ -53,7 +53,7 @@ python inpaint/inpaint_text.py -i split/meme/<clip>.mp4 -o out.mp4
 
 ### MiniMax engine setup (not baked into the Docker image)
 `minimax` (and therefore `auto` on textured bands) needs a vendored third-party repo
-plus its HuggingFace weights, **provisioned separately** — the pezevenk Docker image
+plus its HuggingFace weights, **provisioned separately** — the pezevid Docker image
 does *not* install `diffusers`/download these, and `inpaint/` is not a compose service.
 They live under `inpaint/_minimax/` (git-ignored):
 ```bash

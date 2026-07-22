@@ -10,7 +10,7 @@
 # Any instaloader flag/arg passes straight through.
 set -euo pipefail
 
-IMAGE="${IMAGE:-pezevenk-instaloader:latest}"
+IMAGE="${IMAGE:-pezevid-instaloader:latest}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 
 if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then

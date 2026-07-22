@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Thin wrapper around `docker run` for the pezevenk transition pipeline.
+# Thin wrapper around `docker run` for the pezevid transition pipeline.
 # Usage (pipeline stages live in src/; build_report.py + serve.py are at the root):
 #   ./docker-run.sh src/detect_transitions.py --qa
 #   ./docker-run.sh src/split_clips.py --workers 8
@@ -8,7 +8,7 @@
 # Add GPU=0 to force CPU:  GPU=0 ./docker-run.sh src/detect_transitions.py --limit 5
 set -euo pipefail
 
-IMAGE="${IMAGE:-pezevenk-transitions:latest}"
+IMAGE="${IMAGE:-pezevid-transitions:latest}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 GPU="${GPU:-1}"
 

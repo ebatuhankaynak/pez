@@ -33,5 +33,5 @@ def nav(active, sticky=True):
         cls = ' class="on"' if href == active else ""
         parts.append(f'<a href="{href}"{cls}>{label}</a>')
     wrap = " sticky" if sticky else ""
-    return (f'<nav class="peznav{wrap}"><span class="brand">pezevenk</span>'
+    return (f'<nav class="peznav{wrap}"><span class="brand">pezevid</span>'
             f'{"".join(parts)}</nav>')

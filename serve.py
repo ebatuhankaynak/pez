@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Static file server for the pezevenk workbench + a tiny save endpoint so the cut
+Static file server for the pezevid workbench + a tiny save endpoint so the cut
 editor (editor.html) can write batu's ground truth straight to disk.
 
     python serve.py            # http://localhost:8000/   (app, editor, report)
@@ -36,7 +36,7 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         p = self.path.split("?", 1)[0]
         if p == "/healthz":                       # uptime probe (pc_home etc.)
-            return self._json(200, {"ok": True, "app": "pezevenk"})
+            return self._json(200, {"ok": True, "app": "pezevid"})
         # never serve dotfiles (.git/.env/…) even though we sit at the repo root
         if any(seg.startswith(".") for seg in p.split("/") if seg):
             return self._json(404, {"error": "not found"})
