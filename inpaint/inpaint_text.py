@@ -149,7 +149,7 @@ def _cooc_density(gray_box, white_thr=200, black_thr=60):
     return float(cv2.bitwise_and(cv2.dilate(w, pr), cv2.dilate(b, pr)).mean())
 
 
-def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5,
+def _auto_rects_ocr(path, W, H, ocr=None, sample=12, persist=0.22, min_score=0.5,
                     style_thr=0.12, drift_thr=3.0, txtvar_thr=0.9):
     """OCR-driven caption locator returning TIGHT per-line boxes.
 
@@ -202,7 +202,7 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5,
                     best, bj = v, j
             rec = {"b": b, "text": (_text or "").strip(),
                    "style": _cooc_density(g[b[1]:b[3], b[0]:b[2]])}
-            if best >= 0.3:
+            if best >= 0.2:                              # looser: merge a caption that SCALES between frames
                 clusters[bj][0].append(rec); clusters[bj][1].add(fi)
             else:
                 clusters.append([[rec], {fi}])
@@ -215,7 +215,13 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5,
         if len(frames) < need:                          # not persistent -> transient bg text
             continue
         arr = np.array([r["b"] for r in boxes])
-        x0, y0, x1, y1 = (int(np.median(arr[:, k])) for k in range(4))
+        # UNION (max extent), not median: burned-in captions ANIMATE -- they pop in and
+        # scale up over the first ~0.5s, so the median box matches no single frame; it
+        # lands too small and off-centre, leaving the full-size text un-masked (the
+        # garble we saw on 0fda/ff69). The bounding union covers the largest the caption
+        # ever gets, so the per-frame stroke mask can catch it wherever it animated to.
+        x0, y0 = int(arr[:, 0].min()), int(arr[:, 1].min())
+        x1, y1 = int(arr[:, 2].max()), int(arr[:, 3].max())
         h = y1 - y0
         if h < 0.008 * H or (x1 - x0) < 20:
             continue
@@ -228,7 +234,7 @@ def _auto_rects_ocr(path, W, H, ocr=None, sample=8, persist=0.34, min_score=0.5,
             print(f"[auto] skip scene-text (style={style:.3f} drift={drift:.1f} "
                   f"txtvar={txtvar:.2f}): '{txts[len(txts) // 2][:30]}'")
             continue
-        pv, pl = int(0.22 * h), int(0.12 * h)           # tight pad; extra right for inline emoji
+        pv, pl = int(0.34 * h), int(0.12 * h)           # vertical pad (roomier for outline+descenders); extra right for inline emoji
         rects.append((max(0, x0 - pl), max(0, y0 - pv),
                       min(W, x1 + int(0.7 * h)), min(H, y1 + pv)))
     return rects

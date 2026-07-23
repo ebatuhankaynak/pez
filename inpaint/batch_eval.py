@@ -15,8 +15,12 @@ unchanged -- there is still exactly one LaMa model. Worker count auto-scales to 
 host and floors at 1, so a small/CPU-only box runs it as a plain serial loop.
 
 Run INSIDE the pezevid docker:
-  python /app/inpaint/batch_eval.py --all
-  python /app/inpaint/batch_eval.py --all --workers 1   # force serial (low RAM/cores)
+  python /app/inpaint/batch_eval.py --all                     # LaMa -> inpaint/eval/out
+  python /app/inpaint/batch_eval.py --all --engine minimax    # MiniMax -> inpaint/eval/out_minimax
+  python /app/inpaint/batch_eval.py --all --workers 1         # force serial (low RAM/cores)
+The two engines write to SEPARATE folders (out/ vs out_minimax/), each with its own
+manifest, so a MiniMax run never overwrites the LaMa outputs. --engine minimax needs the
+image built with MINIMAX=1 (else it errors with a rebuild hint).
 Resumable: clips whose output already exists are skipped.
 """
 import argparse, glob, json, os, shutil, threading, time
@@ -26,11 +30,19 @@ import cv2, numpy as np
 import inpaint_text as it   # sibling module in the same dir (not a package)
 
 SRC = "/app/split/meme"
-OUT = "/app/inpaint/eval/out"
-MANIFEST = "/app/inpaint/eval/manifest.json"
 
-FEATHER = 5         # mask-edge feather (px) for the LaMa composite
+# Per-engine output dir + manifest. LaMa keeps the original paths unchanged; MiniMax
+# writes to a SEPARATE folder so the two engines' outputs never overwrite each other and
+# the memes tab can show them side by side (it reads out/ + out_minimax/).
+ENGINE_CFG = {
+    "lama":    ("/app/inpaint/eval/out",         "/app/inpaint/eval/manifest.json"),
+    "minimax": ("/app/inpaint/eval/out_minimax", "/app/inpaint/eval/out_minimax/manifest.json"),
+}
+OUT, MANIFEST = ENGINE_CFG["lama"]   # reassigned per --engine in main()
+
+FEATHER = 5         # mask-edge feather (px) for the composite
 MASK_TEMPORAL = 3   # temporal-max window (frames) to stabilize the glyph mask
+PAD = 200           # vertical context (px) around the caption band for MiniMax band-crop
 
 
 def auto_workers():
@@ -62,19 +74,31 @@ def preprocess(path, ocr, ocr_lock):
     masks = it.temporal_max([it.glyph_mask(cv2.imread(of), rects) for of in origs],
                             MASK_TEMPORAL)
     cov = float(np.mean([(m > 0).mean() for m in masks])) if masks else 0.0
+    # caption band (rects +- PAD, snapped to /8) -- MiniMax inpaints only this band
+    y1 = max(0, min(r[1] for r in rects) - PAD)
+    y2 = min(H, max(r[3] for r in rects) + PAD)
+    by1 = it.snap8(y1); by2 = by1 + it.snap8(y2 - by1)
     meta = {"name": name, "work": work, "final": final, "origs": origs, "masks": masks,
             "rects": rects, "w": W, "h": H, "fps": fps, "cov": cov,
-            "out_path": os.path.join(OUT, name)}
+            "by1": by1, "by2": by2, "out_path": os.path.join(OUT, name)}
     return None, meta
 
 
-def inpaint_stage(meta, lama, gpu_lock):
-    """GPU stage: LaMa-inpaint every frame -> final/. Serialized by gpu_lock so only one
-    worker touches the (single, shared) model at a time -- VRAM stays at one model's cost
-    regardless of --workers. Masks are dropped afterwards to release RAM."""
+def inpaint_stage(meta, model, gpu_lock, engine):
+    """GPU stage: inpaint every frame -> final/ with the chosen engine. Serialized by
+    gpu_lock so only one worker touches the (single, shared) model at a time -- VRAM stays
+    at one model's cost regardless of --workers. Masks are dropped afterwards to release
+    RAM. MiniMax reloads the BGR frames here (it needs them in memory for the band-crop);
+    LaMa streams them from disk itself."""
     with gpu_lock:
-        it.lama_frames(meta["origs"], meta["masks"], meta["final"],
-                       lama=lama, feather=FEATHER, log=False)
+        if engine == "minimax":
+            frames = [cv2.imread(of) for of in meta["origs"]]
+            it.minimax_frames(frames, meta["masks"], meta["final"],
+                              meta["by1"], meta["by2"], meta["w"],
+                              feather=FEATHER, pipe=model)
+        else:
+            it.lama_frames(meta["origs"], meta["masks"], meta["final"],
+                           lama=model, feather=FEATHER, log=False)
     meta["masks"] = None
 
 
@@ -93,7 +117,7 @@ def encode_stage(meta):
             "cov": round(meta["cov"] * 100, 3)}
 
 
-def process_clip(path, lama, ocr, ocr_lock, gpu_lock):
+def process_clip(path, model, ocr, ocr_lock, gpu_lock, engine):
     """One clip through all three stages. preprocess + encode run on CPU (parallel across
     workers); inpaint holds gpu_lock (serial). A worker doing GPU work overlaps other
     workers' ffmpeg/OpenCV, which is where the speedup comes from."""
@@ -101,26 +125,39 @@ def process_clip(path, lama, ocr, ocr_lock, gpu_lock):
     if meta is None:
         return _skip
     try:
-        inpaint_stage(meta, lama, gpu_lock)
+        inpaint_stage(meta, model, gpu_lock, engine)
         return encode_stage(meta)
     finally:
         shutil.rmtree(meta["work"], ignore_errors=True)   # no-op if encode already cleaned
 
 
 def main():
+    global OUT, MANIFEST
     ap = argparse.ArgumentParser()
     ap.add_argument("--count", type=int, default=30, help="clips to process (evenly sampled)")
     ap.add_argument("--offset", type=int, default=0)
     ap.add_argument("--all", action="store_true", help="process every clip")
     ap.add_argument("--random", type=int, default=0, help="process N random clips")
     ap.add_argument("--seed", type=int, default=0, help="RNG seed for --random")
+    ap.add_argument("--engine", choices=("lama", "minimax"), default="lama",
+                    help="lama (default) -> inpaint/eval/out + manifest.json ; minimax -> "
+                         "inpaint/eval/out_minimax (SEPARATE folder, never overwrites LaMa; "
+                         "needs the MINIMAX=1 image build).")
+    ap.add_argument("--tag", default="",
+                    help="suffix the output dir/manifest (e.g. --tag fix -> out_fix/) so a "
+                         "re-run with changed detection never clobbers the baseline outputs.")
     ap.add_argument("--workers", type=int, default=0,
                     help="parallel CPU workers feeding the single GPU model "
                          "(0 = auto: min(4, cores/2), floor 1). Use 1 for serial on "
                          "low-RAM/low-core hosts.")
     a = ap.parse_args()
 
+    OUT, MANIFEST = ENGINE_CFG[a.engine]
+    if a.tag:
+        OUT = f"{OUT}_{a.tag}"
+        MANIFEST = os.path.join(OUT, "manifest.json")
     os.makedirs(OUT, exist_ok=True)
+    os.makedirs(os.path.dirname(MANIFEST), exist_ok=True)
     clips = sorted(glob.glob(os.path.join(SRC, "*.mp4")))
     if a.random > 0:
         rng = np.random.default_rng(a.seed)
@@ -143,12 +180,16 @@ def main():
                     and records.get(os.path.basename(p), {}).get("status") == "done")]
     workers = a.workers if a.workers > 0 else auto_workers()
     workers = max(1, min(workers, len(todo) or 1))
-    print(f"[batch] {len(sel)}/{len(clips)} clips ; {len(todo)} to do ; workers={workers} "
-          f"(cores={os.cpu_count()})")
+    print(f"[batch] engine={a.engine} -> {OUT} ; {len(sel)}/{len(clips)} clips ; "
+          f"{len(todo)} to do ; workers={workers} (cores={os.cpu_count()})")
 
     from rapidocr_onnxruntime import RapidOCR
-    from simple_lama_inpainting import SimpleLama
-    ocr, lama = RapidOCR(), SimpleLama()
+    ocr = RapidOCR()
+    if a.engine == "minimax":
+        model = it.load_minimax()          # raises a clear rebuild hint if image lacks MiniMax
+    else:
+        from simple_lama_inpainting import SimpleLama
+        model = SimpleLama()
     ocr_lock, gpu_lock = threading.Lock(), threading.Lock()
 
     def save_manifest():
@@ -158,7 +199,7 @@ def main():
     done = 0
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(process_clip, p, lama, ocr, ocr_lock, gpu_lock):
+        futs = {ex.submit(process_clip, p, model, ocr, ocr_lock, gpu_lock, a.engine):
                 os.path.basename(p) for p in todo}
         for fut in as_completed(futs):
             name = futs[fut]

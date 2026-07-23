@@ -62,8 +62,15 @@ RUN if [ "$INCLUDE_MINIMAX" = "1" ]; then set -eux; \
       apt-get update && apt-get install -y --no-install-recommends git \
         && rm -rf /var/lib/apt/lists/*; \
       git clone --depth 1 https://github.com/zibojia/MiniMax-Remover.git "$MINIMAX_DIR"; \
-      pip install -r "$MINIMAX_DIR/requirements.txt"; \
-      pip install "huggingface_hub[cli]"; \
+      # Install ONLY what the headless band-crop path imports (see inpaint_text.load_minimax
+      # + the vendored pipeline/transformer). The repo's requirements.txt is NOT used: it
+      # pins torch==2.7.1 / numpy==1.26.4 / opencv==4.10 / Pillow==9.2 -- every one a
+      # DOWNGRADE that would clobber the base CUDA stack (torch 2.10+cu128) or trigger a
+      # from-source Pillow build (no zlib headers -> fail). diffusers 0.33.1 carries the Wan
+      # VAE/pipeline the vendored code needs; it keeps the base torch/numpy/Pillow as-is. \
+      pip install --no-cache-dir \
+        diffusers==0.33.1 accelerate==0.30.1 einops==0.8.0 scipy \
+        "huggingface_hub[cli]==0.32.4"; \
       huggingface-cli download zibojia/minimax-remover --local-dir "$MINIMAX_DIR/weights"; \
       chmod -R a+rwX "$MINIMAX_DIR"; \
     fi
