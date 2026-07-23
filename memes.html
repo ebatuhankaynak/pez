@@ -128,14 +128,38 @@ function panes(r, big){
   const t = big ? "" : "#t=0.4";
   const cls = big ? "lbpane" : "pane";
   const outBase = (r.status==="done" ? OUT : SRC);
+  // Grid videos are lazy: src lives in data-src and is only attached when the card
+  // scrolls near the viewport (IntersectionObserver), so we never hold ~250 decoders
+  // at once (that OOM-crashed Chrome). Lightbox videos load immediately (only 2-3).
+  const srcAttr = big ? "src" : "data-src";
   let h = `<div class="${cls}"><span class="tag i">orig</span>
-      <video muted loop playsinline preload="metadata" src="${SRC+r.name+t}"></video></div>
+      <video muted loop playsinline preload="none" ${srcAttr}="${SRC+r.name+t}"></video></div>
     <div class="${cls}"><span class="tag o">LaMa</span>
-      <video muted loop playsinline preload="metadata" src="${outBase+r.name+t}"></video></div>`;
+      <video muted loop playsinline preload="none" ${srcAttr}="${outBase+r.name+t}"></video></div>`;
   if(hasMM(r)) h += `<div class="${cls}"><span class="tag m">MiniMax</span>
-      <video muted loop playsinline preload="metadata" src="${MM+r.name+t}"></video></div>`;
+      <video muted loop playsinline preload="none" ${srcAttr}="${MM+r.name+t}"></video></div>`;
   return h;
 }
+
+// Attach the real video src only to cards within ~800px of the viewport; detach the
+// rest so we never hold ~250 decoders at once (that OOM-crashed Chrome). Driven by an
+// explicit visibility scan (runs on render/scroll/resize) rather than IntersectionObserver
+// so the first paint is deterministic and doesn't depend on observer callback timing.
+function attachVisibleVideos(){
+  const mb = 800, vh = window.innerHeight;
+  for(const el of document.querySelectorAll(".card")){
+    const r = el.getBoundingClientRect();
+    const near = r.bottom > -mb && r.top < vh + mb;
+    el.querySelectorAll("video").forEach(v=>{
+      if(near){ if(!v.getAttribute("src") && v.dataset.src){ v.setAttribute("src", v.dataset.src); v.load(); } }
+      else{ v.pause(); if(v.getAttribute("src")){ v.removeAttribute("src"); v.load(); } }
+    });
+  }
+}
+let _vscan = 0;
+function scheduleAttach(){ cancelAnimationFrame(_vscan); _vscan = requestAnimationFrame(attachVisibleVideos); }
+window.addEventListener("scroll", scheduleAttach, {passive:true});
+window.addEventListener("resize", scheduleAttach, {passive:true});
 
 function card(r){
   const rv = revOf(r);
@@ -151,7 +175,10 @@ function card(r){
       ${rv && rv.note ? `<div class="note">${rv.note}</div>` : ""}
     </div>`;
   const vids = el.querySelectorAll("video");
-  const play = ()=> vids.forEach(v=>{ v.currentTime=0; v.play().catch(()=>{}); });
+  const play = ()=> vids.forEach(v=>{
+    if(!v.getAttribute("src") && v.dataset.src){ v.setAttribute("src", v.dataset.src); v.load(); }
+    v.currentTime=0; v.play().catch(()=>{});
+  });
   const stop = ()=> vids.forEach(v=>{ v.pause(); v.currentTime=0.4; });
   el.addEventListener("mouseenter", play);
   el.addEventListener("mouseleave", stop);
@@ -197,6 +224,7 @@ function render(){
     return (a.status==="done"?0:1)-(b.status==="done"?0:1) || (b.cov||0)-(a.cov||0);
   });
   shown.forEach(r => g.appendChild(card(r)));
+  attachVisibleVideos();   // prime the initially-visible cards
 
   const done = recs.filter(r=>r.status==="done").length;
   const nocap = recs.filter(r=>r.status==="no-caption").length;
