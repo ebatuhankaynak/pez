@@ -6,11 +6,21 @@ clip -- so N clips cost ~one model load, not N. For each clip it auto-locates th
 caption(s), builds a per-frame glyph mask, LaMa-inpaints, and re-encodes with the
 original audio to inpaint/eval/out/<name>.mp4. Writes a manifest the tab reads.
 
+Throughput: the per-clip work is a chain of CPU (ffmpeg extract/encode, OpenCV
+masking) and GPU (LaMa) stages. Running clips strictly one-at-a-time leaves the GPU
+idle during every CPU stage. So clips are pipelined across a small worker pool: while
+one worker holds the single GPU model and inpaints, the others run ffmpeg/OpenCV for
+other clips. The GPU is used by AT MOST ONE worker at a time (a lock), so VRAM cost is
+unchanged -- there is still exactly one LaMa model. Worker count auto-scales to the
+host and floors at 1, so a small/CPU-only box runs it as a plain serial loop.
+
 Run INSIDE the pezevid docker:
-  python /app/inpaint/batch_eval.py --count 30
+  python /app/inpaint/batch_eval.py --all
+  python /app/inpaint/batch_eval.py --all --workers 1   # force serial (low RAM/cores)
 Resumable: clips whose output already exists are skipped.
 """
-import argparse, glob, json, os, shutil, time
+import argparse, glob, json, os, shutil, threading, time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import cv2, numpy as np
 
 import inpaint_text as it   # sibling module in the same dir (not a package)
@@ -23,34 +33,78 @@ FEATHER = 5         # mask-edge feather (px) for the LaMa composite
 MASK_TEMPORAL = 3   # temporal-max window (frames) to stabilize the glyph mask
 
 
-def process(path, out_path, lama, ocr):
-    """Locate + mask + LaMa one clip. Returns a manifest record."""
+def auto_workers():
+    """Conservative default: half the cores, capped at 4, floor 1. Small enough to keep
+    RAM (each worker holds one clip's masks) and parallel-ffmpeg load bounded; a 1-2 core
+    host runs a single worker = plain serial."""
+    return max(1, min(4, (os.cpu_count() or 2) // 2))
+
+
+def preprocess(path, ocr, ocr_lock):
+    """CPU stage: locate caption(s), extract frames, build the glyph masks. Returns
+    (skip_record, meta). skip_record is set (and meta None) when there is no caption to
+    remove; otherwise meta carries everything the GPU + encode stages need. RapidOCR is
+    shared across workers, so its calls are serialized by ocr_lock (only ~8 sampled
+    frames per clip -- negligible contention)."""
     name = os.path.basename(path)
     W, H, fps = it.probe(path)
-    rects = it.auto_rects(path, W, H, ocr=ocr)
+    with ocr_lock:
+        rects = it.auto_rects(path, W, H, ocr=ocr)
     if not rects:
-        return {"name": name, "status": "no-caption", "rects": [], "w": W, "h": H}
+        return {"name": name, "status": "no-caption", "rects": [], "w": W, "h": H}, None
 
     work = os.path.join(OUT, ".work_" + os.path.splitext(name)[0])
     origdir, final = os.path.join(work, "orig"), os.path.join(work, "final")
     for d in (origdir, final):
         os.makedirs(d, exist_ok=True)
+    it.sh(["ffmpeg", "-y", "-v", "error", "-i", path, os.path.join(origdir, "%05d.png")])
+    origs = sorted(glob.glob(os.path.join(origdir, "*.png")))
+    masks = it.temporal_max([it.glyph_mask(cv2.imread(of), rects) for of in origs],
+                            MASK_TEMPORAL)
+    cov = float(np.mean([(m > 0).mean() for m in masks])) if masks else 0.0
+    meta = {"name": name, "work": work, "final": final, "origs": origs, "masks": masks,
+            "rects": rects, "w": W, "h": H, "fps": fps, "cov": cov,
+            "out_path": os.path.join(OUT, name)}
+    return None, meta
+
+
+def inpaint_stage(meta, lama, gpu_lock):
+    """GPU stage: LaMa-inpaint every frame -> final/. Serialized by gpu_lock so only one
+    worker touches the (single, shared) model at a time -- VRAM stays at one model's cost
+    regardless of --workers. Masks are dropped afterwards to release RAM."""
+    with gpu_lock:
+        it.lama_frames(meta["origs"], meta["masks"], meta["final"],
+                       lama=lama, feather=FEATHER, log=False)
+    meta["masks"] = None
+
+
+def encode_stage(meta):
+    """CPU stage: re-encode final/ at native fps + copy original audio, then drop the
+    work dir. Returns the manifest record."""
+    it.sh(["ffmpeg", "-y", "-v", "error", "-framerate", f"{meta['fps']:.6f}",
+           "-i", os.path.join(meta["final"], "%05d.png"), "-i",
+           os.path.join(SRC, meta["name"]),
+           "-map", "0:v", "-map", "1:a?", "-c:v", "libx264", "-crf", "18",
+           "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "copy",
+           "-shortest", meta["out_path"]])
+    shutil.rmtree(meta["work"], ignore_errors=True)
+    return {"name": meta["name"], "status": "done", "rects": meta["rects"],
+            "w": meta["w"], "h": meta["h"], "frames": len(meta["origs"]),
+            "cov": round(meta["cov"] * 100, 3)}
+
+
+def process_clip(path, lama, ocr, ocr_lock, gpu_lock):
+    """One clip through all three stages. preprocess + encode run on CPU (parallel across
+    workers); inpaint holds gpu_lock (serial). A worker doing GPU work overlaps other
+    workers' ffmpeg/OpenCV, which is where the speedup comes from."""
+    _skip, meta = preprocess(path, ocr, ocr_lock)
+    if meta is None:
+        return _skip
     try:
-        it.sh(["ffmpeg", "-y", "-v", "error", "-i", path, os.path.join(origdir, "%05d.png")])
-        origs = sorted(glob.glob(os.path.join(origdir, "*.png")))
-        masks = it.temporal_max([it.glyph_mask(cv2.imread(of), rects) for of in origs],
-                                MASK_TEMPORAL)
-        cov = float(np.mean([(m > 0).mean() for m in masks])) if masks else 0.0
-        it.lama_frames(origs, masks, final, lama=lama, feather=FEATHER, log=False)
-        it.sh(["ffmpeg", "-y", "-v", "error", "-framerate", f"{fps:.6f}",
-               "-i", os.path.join(final, "%05d.png"), "-i", path,
-               "-map", "0:v", "-map", "1:a?", "-c:v", "libx264", "-crf", "18",
-               "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "copy",
-               "-shortest", out_path])
+        inpaint_stage(meta, lama, gpu_lock)
+        return encode_stage(meta)
     finally:
-        shutil.rmtree(work, ignore_errors=True)
-    return {"name": name, "status": "done", "rects": rects,
-            "w": W, "h": H, "frames": len(origs), "cov": round(cov * 100, 3)}
+        shutil.rmtree(meta["work"], ignore_errors=True)   # no-op if encode already cleaned
 
 
 def main():
@@ -60,6 +114,10 @@ def main():
     ap.add_argument("--all", action="store_true", help="process every clip")
     ap.add_argument("--random", type=int, default=0, help="process N random clips")
     ap.add_argument("--seed", type=int, default=0, help="RNG seed for --random")
+    ap.add_argument("--workers", type=int, default=0,
+                    help="parallel CPU workers feeding the single GPU model "
+                         "(0 = auto: min(4, cores/2), floor 1). Use 1 for serial on "
+                         "low-RAM/low-core hosts.")
     a = ap.parse_args()
 
     os.makedirs(OUT, exist_ok=True)
@@ -73,37 +131,49 @@ def main():
     else:
         idx = np.linspace(0, len(clips) - 1, a.count).astype(int)
         sel = [clips[i] for i in sorted(set(idx))][a.offset:]
-    print(f"[batch] {len(sel)}/{len(clips)} clips")
-
-    from rapidocr_onnxruntime import RapidOCR
-    from simple_lama_inpainting import SimpleLama
-    ocr, lama = RapidOCR(), SimpleLama()
 
     records = {}
     if os.path.exists(MANIFEST):
         with open(MANIFEST) as f:
             records = {r["name"]: r for r in json.load(f)}
 
-    for k, path in enumerate(sel):
-        name = os.path.basename(path)
-        out_path = os.path.join(OUT, name)
-        if os.path.exists(out_path) and records.get(name, {}).get("status") == "done":
-            print(f"[{k+1}/{len(sel)}] skip (done) {name}")
-            continue
-        t = time.time()
-        try:
-            rec = process(path, out_path, lama, ocr)
-        except Exception as e:
-            rec = {"name": name, "status": f"error: {e.__class__.__name__}: {e}"}
-            print(f"[{k+1}/{len(sel)}] ERROR {name}: {e}")
-        rec["secs"] = round(time.time() - t, 1)
-        records[name] = rec
+    # skip already-done clips up front (resume)
+    todo = [p for p in sel
+            if not (os.path.exists(os.path.join(OUT, os.path.basename(p)))
+                    and records.get(os.path.basename(p), {}).get("status") == "done")]
+    workers = a.workers if a.workers > 0 else auto_workers()
+    workers = max(1, min(workers, len(todo) or 1))
+    print(f"[batch] {len(sel)}/{len(clips)} clips ; {len(todo)} to do ; workers={workers} "
+          f"(cores={os.cpu_count()})")
+
+    from rapidocr_onnxruntime import RapidOCR
+    from simple_lama_inpainting import SimpleLama
+    ocr, lama = RapidOCR(), SimpleLama()
+    ocr_lock, gpu_lock = threading.Lock(), threading.Lock()
+
+    def save_manifest():
         with open(MANIFEST, "w") as f:
             json.dump(list(records.values()), f, indent=1)
-        print(f"[{k+1}/{len(sel)}] {rec['status']:12} {name}  "
-              f"({rec.get('frames','?')}f, {rec['secs']}s, "
-              f"{len(rec.get('rects',[]))} rect)")
-    print(f"[batch] done -> {MANIFEST}")
+
+    done = 0
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        futs = {ex.submit(process_clip, p, lama, ocr, ocr_lock, gpu_lock):
+                os.path.basename(p) for p in todo}
+        for fut in as_completed(futs):
+            name = futs[fut]
+            try:
+                rec = fut.result()
+            except Exception as e:
+                rec = {"name": name, "status": f"error: {e.__class__.__name__}: {e}"}
+            done += 1
+            records[name] = rec
+            save_manifest()                                  # incremental (main thread only)
+            avg = (time.time() - t0) / done
+            print(f"[{done}/{len(todo)}] {rec['status']:12} {name}  "
+                  f"({rec.get('frames', '?')}f, {len(rec.get('rects', []))} rect, "
+                  f"avg {avg:.1f}s/clip)")
+    print(f"[batch] done in {time.time() - t0:.1f}s -> {MANIFEST}")
 
 
 if __name__ == "__main__":

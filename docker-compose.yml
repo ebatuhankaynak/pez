@@ -16,7 +16,13 @@
 #   DEVICE=cpu (detect honors --device) or remove the `gpus:` line below.
 
 x-common: &common
-  build: .
+  build:
+    context: .
+    args:
+      # MiniMax text-removal engine is opt-in (heavy: vendored repo + multi-GB weights).
+      # Default build = LaMa-only:            docker compose build
+      # Full build (adds MiniMax):   MINIMAX=1 docker compose build
+      INCLUDE_MINIMAX: "${MINIMAX:-0}"
   image: pezevid-transitions:latest
   # Write outputs as the host user (avoids root-owned files). HOST_UID/HOST_GID come
   # from the .env file (auto-generated to your id -u/-g); falls back to 1000:1000.
@@ -60,6 +66,13 @@ services:
     <<: *common
     entrypoint: ["bash", "-c"]
     command: ["python src/detect_transitions.py && python src/relabel_faces.py --qa && python src/face_cut.py --dump-curves && python src/face_cut.py --split segments && python src/split_clips.py --workers 8 && python build_report.py --out report.html"]
+
+  # Track 2 — caption text-removal batch over split/meme -> inpaint/eval/out (+ manifest
+  # the memes.html tab reads). LaMa engine (baked in). Run `split` first so meme clips exist.
+  inpaint:
+    <<: *common
+    entrypoint: ["python"]
+    command: ["inpaint/batch_eval.py", "--all"]
 
   # Static UI + batu-GT save endpoint (serve.py). `up serve` keeps it running.
   serve:

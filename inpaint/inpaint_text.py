@@ -22,9 +22,17 @@ glyph detector tightens the actual mask within it per frame.
 import argparse, glob, json, os, shutil, subprocess, sys, time
 import cv2, numpy as np
 
-# MiniMax-Remover (distilled Wan2.1 video inpainter) lives alongside this file.
-MINIMAX_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_minimax")
+# MiniMax-Remover (distilled Wan2.1 video inpainter). Defaults to a checkout alongside
+# this file; the docker image sets MINIMAX_DIR=/opt/minimax (outside the compose bind
+# mount) and only populates it when built with --build-arg INCLUDE_MINIMAX=1.
+MINIMAX_DIR = os.environ.get(
+    "MINIMAX_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "_minimax"))
 MM_WDST, MM_WIN, MM_OVL = 480, 81, 8            # DiT width, window frames, window overlap
+
+
+def minimax_available():
+    """True when the MiniMax vendored repo + weights are provisioned (see load_minimax)."""
+    return os.path.isdir(os.path.join(MINIMAX_DIR, "weights"))
 
 
 def sh(cmd, **kw):
@@ -405,6 +413,11 @@ def _mm_win_weight(k, win, ovl):
 
 def load_minimax(device="cuda:0"):
     """Load the MiniMax-Remover pipeline (Wan VAE + distilled transformer)."""
+    if not minimax_available():
+        raise RuntimeError(
+            f"MiniMax engine not provisioned (no weights under {MINIMAX_DIR}). Rebuild the "
+            "image with `MINIMAX=1 docker compose build` (or --build-arg INCLUDE_MINIMAX=1), "
+            "or use --engine lama.")
     import torch
     if MINIMAX_DIR not in sys.path:
         sys.path.insert(0, MINIMAX_DIR)
@@ -559,6 +572,9 @@ def main():
     if engine == "auto":
         flat = band_flatness(frames, full_masks)
         engine = "solid" if flat >= a.flat_thr else "minimax"
+        if engine == "minimax" and not minimax_available():
+            engine = "lama"                              # image built without MiniMax
+            print("[auto] MiniMax not provisioned -> falling back to lama")
         print(f"[auto] band_flatness={flat:.2f} (thr {a.flat_thr}) -> {engine}")
     t = time.time()
     if engine == "solid":
