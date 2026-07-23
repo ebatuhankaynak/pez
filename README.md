@@ -1,9 +1,7 @@
 # pezevid
 
-Two pipelines over vertical TikTok clips:
-
-- **Cut detection** — find the person→meme shot boundary and every creator *return*.
-- **Caption inpainting** — remove burned-in captions from the meme segments.
+Cut detection over vertical TikTok clips — find the person→meme shot boundary and every
+creator *return*.
 
 Traced below on clip `fa68486e668e` with real per-stage I/O. Dataset: **121 clips**, 720×1280,
 variable fps (TikTok re-encodes, ~8 s each). The pipeline reads each clip's native fps and works
@@ -37,7 +35,7 @@ in **seconds** throughout, so timestamps are comparable across clips.
 
 ---
 
-# Track 1 — cut detection
+# Pipeline
 
 ```bash
 docker compose run --rm all      # detect → relabel → segment → split → report
@@ -107,48 +105,6 @@ manual GT (`--tol 0.5`). `app.html` — live workbench (ticks, picked cut, per-s
 
 ---
 
-# Track 2 — caption removal
-
-```bash
-python inpaint/inpaint_text.py -i split/meme/<clip>.mp4 -o out.mp4
-```
-
-Input: the `split/meme` plates from Track 1. Remove burned-in text: locate → route → fill.
-
-### 1. Caption localization — RapidOCR (ONNX)
-Rects optional. Sample frames, cluster OCR boxes by IoU, keep **screen-static** boxes only
-(burned-in captions persist frame to frame; background text doesn't). One tight box per line.
-Override: `-r x1,y1,x2,y2` (repeatable).
-
-### 2. Engine selection — `--engine auto`
-Static centered text over near-static scenery → no reliable motion for a temporal/flow method to
-propagate. `auto` routes per clip by band flatness (`--flat-thr 0.6`).
-
-| band | engine | how |
-|------|--------|-----|
-| flat (letterbox / wall) | `solid` | strokes → ring median color; exact, instant, no smudge |
-| **textured (default)** | **`minimax`** | band-cropped MiniMax-Remover (distilled Wan2.1 video DiT); caption band only → few latent tokens, no whole-frame softening |
-| fallback | `lama` | per-frame big-LaMa, self-contained weights; softer on heavy texture |
-
-Blind A/B (n=18): **MiniMax 5 wins · LaMa 3 · 10 tie**. MiniMax needs the vendored repo + weights
-(see setup below); without it, use `--engine lama`.
-
-### 3. Composite + encode
-Writes `inpaint/out/<clip>.mp4`.
-
-**One-sided feather** (opacity outward only) prevents the original text ghosting back through.
-Uniform surround → snap to a diffused color; flatness-scaled dilation eats the glyph halo.
-Re-encode `CRF 16`, copy original audio.
-
-<table>
-<tr>
-<td align="center"><img src="examples/inpaint_before.jpg" width="200"><br><sub><b>before</b> · caption burned in</sub></td>
-<td align="center"><img src="examples/inpaint_after.jpg" width="200"><br><sub><b>after</b> · caption removed</sub></td>
-</tr>
-</table>
-
----
-
 ## Metrics
 
 **Cut** — vs manual cut-editor GT (n=121), multi-cut aware, `--tol 0.5`:
@@ -162,8 +118,6 @@ Re-encode `CRF 16`, copy original audio.
 frame-by-frame (manual pass scored 98.3 %, surfaced 8 GT mistakes, since corrected —
 `transitions/verification.json`).
 
-**Clean** — blind MiniMax/LaMa A/B (n=18): MiniMax 5 / LaMa 3 / 10 tie (`minimax_reviews.json`).
-
 ## `method` values (`transitions.json`)
 `creator_to_meme` · `creator_to_meme_prior` · `creator_to_meme_soft` / `_softcut` ·
 `single_shot_creator` / `all_creator_no_transition` · `all_meme_no_creator`.
@@ -175,7 +129,6 @@ src/          compute pipeline (GPU, in-container): detect_transitions, relabel_
 ./            web app + orchestration: serve.py, build_report.py, peznav.py/.css,
               index/app/editor.html, vendor/, Docker* / compose / requirements
 tools/        re-runnable utilities: debug_faces.py, blank_unaddressed_cuts.py
-inpaint/      caption removal: inpaint_text.py, batch_eval.py
 transitions/  data — ground-truth JSON (tracked) + generated transitions.json / segments.json
 examples/     the frames used in this README
 ```
@@ -192,15 +145,3 @@ docker compose up serve                      # UI at http://localhost:8000/  (or
 No compose? `./docker-run.sh src/detect_transitions.py` (`GPU=0` forces CPU). Both stages use the
 GPU with the NVIDIA runtime and fall back to CPU on an actual visible-device check. TransNetV2 +
 buffalo_l are baked in — runs are offline.
-
-### MiniMax engine setup (not in the Docker image)
-`minimax` (and `auto` on textured bands) needs a vendored repo + HF weights under
-`inpaint/_minimax/` (git-ignored):
-```bash
-# from inpaint/
-git clone https://github.com/zibojia/MiniMax-Remover _minimax
-pip install -r _minimax/requirements.txt          # diffusers==0.33.1 etc.
-huggingface-cli download zibojia/minimax-remover --local-dir _minimax/weights
-```
-Running inpaint inside the transitions container also needs
-`pip install rapidocr-onnxruntime simple-lama-inpainting` (not yet in the image).

@@ -23,3 +23,8 @@ transitions/*.bak*
 
 # --- scratch A/B comparison pages (regenerable review artifacts) ---
 *_compare.html
+
+# --- text-removal leftovers (removed on this branch; dir still holds untracked data) ---
+inpaint/
+compare_bundle.html
+*_compare.html

@@ -14,7 +14,6 @@ LINKS = [
     ("app.html", "workbench"),
     ("editor.html", "cut editor"),
     ("report.html", "report"),
-    ("memes.html", "text removal"),
 ]
 
 
